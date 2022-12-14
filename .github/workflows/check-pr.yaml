@@ -44,9 +44,8 @@ jobs:
           --logger "trx;logfileprefix=tr"
 
       - name: "Publish Solution Test Results"
-        uses: dorny/test-reporter@v1
+        uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
-          name: "Test Results"
-          reporter: "dotnet-trx"
+          name: "test-results"
           path: "src/**/TestResults/*.trx"
