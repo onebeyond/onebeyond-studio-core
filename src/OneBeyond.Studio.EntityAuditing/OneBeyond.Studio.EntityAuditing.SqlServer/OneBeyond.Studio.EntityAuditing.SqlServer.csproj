@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OneBeyond.Studio.DataAccess.EFCore\OneBeyond.Studio.DataAccess.EFCore.csproj" />
+    <ProjectReference Include="..\OneBeyond.Studio.EntityAuditing.Infrastructure\OneBeyond.Studio.EntityAuditing.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

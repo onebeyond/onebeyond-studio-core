@@ -1,0 +1,20 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Authors>One Beyond</Authors>
+    <Product>One Beyond Studio</Product>
+    <Deterministic>true</Deterministic>
+    <DebugType>embedded</DebugType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <DotNetVersion>7</DotNetVersion>
+    <MinVerTagPrefix>v$(DotNetVersion).</MinVerTagPrefix>
+    <MinVerSkip Condition="'$(Configuration)' != 'Release'">true</MinVerSkip>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="MinVer" Version="4.2.0" PrivateAssets="All" />
+  </ItemGroup>
+  
+</Project>
