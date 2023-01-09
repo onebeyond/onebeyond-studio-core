@@ -10,10 +10,10 @@ namespace OneBeyond.Studio.EntityAuditing.Domain;
 public interface IExtendedAuditReader<TEntity>
     where TEntity : class
 {
-    Task<List<TResultDTO>> GetAllEventsAsync<TResultDTO>(
+    Task<List<TResultDto>> GetAllEventsAsync<TResultDto>(
         Expression<Func<TEntity, bool>> filter = null,
         Sorting<TEntity> sorting = null,
         Paging paging = null,
         CancellationToken cancellationToken = default)
-    where TResultDTO : new();
+    where TResultDto : new();
 }

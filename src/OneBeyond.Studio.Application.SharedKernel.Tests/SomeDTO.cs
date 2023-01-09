@@ -1,5 +1,5 @@
 namespace OneBeyond.Studio.Application.SharedKernel.Tests;
 
-internal sealed class SomeDTO
+internal sealed class SomeDto
 {
 }

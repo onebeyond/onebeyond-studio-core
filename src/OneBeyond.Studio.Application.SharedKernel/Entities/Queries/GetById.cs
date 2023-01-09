@@ -8,11 +8,11 @@ namespace OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 /// <summary>
 /// Query for getting an entity projected by Id and projected to a DTO
 /// </summary>
-/// <typeparam name="TResultDTO"></typeparam>
+/// <typeparam name="TResultDto"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TEntityId"></typeparam>
-public record GetById<TResultDTO, TEntity, TEntityId>
-    : IRequest<TResultDTO>
+public record GetById<TResultDto, TEntity, TEntityId>
+    : IRequest<TResultDto>
     where TEntity : DomainEntity<TEntityId>
 {
     /// <summary>

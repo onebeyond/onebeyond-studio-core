@@ -12,13 +12,13 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 
 /// <summary>
-/// Handles <see cref="Update{TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId}"/> command
+/// Handles <see cref="Update{TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId}"/> command
 /// </summary>
-/// <typeparam name="TAggregateRootUpdateDTO"></typeparam>
+/// <typeparam name="TAggregateRootUpdateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
-public class UpdateHandler<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId>
-    : IRequestHandler<Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
+public class UpdateHandler<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>
+    : IRequestHandler<Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
     where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
     where TAggregateRootId : notnull
 {
@@ -53,7 +53,7 @@ public class UpdateHandler<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRo
     /// <summary>
     /// </summary>
     public Task<TAggregateRootId> Handle(
-        Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId> command,
+        Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(command, nameof(command));
@@ -64,12 +64,12 @@ public class UpdateHandler<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRo
     /// <summary>
     /// </summary>
     protected virtual async Task<TAggregateRootId> HandleAsync(
-        Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId> command,
+        Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {
-        var aggregateRoot = await UpdateAggregateRootFromDTOAsync(
+        var aggregateRoot = await UpdateAggregateRootFromDtoAsync(
             command.AggregateRootId,
-            command.AggregateRootUpdateDTO,
+            command.AggregateRootUpdateDto,
             cancellationToken).ConfigureAwait(false);
         Validator.EnsureIsValid(aggregateRoot);
         await RwRepository.UpdateAsync(aggregateRoot, cancellationToken).ConfigureAwait(false);
@@ -78,13 +78,13 @@ public class UpdateHandler<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRo
 
     /// <summary>
     /// </summary>
-    protected virtual async Task<TAggregateRoot> UpdateAggregateRootFromDTOAsync(
+    protected virtual async Task<TAggregateRoot> UpdateAggregateRootFromDtoAsync(
         TAggregateRootId aggregateRootId,
-        TAggregateRootUpdateDTO aggregateRootUpdateDTO,
+        TAggregateRootUpdateDto aggregateRootUpdateDto,
         CancellationToken cancellationToken)
     {
         var aggregateRoot = await RwRepository.GetByIdAsync(aggregateRootId, cancellationToken).ConfigureAwait(false);
-        aggregateRoot = Mapper.Map(aggregateRootUpdateDTO, aggregateRoot);
+        aggregateRoot = Mapper.Map(aggregateRootUpdateDto, aggregateRoot);
         return aggregateRoot;
     }
 }

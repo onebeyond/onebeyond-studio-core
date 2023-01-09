@@ -12,13 +12,13 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 
 /// <summary>
-/// Handles <see cref="Create{TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId}"/> command
+/// Handles <see cref="Create{TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId}"/> command
 /// </summary>
-/// <typeparam name="TAggregateRootCreateDTO"></typeparam>
+/// <typeparam name="TAggregateRootCreateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
-public class CreateHandler<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId>
-    : IRequestHandler<Create<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
+public class CreateHandler<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId>
+    : IRequestHandler<Create<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
     where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
     where TAggregateRootId : notnull
 {
@@ -56,7 +56,7 @@ public class CreateHandler<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRo
     /// <summary>
     /// </summary>
     public Task<TAggregateRootId> Handle(
-        Create<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId> command,
+        Create<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(command, nameof(command));
@@ -67,10 +67,10 @@ public class CreateHandler<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRo
     /// <summary>
     /// </summary>
     protected virtual async Task<TAggregateRootId> HandleAsync(
-        Create<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId> command,
+        Create<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {
-        var aggregateRoot = await CreateAggregateRootFromDTOAsync(command.AggregateRootCreateDTO, cancellationToken).ConfigureAwait(false);
+        var aggregateRoot = await CreateAggregateRootFromDtoAsync(command.AggregateRootCreateDto, cancellationToken).ConfigureAwait(false);
         Validator.EnsureIsValid(aggregateRoot);
         await RwRepository.CreateAsync(aggregateRoot, cancellationToken).ConfigureAwait(false);
         return aggregateRoot.Id;
@@ -78,11 +78,11 @@ public class CreateHandler<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRo
 
     /// <summary>
     /// </summary>
-    protected virtual Task<TAggregateRoot> CreateAggregateRootFromDTOAsync(
-        TAggregateRootCreateDTO aggregateRootCreateDTO,
+    protected virtual Task<TAggregateRoot> CreateAggregateRootFromDtoAsync(
+        TAggregateRootCreateDto aggregateRootCreateDto,
         CancellationToken cancellationToken)
     {
-        var aggregateRoot = Mapper.Map<TAggregateRootCreateDTO, TAggregateRoot>(aggregateRootCreateDTO);
+        var aggregateRoot = Mapper.Map<TAggregateRootCreateDto, TAggregateRoot>(aggregateRootCreateDto);
         return Task.FromResult(aggregateRoot);
     }
 }

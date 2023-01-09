@@ -6,8 +6,8 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.CommandHandlers;
 
-internal sealed class ClosedCreateHandler : IRequestHandler<Create<SomeDTO, SomeAggregateRoot, int>, int>
+internal sealed class ClosedCreateHandler : IRequestHandler<Create<SomeDto, SomeAggregateRoot, int>, int>
 {
-    public Task<int> Handle(Create<SomeDTO, SomeAggregateRoot, int> request, CancellationToken cancellationToken)
+    public Task<int> Handle(Create<SomeDto, SomeAggregateRoot, int> request, CancellationToken cancellationToken)
         => throw new NotImplementedException();
 }

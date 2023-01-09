@@ -26,11 +26,11 @@ public static class IRORepositoryExtensions
             cancellationToken);
     }
 
-    public static Task<IReadOnlyCollection<TResultDTO>> ListAsync<TEntity, TEntityId, TResultDTO>(
+    public static Task<IReadOnlyCollection<TResultDto>> ListAsync<TEntity, TEntityId, TResultDto>(
         this IRORepository<TEntity, TEntityId> roRepository,
-        Expression<Func<TResultDTO, bool>>? filter = default,
+        Expression<Func<TResultDto, bool>>? filter = default,
         Paging? paging = default,
-        IReadOnlyCollection<Sorting<TResultDTO>>? sortings = default,
+        IReadOnlyCollection<Sorting<TResultDto>>? sortings = default,
         CancellationToken cancellationToken = default)
         where TEntity : DomainEntity<TEntityId>
         where TEntityId : notnull
@@ -45,9 +45,9 @@ public static class IRORepositoryExtensions
             cancellationToken);
     }
 
-    public static Task<int> CountAsync<TEntity, TEntityId, TResultDTO>(
+    public static Task<int> CountAsync<TEntity, TEntityId, TResultDto>(
         this IRORepository<TEntity, TEntityId> roRepository,
-        Expression<Func<TResultDTO, bool>>? filter = default,
+        Expression<Func<TResultDto, bool>>? filter = default,
         CancellationToken cancellationToken = default)
         where TEntity : DomainEntity<TEntityId>
         where TEntityId : notnull
@@ -60,9 +60,9 @@ public static class IRORepositoryExtensions
             cancellationToken);
     }
 
-    public static Task<bool> AnyAsync<TEntity, TEntityId, TResultDTO>(
+    public static Task<bool> AnyAsync<TEntity, TEntityId, TResultDto>(
         this IRORepository<TEntity, TEntityId> roRepository,
-        Expression<Func<TResultDTO, bool>>? filter = default,
+        Expression<Func<TResultDto, bool>>? filter = default,
         CancellationToken cancellationToken = default)
         where TEntity : DomainEntity<TEntityId>
         where TEntityId : notnull

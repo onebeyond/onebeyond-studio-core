@@ -21,11 +21,11 @@ namespace OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 
 /// <summary>
 /// </summary>
-/// <typeparam name="TResultDTO"></typeparam>
+/// <typeparam name="TResultDto"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TEntityId"></typeparam>
-public class ListHandler<TResultDTO, TEntity, TEntityId>
-    : ListHandler<List<TResultDTO, TEntity, TEntityId>, TResultDTO, TEntity, TEntityId>
+public class ListHandler<TResultDto, TEntity, TEntityId>
+    : ListHandler<List<TResultDto, TEntity, TEntityId>, TResultDto, TEntity, TEntityId>
     where TEntity : DomainEntity<TEntityId>
     where TEntityId : notnull
 {
@@ -40,9 +40,9 @@ public class ListHandler<TResultDTO, TEntity, TEntityId>
 
 /// <summary>
 /// </summary>
-public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
-    : IRequestHandler<TQuery, PagedList<TResultDTO>>
-    where TQuery : List<TResultDTO, TEntity, TEntityId>
+public abstract class ListHandler<TQuery, TResultDto, TEntity, TEntityId>
+    : IRequestHandler<TQuery, PagedList<TResultDto>>
+    where TQuery : List<TResultDto, TEntity, TEntityId>
     where TEntity : DomainEntity<TEntityId>
     where TEntityId : notnull
 {
@@ -62,7 +62,7 @@ public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
 
     /// <summary>
     /// </summary>
-    public virtual async Task<PagedList<TResultDTO>> Handle(
+    public virtual async Task<PagedList<TResultDto>> Handle(
         TQuery query,
         CancellationToken cancellationToken)
     {
@@ -86,7 +86,7 @@ public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
 
         var sorting = sortExpressions;
 
-        var pagedList = new PagedList<TResultDTO>
+        var pagedList = new PagedList<TResultDto>
         {
             Data = await Repository.ListAsync(
                 preFilterExpression,
@@ -118,30 +118,30 @@ public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    protected virtual ValueTask<Expression<Func<TResultDTO, bool>>?> GetFilterExpressionAsync(
+    protected virtual ValueTask<Expression<Func<TResultDto, bool>>?> GetFilterExpressionAsync(
         TQuery query,
         CancellationToken cancellationToken)
-        => new ValueTask<Expression<Func<TResultDTO, bool>>?>(
+        => new ValueTask<Expression<Func<TResultDto, bool>>?>(
             GetFilterExpression(query.FilterByFields, query.SearchText, query.ParentId));
 
     /// <summary>
     /// </summary>
     /// <param name="filterByFields"></param>
     /// <returns></returns>
-    protected virtual Expression<Func<TResultDTO, bool>>? GetFilterExpression(
+    protected virtual Expression<Func<TResultDto, bool>>? GetFilterExpression(
         IReadOnlyDictionary<string, IReadOnlyCollection<string>> filterByFields)
-        => FilterExpressionBuilder<TResultDTO>.Build(filterByFields);
+        => FilterExpressionBuilder<TResultDto>.Build(filterByFields);
 
     /// <summary>
     /// </summary>
-    protected virtual Expression<Func<TResultDTO, bool>>? GetSearchExpression(string searchText)
+    protected virtual Expression<Func<TResultDto, bool>>? GetSearchExpression(string searchText)
         => default;
 
     /// <summary>
-    /// Defines an expression checking whether a <typeparamref name="TResultDTO"/> is bound to
+    /// Defines an expression checking whether a <typeparamref name="TResultDto"/> is bound to
     /// the specified <paramref name="parentId"/>.
     /// </summary>
-    protected virtual Expression<Func<TResultDTO, bool>>? GetParentIdExpression(string parentId)
+    protected virtual Expression<Func<TResultDto, bool>>? GetParentIdExpression(string parentId)
         => default;
 
     /// <summary>
@@ -149,24 +149,24 @@ public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    protected virtual ValueTask<IReadOnlyCollection<Sorting<TResultDTO>>?> GetSortExpressionsAsync(
+    protected virtual ValueTask<IReadOnlyCollection<Sorting<TResultDto>>?> GetSortExpressionsAsync(
         TQuery query,
         CancellationToken cancellationToken)
-        => new ValueTask<IReadOnlyCollection<Sorting<TResultDTO>>?>(
+        => new ValueTask<IReadOnlyCollection<Sorting<TResultDto>>?>(
             GetSortExpressions(query.SortByFields, query.SortDirection));
 
     /// <summary>
-    /// Defines an expression used for sorting a list of <typeparamref name="TResultDTO"/> objects
+    /// Defines an expression used for sorting a list of <typeparamref name="TResultDto"/> objects
     /// by the specified <paramref name="sortByFields"/> field name.
     /// </summary>
-    protected virtual IReadOnlyCollection<Sorting<TResultDTO>>? GetSortExpressions(
+    protected virtual IReadOnlyCollection<Sorting<TResultDto>>? GetSortExpressions(
         IReadOnlyCollection<string> sortByFields,
         ListSortDirection defaultDirection)
         => sortByFields.Count <= 0
             ? default
-            : SortExpressionBuilder<TResultDTO>.Build(sortByFields, defaultDirection);
+            : SortExpressionBuilder<TResultDto>.Build(sortByFields, defaultDirection);
 
-    private Expression<Func<TResultDTO, bool>>? GetFilterExpression(
+    private Expression<Func<TResultDto, bool>>? GetFilterExpression(
         IReadOnlyDictionary<string, IReadOnlyCollection<string>> filterByFields,
         string? searchText,
         string? parentId)
@@ -190,9 +190,9 @@ public abstract class ListHandler<TQuery, TResultDTO, TEntity, TEntityId>
         return expression;
     }
 
-    private Expression<Func<TResultDTO, bool>>? CombineExpressions(
-        Expression<Func<TResultDTO, bool>>? first,
-        Expression<Func<TResultDTO, bool>>? second)
+    private Expression<Func<TResultDto, bool>>? CombineExpressions(
+        Expression<Func<TResultDto, bool>>? first,
+        Expression<Func<TResultDto, bool>>? second)
     {
         return first is null
             ? second
