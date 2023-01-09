@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Crosscuts.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Domain.SharedKernel", "src\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj", "{E1465A8D-1E4C-4E30-8BF0-AA1E711F7DCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel.Tests", "src\OneBeyond.Studio.Domain.SharedKernel.Tests\OneBeyond.Studio.Application.SharedKernel.Tests.csproj", "{4898EC43-545C-4D43-9A9F-73616B14A3E7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Hosting.AspNet", "src\OneBeyond.Studio.Hosting.AspNet\OneBeyond.Studio.Hosting.AspNet.csproj", "{B364A8B3-0681-42A0-928D-A8223C07847C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Hosting.AspNet.Tests", "src\OneBeyond.Studio.Hosting.AspNet.Tests\OneBeyond.Studio.Hosting.AspNet.Tests.csproj", "{4BBFBCEC-D24B-4797-A44C-23157EDBC89A}"
@@ -63,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.EntityAudi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel", "src\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj", "{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel.Tests", "src\OneBeyond.Studio.Application.SharedKernel.Tests\OneBeyond.Studio.Application.SharedKernel.Tests.csproj", "{EF09109A-F856-47D0-AAA5-A8985821E988}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,10 +81,6 @@ Global
 		{E1465A8D-1E4C-4E30-8BF0-AA1E711F7DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1465A8D-1E4C-4E30-8BF0-AA1E711F7DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1465A8D-1E4C-4E30-8BF0-AA1E711F7DCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4898EC43-545C-4D43-9A9F-73616B14A3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4898EC43-545C-4D43-9A9F-73616B14A3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4898EC43-545C-4D43-9A9F-73616B14A3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4898EC43-545C-4D43-9A9F-73616B14A3E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B364A8B3-0681-42A0-928D-A8223C07847C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B364A8B3-0681-42A0-928D-A8223C07847C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B364A8B3-0681-42A0-928D-A8223C07847C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -165,6 +161,10 @@ Global
 		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF09109A-F856-47D0-AAA5-A8985821E988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF09109A-F856-47D0-AAA5-A8985821E988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF09109A-F856-47D0-AAA5-A8985821E988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF09109A-F856-47D0-AAA5-A8985821E988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
