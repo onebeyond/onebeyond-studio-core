@@ -6,10 +6,10 @@ using Autofac.Features.OwnedInstances;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Crosscuts.Activities;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Crosscuts.Logging;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 

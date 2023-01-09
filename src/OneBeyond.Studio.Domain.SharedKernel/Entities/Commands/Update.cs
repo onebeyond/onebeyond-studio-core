@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using EnsureThat;
-using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
@@ -8,10 +7,10 @@ namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 /// <summary>
 /// Command for updating an aggregate root by DTO
 /// </summary>
-/// <typeparam name="TAggregateRootUpdateDTO"></typeparam>
+/// <typeparam name="TAggregateRootUpdateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
-public record Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId>
+public record Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>
     : IAuditableRequest<TAggregateRootId>
     where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
 {
@@ -19,17 +18,17 @@ public record Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId>
     /// </summary>
     public Update(
         TAggregateRootId aggregateRootId,
-        TAggregateRootUpdateDTO aggregateRootUpdateDTO)
+        TAggregateRootUpdateDto aggregateRootUpdateDto)
     {
         EnsureArg.IsFalse(
             EqualityComparer<TAggregateRootId>.Default.Equals(aggregateRootId, default!),
             nameof(aggregateRootId));
         EnsureArg.IsFalse(
-            EqualityComparer<TAggregateRootUpdateDTO>.Default.Equals(aggregateRootUpdateDTO, default!),
-            nameof(aggregateRootUpdateDTO));
+            EqualityComparer<TAggregateRootUpdateDto>.Default.Equals(aggregateRootUpdateDto, default!),
+            nameof(aggregateRootUpdateDto));
 
         AggregateRootId = aggregateRootId;
-        AggregateRootUpdateDTO = aggregateRootUpdateDTO;
+        AggregateRootUpdateDto = aggregateRootUpdateDto;
     }
 
     /// <summary>
@@ -40,5 +39,5 @@ public record Update<TAggregateRootUpdateDTO, TAggregateRoot, TAggregateRootId>
     /// <summary>
     /// DTO to be used for aggregate root updating
     /// </summary>
-    public TAggregateRootUpdateDTO AggregateRootUpdateDTO { get; }
+    public TAggregateRootUpdateDto AggregateRootUpdateDto { get; }
 }

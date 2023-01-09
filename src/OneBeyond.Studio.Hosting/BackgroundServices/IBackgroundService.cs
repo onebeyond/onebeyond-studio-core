@@ -1,7 +1,6 @@
-namespace OneBeyond.Studio.Hosting.BackgroundServices
+namespace OneBeyond.Studio.Hosting.BackgroundServices;
+
+public interface IBackgroundService
 {
-    public interface IBackgroundService
-    {
-        Task ExecuteAsync(CancellationToken stoppingToken);
-    }
+    Task ExecuteAsync(CancellationToken stoppingToken);
 }

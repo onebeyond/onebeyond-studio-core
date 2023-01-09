@@ -9,18 +9,18 @@ namespace OneBeyond.Studio.EntityAuditing.Domain;
 public interface ISimpleAuditReader<TEntity, TEntityId>
     where TEntity : class
 {
-    Task<List<TResultDTO>> GetEventsByIdAsync<TResultDTO>(
+    Task<List<TResultDto>> GetEventsByIdAsync<TResultDto>(
         TEntityId id,
         DateTimeOffset? dateFrom = null,
         DateTimeOffset? dateTo = null,
         Paging paging = null,
         CancellationToken cancellationToken = default)
-     where TResultDTO : new();
+     where TResultDto : new();
 
-    Task<List<TResultDTO>> GetAllEventsAsync<TResultDTO>(
+    Task<List<TResultDto>> GetAllEventsAsync<TResultDto>(
         DateTimeOffset? dateFrom = null,
         DateTimeOffset? dateTo = null,
         Paging paging = null,
         CancellationToken cancellationToken = default)
-    where TResultDTO : new();
+    where TResultDto : new();
 }

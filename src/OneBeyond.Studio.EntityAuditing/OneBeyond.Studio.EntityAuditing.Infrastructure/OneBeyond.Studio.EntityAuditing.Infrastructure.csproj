@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj" />
     <ProjectReference Include="..\OneBeyond.Studio.EntityAuditing.Domain\OneBeyond.Studio.EntityAuditing.Domain.csproj" />
   </ItemGroup>
 </Project>

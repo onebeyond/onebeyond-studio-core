@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using Newtonsoft.Json.Linq;
-using OneBeyond.Studio.EntityAuditing.Domain;
 
 namespace OneBeyond.Studio.EntityAuditing.Domain.AuditEventSerializers;
 

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using EnsureThat;
-using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
@@ -8,26 +7,26 @@ namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 /// <summary>
 /// Command for creating an aggregate root by DTO
 /// </summary>
-/// <typeparam name="TAggregateRootCreateDTO"></typeparam>
+/// <typeparam name="TAggregateRootCreateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
-public record Create<TAggregateRootCreateDTO, TAggregateRoot, TAggregateRootId>
+public record Create<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId>
     : IAuditableRequest<TAggregateRootId>
     where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
 {
     /// <summary>
     /// </summary>
-    public Create(TAggregateRootCreateDTO aggregateRootCreateDTO)
+    public Create(TAggregateRootCreateDto aggregateRootCreateDto)
     {
         EnsureArg.IsFalse(
-            EqualityComparer<TAggregateRootCreateDTO>.Default.Equals(aggregateRootCreateDTO, default!),
-            nameof(aggregateRootCreateDTO));
+            EqualityComparer<TAggregateRootCreateDto>.Default.Equals(aggregateRootCreateDto, default!),
+            nameof(aggregateRootCreateDto));
 
-        AggregateRootCreateDTO = aggregateRootCreateDTO;
+        AggregateRootCreateDto = aggregateRootCreateDto;
     }
 
     /// <summary>
     /// DTO to be used for aggregate root creating
     /// </summary>
-    public TAggregateRootCreateDTO AggregateRootCreateDTO { get; }
+    public TAggregateRootCreateDto AggregateRootCreateDto { get; }
 }

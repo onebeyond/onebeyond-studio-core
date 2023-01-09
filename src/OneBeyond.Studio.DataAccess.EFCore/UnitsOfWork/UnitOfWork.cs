@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using EnsureThat;
 using Microsoft.Extensions.Options;
-using OneBeyond.Studio.Domain.SharedKernel.UnitsOfWork;
+using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.UnitsOfWork;
 

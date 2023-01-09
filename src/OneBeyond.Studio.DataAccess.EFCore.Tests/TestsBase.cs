@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OneBeyond.Studio.Application.SharedKernel.Repositories;
 using OneBeyond.Studio.Crosscuts.Logging;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Data.Repositories;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests;
 

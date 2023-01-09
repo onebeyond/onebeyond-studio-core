@@ -7,12 +7,12 @@ using DelegateDecompiler.EntityFrameworkCore;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Nito.AsyncEx;
+using OneBeyond.Studio.Application.SharedKernel.DataAccessPolicies;
+using OneBeyond.Studio.Application.SharedKernel.Repositories;
+using OneBeyond.Studio.Application.SharedKernel.Repositories.Exceptions;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
-using OneBeyond.Studio.Domain.SharedKernel.DataAccessPolicies;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories.Exceptions;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Repositories;
 

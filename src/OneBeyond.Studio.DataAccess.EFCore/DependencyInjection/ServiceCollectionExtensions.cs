@@ -3,10 +3,10 @@ using System.Reflection;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Options;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 

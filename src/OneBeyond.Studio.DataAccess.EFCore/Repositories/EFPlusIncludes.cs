@@ -7,7 +7,7 @@ using System.Reflection;
 using EnsureThat;
 using OneBeyond.Studio.Crosscuts.Expressions;
 using OneBeyond.Studio.Crosscuts.Reflection;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using Z.EntityFramework.Plus;
 
 #nullable disable

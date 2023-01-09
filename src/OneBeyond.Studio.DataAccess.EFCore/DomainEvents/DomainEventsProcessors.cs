@@ -11,9 +11,10 @@ using MoreLinq;
 using OneBeyond.Studio.Crosscuts.DynamicProxy;
 using OneBeyond.Studio.Crosscuts.Reflection;
 using OneBeyond.Studio.Crosscuts.Utilities.LogicalCallContext;
-using OneBeyond.Studio.Domain.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
+using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 

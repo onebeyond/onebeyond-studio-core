@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 

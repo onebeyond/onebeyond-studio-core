@@ -1,6 +1,5 @@
 using EnsureThat;
 using Microsoft.Extensions.DependencyInjection;
-using OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource;
 
 namespace OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource.DependencyInjection;
 
