@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Entities;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Entities;
 
 public sealed class ValueObjects : IClassFixture<LogManagerFixture>
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Testables;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Testables;
 
 internal sealed class TestableContainer<TItem>
 {

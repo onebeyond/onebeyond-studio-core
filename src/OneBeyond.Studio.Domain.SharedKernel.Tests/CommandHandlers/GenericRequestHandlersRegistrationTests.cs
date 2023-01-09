@@ -5,15 +5,15 @@ using FluentValidation;
 using MediatR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OneBeyond.Studio.Domain.SharedKernel.CommandHandlers;
-using OneBeyond.Studio.Domain.SharedKernel.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
+using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.Entities.Dto;
+using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
+using OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
+using OneBeyond.Studio.Application.SharedKernel.Repositories;
 using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
-using OneBeyond.Studio.Domain.SharedKernel.Entities.Dto;
-using OneBeyond.Studio.Domain.SharedKernel.Entities.Queries;
-using OneBeyond.Studio.Domain.SharedKernel.QueryHandlers;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.CommandHandlers;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.CommandHandlers;
 
 [TestClass]
 public sealed class GenericRequestHandlersRegistrationTests

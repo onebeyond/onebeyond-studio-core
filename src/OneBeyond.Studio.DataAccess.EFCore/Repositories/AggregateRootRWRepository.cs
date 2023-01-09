@@ -7,10 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
+using OneBeyond.Studio.Application.SharedKernel.Repositories;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using OneBeyond.Studio.Crosscuts.Reflection;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Repositories;
 

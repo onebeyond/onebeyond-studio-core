@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OneBeyond.Studio.Crosscuts.Logging;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests;
 
 internal sealed class LogManagerFixture : IDisposable
 {

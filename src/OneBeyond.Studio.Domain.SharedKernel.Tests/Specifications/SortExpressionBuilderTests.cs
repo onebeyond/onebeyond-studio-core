@@ -1,9 +1,9 @@
 using System.ComponentModel;
 using System.Linq;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using Xunit;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Specifications;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Specifications;
 
 public sealed class SortExpressionBuilderTests : IClassFixture<LogManagerFixture>
 {

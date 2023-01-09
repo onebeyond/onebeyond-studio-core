@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders.DomainEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.Services;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders.DomainEventHandlers;
 

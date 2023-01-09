@@ -6,12 +6,12 @@ using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OneBeyond.Studio.Domain.SharedKernel.DependencyInjection;
-using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
-using OneBeyond.Studio.Domain.SharedKernel.Tests.Infrastructure;
-using OneBeyond.Studio.Domain.SharedKernel.Tests.Testables;
+using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
+using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
+using OneBeyond.Studio.Application.SharedKernel.Tests.Testables;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 [TestClass]
 public sealed class IntegrationEventDispatcherTests : TestsBase
@@ -22,7 +22,7 @@ public sealed class IntegrationEventDispatcherTests : TestsBase
 
     protected override void ConfigureTestServices(IConfiguration configuration, ContainerBuilder containerBuilder)
     {
-        containerBuilder.AddIntegratonEvents();
+        containerBuilder.AddIntegrationEvents();
 
         containerBuilder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
             .AsClosedTypesOf(typeof(IIntegrationEventHandler<>))

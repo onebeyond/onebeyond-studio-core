@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Autofac.Features.OwnedInstances;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Crosscuts.Exceptions;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 

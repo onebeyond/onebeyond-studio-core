@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using OneBeyond.Studio.FileStorage.Domain;
 using OneBeyond.Studio.FileStorage.Domain.Entities;
 
 namespace OneBeyond.Studio.FileStorage.Domain.Extensions;

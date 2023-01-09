@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using MediatR;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Authorization;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 internal static class TestableCommandHandlers
 {

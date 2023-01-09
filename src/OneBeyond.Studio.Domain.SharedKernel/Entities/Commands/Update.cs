@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using EnsureThat;
-using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;

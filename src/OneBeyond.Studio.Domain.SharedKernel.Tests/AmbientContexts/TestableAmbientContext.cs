@@ -1,7 +1,7 @@
 using EnsureThat;
-using OneBeyond.Studio.Domain.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.AmbientContexts;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.AmbientContexts;
 
 internal sealed record TestableAmbientContext : AmbientContext
 {

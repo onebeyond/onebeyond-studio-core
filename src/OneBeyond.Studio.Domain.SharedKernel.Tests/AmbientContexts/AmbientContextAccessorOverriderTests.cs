@@ -2,10 +2,10 @@ using System;
 using Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OneBeyond.Studio.Domain.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Domain.SharedKernel.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.AmbientContexts;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.AmbientContexts;
 
 [TestClass]
 public sealed class AmbientContextAccessorOverriderTests

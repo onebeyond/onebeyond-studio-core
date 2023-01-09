@@ -1,5 +1,4 @@
 using System;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OneBeyond.Studio.DataAccess.EFCore.Configurations;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;

@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OneBeyond.Studio.Domain.SharedKernel.Exceptions;
-using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
+using OneBeyond.Studio.Application.SharedKernel.Exceptions;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 [TestClass]
 public sealed class IntegrationEventAttributesTests

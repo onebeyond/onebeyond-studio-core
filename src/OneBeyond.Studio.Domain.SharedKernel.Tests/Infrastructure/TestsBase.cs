@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneBeyond.Studio.Crosscuts.Logging;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Infrastructure;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 
 public abstract class TestsBase
 {

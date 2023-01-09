@@ -10,11 +10,11 @@ using OneBeyond.Studio.DataAccess.EFCore.Options;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
 using OneBeyond.Studio.DataAccess.EFCore.RelationalTypeMappings;
 using OneBeyond.Studio.DataAccess.EFCore.UnitsOfWork;
-using OneBeyond.Studio.Domain.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
-using OneBeyond.Studio.Domain.SharedKernel.UnitsOfWork;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using Thinktecture;
 using Z.EntityFramework.Extensions;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Crosscuts.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Domain.SharedKernel", "src\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj", "{E1465A8D-1E4C-4E30-8BF0-AA1E711F7DCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Domain.SharedKernel.Tests", "src\OneBeyond.Studio.Domain.SharedKernel.Tests\OneBeyond.Studio.Domain.SharedKernel.Tests.csproj", "{4898EC43-545C-4D43-9A9F-73616B14A3E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel.Tests", "src\OneBeyond.Studio.Domain.SharedKernel.Tests\OneBeyond.Studio.Application.SharedKernel.Tests.csproj", "{4898EC43-545C-4D43-9A9F-73616B14A3E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Hosting.AspNet", "src\OneBeyond.Studio.Hosting.AspNet\OneBeyond.Studio.Hosting.AspNet.csproj", "{B364A8B3-0681-42A0-928D-A8223C07847C}"
 EndProject
@@ -60,6 +60,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.EntityAuditing.SqlServer", "src\OneBeyond.Studio.EntityAuditing\OneBeyond.Studio.EntityAuditing.SqlServer\OneBeyond.Studio.EntityAuditing.SqlServer.csproj", "{A27E211D-9DBF-4539-B50A-C2AC4BA36D3C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.EntityAuditing.AzureTableStorage", "src\OneBeyond.Studio.EntityAuditing\OneBeyond.Studio.EntityAuditing.AzureTableStorage\OneBeyond.Studio.EntityAuditing.AzureTableStorage.csproj", "{F568A63E-B628-499B-90B4-AD804D359CC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel", "src\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj", "{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +161,10 @@ Global
 		{F568A63E-B628-499B-90B4-AD804D359CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F568A63E-B628-499B-90B4-AD804D359CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F568A63E-B628-499B-90B4-AD804D359CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF72E3C9-93F6-4D72-8091-ADEF079BFC0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

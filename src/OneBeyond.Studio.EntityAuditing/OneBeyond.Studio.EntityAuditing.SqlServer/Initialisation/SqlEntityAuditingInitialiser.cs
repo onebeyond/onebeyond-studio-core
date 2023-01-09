@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OneBeyond.Studio.EntityAuditing.Infrastructure.Initialisation;
-using OneBeyond.Studio.EntityAuditing.SqlServer;
 
 namespace OneBeyond.Studio.EntityAuditing.SqlServer.Initialisation;
 

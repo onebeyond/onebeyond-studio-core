@@ -1,7 +1,8 @@
 using System;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 internal static class TestableIntegrationEvents
 {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Specifications;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Specifications;
 
 [TestClass]
 public sealed class IncludesTests

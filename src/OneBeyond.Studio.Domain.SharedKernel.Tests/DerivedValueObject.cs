@@ -1,4 +1,4 @@
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests;
 
 internal sealed class DerivedValueObject : SomeValueObject
 {

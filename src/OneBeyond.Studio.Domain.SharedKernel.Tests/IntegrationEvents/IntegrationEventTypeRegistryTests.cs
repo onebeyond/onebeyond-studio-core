@@ -3,10 +3,10 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Crosscuts.Logging;
-using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 [TestClass]
 public sealed class IntegrationEventTypeRegistryTests

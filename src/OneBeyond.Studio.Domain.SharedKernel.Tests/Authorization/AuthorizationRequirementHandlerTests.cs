@@ -7,11 +7,11 @@ using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OneBeyond.Studio.Domain.SharedKernel.DependencyInjection;
-using OneBeyond.Studio.Domain.SharedKernel.Exceptions;
-using OneBeyond.Studio.Domain.SharedKernel.Tests.Infrastructure;
+using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.Exceptions;
+using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Authorization;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 [TestClass]
 public sealed class AuthorizationRequirementHandlerTests : TestsBase

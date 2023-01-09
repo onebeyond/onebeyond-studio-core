@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OneBeyond.Studio.Application.SharedKernel.Repositories;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using OneBeyond.Studio.DataAccess.EFCore.Repositories;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.DbContexts;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
-using OneBeyond.Studio.Domain.SharedKernel.Repositories;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests;
 

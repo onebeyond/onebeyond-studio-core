@@ -1,6 +1,6 @@
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Authorization;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 internal static class TestableAuthorizationRequirements
 {

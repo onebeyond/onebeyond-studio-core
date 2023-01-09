@@ -1,7 +1,7 @@
 using System;
 using EnsureThat;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 internal sealed class TestableScopedItem
 {

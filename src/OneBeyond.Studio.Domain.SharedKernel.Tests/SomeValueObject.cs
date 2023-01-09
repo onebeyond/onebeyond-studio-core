@@ -1,6 +1,6 @@
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests;
 
 internal class SomeValueObject : ValueObject
 {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
-using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.EntityAuditing.Domain;
 using OneBeyond.Studio.EntityAuditing.Infrastructure.Attributes;

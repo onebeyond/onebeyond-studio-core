@@ -1,5 +1,3 @@
-using OneBeyond.Studio.EntityAuditing.Infrastructure;
-
 namespace OneBeyond.Studio.EntityAuditing.Infrastructure.Options;
 
 public sealed class EntityAuditingOptions

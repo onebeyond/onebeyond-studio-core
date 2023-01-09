@@ -2,10 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
-using OneBeyond.Studio.Domain.SharedKernel.Tests.Testables;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
+using OneBeyond.Studio.Application.SharedKernel.Tests.Testables;
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.IntegrationEvents;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 internal sealed class TestableIntegrationEventHandler2
     : IIntegrationEventHandler<TestableIntegrationEvents.ThisHappened_1_1>

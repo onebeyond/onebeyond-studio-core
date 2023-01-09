@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace OneBeyond.Studio.Domain.SharedKernel.Tests.Specifications;
+namespace OneBeyond.Studio.Application.SharedKernel.Tests.Specifications;
 
 internal sealed class SomeClass
 {

@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using OneBeyond.Studio.EntityAuditing.Domain;
 
 namespace OneBeyond.Studio.EntityAuditing.Domain.AuditEventSerializers;
 

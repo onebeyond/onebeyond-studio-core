@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using OneBeyond.Studio.Domain.SharedKernel.Specifications;
+using OneBeyond.Studio.Application.SharedKernel.Specifications;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Repositories;
 
