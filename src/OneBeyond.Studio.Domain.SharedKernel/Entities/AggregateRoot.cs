@@ -22,11 +22,13 @@ public abstract class AggregateRoot<TEntity, TEntityId>
 
     public IReadOnlyCollection<TEntity> Entities => _entities.AsReadOnly();
 
-    protected void AddEntity(TEntity entity)
+    protected TEntity AddEntity(TEntity entity)
     {
         EnsureArg.IsNotNull(entity, nameof(entity));
 
         _entities.Add(entity);
+
+        return entity;
     }
 
     protected void RemoveEntity(TEntity entity)

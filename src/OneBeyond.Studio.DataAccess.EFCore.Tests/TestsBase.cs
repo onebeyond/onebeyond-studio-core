@@ -35,6 +35,8 @@ public abstract class TestsBase
 
         serviceCollection.AddScoped(typeof(IRWRepository<,>), typeof(RWRepository<,>));
 
+        serviceCollection.AddScoped(typeof(IAggregateRootRWRepository<,,>), typeof(AggregateRootRWRepository<,,>));
+
         serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         ConfigureTestServices(configuration, serviceCollection);

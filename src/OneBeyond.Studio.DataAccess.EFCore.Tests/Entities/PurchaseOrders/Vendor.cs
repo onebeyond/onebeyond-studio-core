@@ -14,4 +14,10 @@ public sealed class Vendor : AggregateRoot<Guid>
     }
 
     public string Name { get; private set; }
+
+    public void UpdateName(string name)
+    {
+        EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
+        Name = name;
+    }
 }
