@@ -13,7 +13,7 @@ public static class IRWRepositoryExtensions
         this IRWRepository<TAggregateRoot, TAggregateRootId> rwRepository,
         TAggregateRootId aggregateRootId,
         CancellationToken cancellationToken)
-        where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+        where TAggregateRoot : AggregateRoot<TAggregateRootId>
         where TAggregateRootId : notnull
     {
         EnsureArg.IsNotNull(rwRepository, nameof(rwRepository));
@@ -28,7 +28,7 @@ public static class IRWRepositoryExtensions
         this IRWRepository<TAggregateRoot, TAggregateRootId> rwRepository,
         Expression<Func<TAggregateRoot, bool>> filter,
         CancellationToken cancellationToken)
-        where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+        where TAggregateRoot : AggregateRoot<TAggregateRootId>
         where TAggregateRootId : notnull
     {
         EnsureArg.IsNotNull(rwRepository, nameof(rwRepository));

@@ -3,22 +3,25 @@ using EnsureThat;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.Entities;
 
-/// <summary>
-/// </summary>
-/// <typeparam name="TEntity"></typeparam>
-/// <typeparam name="TEntityId"></typeparam>
-public abstract class AggregateRoot<TEntity, TEntityId> : IAggregateRoot
+public abstract class AggregateRoot<TEntityId>: DomainEntity<TEntityId>
+{
+    protected AggregateRoot(TEntityId entityId) : base(entityId)
+    {
+    }
+
+    protected AggregateRoot() : base()
+    {
+    }
+
+}
+
+public abstract class AggregateRoot<TEntity, TEntityId>
     where TEntity : DomainEntity<TEntityId>
 {
     private readonly List<TEntity> _entities = new List<TEntity>();
 
-    /// <summary>
-    /// </summary>
     public IReadOnlyCollection<TEntity> Entities => _entities.AsReadOnly();
 
-    /// <summary>
-    /// </summary>
-    /// <param name="entity"></param>
     protected void AddEntity(TEntity entity)
     {
         EnsureArg.IsNotNull(entity, nameof(entity));
@@ -26,9 +29,6 @@ public abstract class AggregateRoot<TEntity, TEntityId> : IAggregateRoot
         _entities.Add(entity);
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="entity"></param>
     protected void RemoveEntity(TEntity entity)
     {
         EnsureArg.IsNotNull(entity, nameof(entity));

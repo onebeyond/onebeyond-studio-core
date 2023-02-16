@@ -19,7 +19,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 /// <typeparam name="TAggregateRootId"></typeparam>
 public class UpdateHandler<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>
     : IRequestHandler<Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
-    where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+    where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
     /// <summary>

@@ -6,7 +6,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
 
-internal sealed class PurchaseOrder : DomainEntity<Guid>, IAggregateRoot
+internal sealed class PurchaseOrder : AggregateRoot<Guid>
 {
     private readonly List<PurchaseOrderLine> _lines;
     private readonly List<PurchaseOrderTag> _tags;

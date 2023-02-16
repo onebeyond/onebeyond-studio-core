@@ -4,7 +4,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.AirTravels;
 
-internal sealed class Survey : DomainEntity<Guid>, IAggregateRoot
+internal sealed class Survey : AggregateRoot<Guid>
 {
     public Survey(string name, Company company)
         : base(Guid.NewGuid())
