@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 /// <typeparam name="TAggregateRootId"></typeparam>
 public record Delete<TAggregateRoot, TAggregateRootId>
     : IAuditableRequest<TAggregateRootId>
-    where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+    where TAggregateRoot : AggregateRoot<TAggregateRootId> 
 {
     /// <summary>
     /// </summary>

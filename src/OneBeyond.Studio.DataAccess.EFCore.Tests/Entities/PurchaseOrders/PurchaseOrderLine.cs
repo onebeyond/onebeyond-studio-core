@@ -5,7 +5,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
 
-internal sealed class PurchaseOrderLine : DomainEntity<Guid>, IAggregateRoot
+internal sealed class PurchaseOrderLine : AggregateRoot<Guid>
 {
     private readonly List<PurchaseOrderLineComment> _comments;
 

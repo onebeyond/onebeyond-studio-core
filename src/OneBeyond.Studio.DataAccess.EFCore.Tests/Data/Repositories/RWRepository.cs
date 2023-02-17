@@ -7,7 +7,7 @@ namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Data.Repositories;
 
 internal class RWRepository<TAggregateRoot, TAggregateRootId>
     : BaseRWRepository<DbContexts.DbContext, TAggregateRoot, TAggregateRootId>
-    where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+    where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
     public RWRepository(

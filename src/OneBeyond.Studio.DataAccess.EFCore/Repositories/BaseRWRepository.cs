@@ -27,7 +27,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
     : BaseRORepository<TDbContext, TAggregateRoot, TAggregateRootId>
     , IRWRepository<TAggregateRoot, TAggregateRootId>
     where TDbContext : DbContext
-    where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+    where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
     public BaseRWRepository(

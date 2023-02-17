@@ -4,7 +4,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
 
-public sealed class Vendor : DomainEntity<Guid>, IAggregateRoot
+public sealed class Vendor : AggregateRoot<Guid>
 {
     public Vendor(string name)
         : base(Guid.NewGuid())
@@ -14,4 +14,10 @@ public sealed class Vendor : DomainEntity<Guid>, IAggregateRoot
     }
 
     public string Name { get; private set; }
+
+    public void UpdateName(string name)
+    {
+        EnsureArg.IsNotNullOrWhiteSpace(name, nameof(name));
+        Name = name;
+    }
 }

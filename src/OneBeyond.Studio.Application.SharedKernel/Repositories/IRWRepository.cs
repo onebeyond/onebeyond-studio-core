@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Repositories;
 /// Represents a repository with read-write operations.
 /// </summary>
 public interface IRWRepository<TAggregateRoot, TAggregateRootId>
-    where TAggregateRoot : DomainEntity<TAggregateRootId>, IAggregateRoot
+    where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
     Task<TAggregateRoot> GetByIdAsync(

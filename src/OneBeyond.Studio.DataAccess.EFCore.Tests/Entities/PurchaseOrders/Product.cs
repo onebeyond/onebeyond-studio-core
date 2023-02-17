@@ -4,7 +4,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
 
-public sealed class Product : DomainEntity<Guid>, IAggregateRoot
+public sealed class Product : AggregateRoot<Guid>
 {
     public Product(
         string name,
