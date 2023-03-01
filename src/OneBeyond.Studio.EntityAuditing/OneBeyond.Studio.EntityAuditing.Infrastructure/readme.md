@@ -1,1 +1,1 @@
-OneBeyond Studio entity audting infrastructure.
+OneBeyond Studio entity auditing infrastructure.

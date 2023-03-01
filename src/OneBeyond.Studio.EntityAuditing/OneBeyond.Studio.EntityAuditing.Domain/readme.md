@@ -1,1 +1,1 @@
-OneBeyond Studio core conepts and structures for entity auditing.
+OneBeyond Studio core concepts and structures for entity .

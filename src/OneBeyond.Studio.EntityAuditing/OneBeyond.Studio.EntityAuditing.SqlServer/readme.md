@@ -1,1 +1,1 @@
-OneBeyond Studio entity audting implemented based on SQL Server.
+OneBeyond Studio entity auditing implemented based on SQL Server.
