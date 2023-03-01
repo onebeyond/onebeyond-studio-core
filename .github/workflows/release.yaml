@@ -35,7 +35,7 @@ jobs:
         run: dotnet pack
           --no-restore --no-build
           --configuration "Release"
-          --output "nupkgs"
+          --property:PackageOutputPath="../../nupkgs"
 
       - name: "Upload NuGets to Artifacts"
         uses: actions/upload-artifact@v3
