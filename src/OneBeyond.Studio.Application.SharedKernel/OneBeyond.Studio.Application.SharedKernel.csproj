@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Title>OneBeyond.Studio.Application.SharedKernel</Title>
@@ -8,11 +8,12 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="readme.md" />
+    <None Include="readme.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
