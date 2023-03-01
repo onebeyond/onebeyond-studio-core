@@ -1,1 +1,1 @@
-OneBeyond.Studio.Crosscuts
+OneBeyond Studio Core Crosscuts. 

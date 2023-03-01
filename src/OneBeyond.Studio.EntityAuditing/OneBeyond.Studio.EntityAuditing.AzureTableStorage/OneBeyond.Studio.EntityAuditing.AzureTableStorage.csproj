@@ -1,8 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Title>OneBeyond.Studio.EntityAuditing.AzureTableStorage</Title>
+    <PackageId>OneBeyond.Studio.EntityAuditing.AzureTableStorage</PackageId>
     <TargetFramework>net7.0</TargetFramework>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Data.Tables" Version="12.7.1" />
