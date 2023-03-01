@@ -1,8 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Title>OneBeyond.Studio.EntityAuditing.Domain</Title>
+    <PackageId>OneBeyond.Studio.EntityAuditing.Domain</PackageId>
     <TargetFramework>net7.0</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
