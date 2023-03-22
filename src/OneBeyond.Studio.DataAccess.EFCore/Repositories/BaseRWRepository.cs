@@ -102,7 +102,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         var ensureCreateDataAccessPolicy = await EnsureCreateDataAccessPolicy.Task.ConfigureAwait(false);
         ensureCreateDataAccessPolicy(aggregateRoot);
         DbSet.Value.Add(aggregateRoot);
-        await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task UpdateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
@@ -111,7 +111,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         var ensureUpdateDataAccessPolicy = await EnsureUpdateDataAccessPolicy.Task.ConfigureAwait(false);
         ensureUpdateDataAccessPolicy(aggregateRoot);
         DbSet.Value.Update(aggregateRoot);
-        await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task DeleteAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
@@ -120,7 +120,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         var ensureDeleteDataAccessPolicy = await EnsureDeleteDataAccessPolicy.Task.ConfigureAwait(false);
         ensureDeleteDataAccessPolicy(aggregateRoot);
         DbSet.Value.Remove(aggregateRoot);
-        await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public Task DeleteAsync(TAggregateRootId id, CancellationToken cancellationToken)
@@ -131,6 +131,9 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
             ? Task.CompletedTask
             : DbSet.Value.DeleteByKeyAsync(cancellationToken, id);
     }
+
+    protected virtual Task SaveChangesAsync(CancellationToken cancellationToken)
+        => DbContext.SaveChangesAsync(cancellationToken);
 
     protected async Task<IQueryable<TAggregateRoot>> BuildGetQueryAsync(
         Expression<Func<TAggregateRoot, bool>> filter,
