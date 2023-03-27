@@ -1,6 +1,9 @@
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource;
 using OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource.Converters;
 using OneBeyond.Studio.Hosting.AspNet.Tests.ModelBinders.BindingContext;
@@ -21,7 +24,9 @@ public sealed class FromRouteConverterTests
 
         var converter = new FromRouteConverter();
 
-        var values = await converter.ConvertAsync(context);
+        var token = await converter.ConvertAsync(context);
+        token.Type.Should().Be(JTokenType.Object);
+        var values = (JObject)token;
         values.Should().NotBeNull();
         values.Count.Should().Be(2);
         values.Value<string>("id").Should().Be(TestBindingContext.ID_FROM_ROUTE);
@@ -38,10 +43,47 @@ public sealed class FromRouteConverterTests
 
         var converter = new FromRouteConverter();
 
-        var values = await converter.ConvertAsync(context);
+        var token = await converter.ConvertAsync(context);
+        token.Type.Should().Be(JTokenType.Object);
+        var values = (JObject)token;
         values.Should().NotBeNull();
         values.Count.Should().Be(1);
         values.Value<string>("id").Should().Be(TestBindingContext.ID_FROM_ROUTE);
     }
 
+    [TestMethod]
+    public async Task BindEmptyBody()
+    {
+        const string testRequestBody = "";
+        var context = new TestBodyBindingContext(new MixedSourceBinderSource(), 
+                                                 new TestMetadata(typeof(TestBindingModelBody)),
+                                                 testRequestBody);
+
+        var converter = new FromBodyConverter();
+
+        var token = await converter.ConvertAsync(context);
+        token.Type.Should().Be(JTokenType.Object);
+        var values = (JObject)token;
+        values.Should().NotBeNull();
+        values.Count.Should().Be(0);
+    }
+
+    [TestMethod]
+    public async Task BindEmptyStringBody()
+    {
+        const string testRequestBody = "\"\"";
+        const string expectedResult = "";
+        var context = new TestBodyBindingContext(new MixedSourceBinderSource(),
+                                                 new TestMetadata(typeof(TestBindingModelBody)),
+                                                 testRequestBody);
+
+        var converter = new FromBodyConverter();
+
+        var token = await converter.ConvertAsync(context);
+
+        token.Type.Should().Be(JTokenType.String);
+        var value = (JValue)token;
+        value.Value<string>().Should().NotBeNull();
+        value.Value<string>().Should().Be(expectedResult);
+    }
 }

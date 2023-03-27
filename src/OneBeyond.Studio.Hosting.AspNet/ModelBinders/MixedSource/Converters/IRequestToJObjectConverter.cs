@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource.Converters;
 
-internal interface IRequestToJObjectConverter
+internal interface IRequestToJTokenConverter
 {
-    ValueTask<JObject> ConvertAsync(ModelBindingContext bindingContext);
+    ValueTask<JToken> ConvertAsync(ModelBindingContext bindingContext);
 }
