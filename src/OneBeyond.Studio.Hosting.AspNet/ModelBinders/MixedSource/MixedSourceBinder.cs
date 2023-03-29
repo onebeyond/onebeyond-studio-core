@@ -13,8 +13,8 @@ namespace OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource;
 
 internal sealed class MixedSourceBinder : IModelBinder
 {
-    private static readonly IReadOnlyDictionary<string, IRequestToJObjectConverter> Converters =
-        new Dictionary<string, IRequestToJObjectConverter>
+    private static readonly IReadOnlyDictionary<string, IRequestToJTokenConverter> Converters =
+        new Dictionary<string, IRequestToJTokenConverter>
         {
                 { Source.ROUTE, new FromRouteConverter() },
                 { Source.BODY, new FromBodyConverter() }

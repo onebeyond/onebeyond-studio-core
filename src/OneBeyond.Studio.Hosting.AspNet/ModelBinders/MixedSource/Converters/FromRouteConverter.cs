@@ -6,9 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource.Converters;
 
-internal sealed class FromRouteConverter : IRequestToJObjectConverter
+internal sealed class FromRouteConverter : IRequestToJTokenConverter
 {
-    public ValueTask<JObject> ConvertAsync(ModelBindingContext bindingContext)
+    public ValueTask<JToken> ConvertAsync(ModelBindingContext bindingContext)
     {
         EnsureArg.IsNotNull(bindingContext, nameof(bindingContext));
 
@@ -19,6 +19,6 @@ internal sealed class FromRouteConverter : IRequestToJObjectConverter
                 .Contains(value.Key.ToLower()))
             .ToDictionary(x => x.Key, x => x.Value);
 
-        return new ValueTask<JObject>(JObject.FromObject(routeParams));
+        return new ValueTask<JToken>(JToken.FromObject(routeParams));
     }
 }
