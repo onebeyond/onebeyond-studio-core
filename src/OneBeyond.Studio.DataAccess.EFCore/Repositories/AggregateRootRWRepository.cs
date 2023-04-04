@@ -87,7 +87,7 @@ public class AggregateRootRWRepository<TDbContext, TAggregateRoot, TEntity, TEnt
 
         try
         {
-            await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
         {
@@ -96,6 +96,9 @@ public class AggregateRootRWRepository<TDbContext, TAggregateRoot, TEntity, TEnt
             throw;
         }
     }
+
+    protected virtual Task SaveChangesAsync(CancellationToken cancellationToken)
+        => DbContext.SaveChangesAsync(cancellationToken);
 
     protected static IQueryable<TEntity> ApplyFilter(
         IQueryable<TEntity> query,
