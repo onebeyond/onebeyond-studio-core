@@ -20,7 +20,7 @@
     <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     <PackageReference Include="Autofac" Version="6.5.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Castle.Core" Version="5.1.0" />
+    <PackageReference Include="Castle.Core" Version="5.1.1" />
     <PackageReference Include="Ensure.That" Version="10.1.0" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Handlebars.Net" Version="2.1.4" />
