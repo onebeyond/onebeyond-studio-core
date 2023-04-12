@@ -289,6 +289,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
         IConfiguration configuration,
         IServiceCollection serviceCollection)
     {
+        serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
     }
 
     protected override void ConfigureTestServices(
@@ -309,7 +310,5 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
                 AllowUnattributedRequests = false
             },
             Assembly.GetExecutingAssembly());
-
-        containerBuilder.RegisterMediatR(Assembly.GetExecutingAssembly());
     }
 }
