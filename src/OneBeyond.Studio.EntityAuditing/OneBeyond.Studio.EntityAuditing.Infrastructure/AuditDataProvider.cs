@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Audit.EntityFramework;
 using EnsureThat;
@@ -33,10 +34,10 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
     public override object InsertEvent(Audit.Core.AuditEvent auditEvent)
         => throw new NotSupportedException();
 
-    public override Task<object> InsertEventAsync(Audit.Core.AuditEvent auditEvent)
-        => ProcessEventAsync(auditEvent);
+    public override Task<object> InsertEventAsync(Audit.Core.AuditEvent auditEvent, CancellationToken cancellationToken = default)
+        => ProcessEventAsync(auditEvent, cancellationToken);
 
-    private async Task<object> ProcessEventAsync(Audit.Core.AuditEvent auditEvent)
+    private async Task<object> ProcessEventAsync(Audit.Core.AuditEvent auditEvent, CancellationToken cancellationToken)
     {
         if (auditEvent is not AuditEventEntityFramework efAudit)
         {
