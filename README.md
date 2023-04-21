@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# One Beyond Studio Core libraries dependencies
+# One Beyond Studio Core Libraries Dependencies
 
 ```mermaid
  graph BT;
