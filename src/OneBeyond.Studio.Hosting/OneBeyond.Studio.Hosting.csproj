@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj" />
-    <ProjectReference Include="..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

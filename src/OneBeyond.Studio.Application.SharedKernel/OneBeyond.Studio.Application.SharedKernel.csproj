@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OneBeyond.Studio.Crosscuts\OneBeyond.Studio.Crosscuts.csproj" />
     <ProjectReference Include="..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
   </ItemGroup>
 
