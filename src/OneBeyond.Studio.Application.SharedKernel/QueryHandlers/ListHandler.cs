@@ -49,7 +49,7 @@ public abstract class ListHandler<TQuery, TResultDto, TEntity, TEntityId>
     /// <summary>
     /// </summary>
     /// <param name="repository"></param>
-    public ListHandler(IRORepository<TEntity, TEntityId> repository)
+    protected ListHandler(IRORepository<TEntity, TEntityId> repository)
     {
         EnsureArg.IsNotNull(repository, nameof(repository));
 
