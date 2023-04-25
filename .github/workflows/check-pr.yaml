@@ -25,7 +25,6 @@ jobs:
       uses: highbyte/sonarscan-dotnet@v2.2.2
       with:
         sonarProjectKey: onebeyond-studio-core
-        sonarProjectName:  onebeyond-studio-core
         sonarOrganization: dcslsoftwareltd
         dotnetTestArguments: --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
