@@ -26,7 +26,7 @@ public sealed class Mp4Validator : FileSignatureValidator
         var fileSignatureAsHex = GetFileSignatureAsHex(readFromStart);
 
         if (!(Signatures.Any(fileSignatureAsHex.StartsWith)
-                || Regex.IsMatch(fileSignatureAsHex, @"(?:[\dA-F]{2}-){4}(66-74-79-70)(?:[-\dA-F]{2})*")))
+                || Regex.IsMatch(fileSignatureAsHex, @"(?:[\dA-F]{2}-){4}(66-74-79-70)(?:[-\dA-F]{2})*", RegexOptions.None, Regex.InfiniteMatchTimeout)))
         {
             throw new FileContentValidatorException($"Invalid file content.");
         }
