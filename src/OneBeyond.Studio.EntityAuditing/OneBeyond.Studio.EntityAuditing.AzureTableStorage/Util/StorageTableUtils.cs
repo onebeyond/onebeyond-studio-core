@@ -6,8 +6,8 @@ namespace OneBeyond.Studio.EntityAuditing.AzureTableStorage.Util;
 
 public static class StorageTableUtils
 {
-    private static readonly Regex TableNameRegex = new("[^a-zA-Z0-9]", RegexOptions.Compiled);
-    private static readonly Regex TableNameValidationRegex = new("^[A-Za-z][A-Za-z0-9]{2,62}$", RegexOptions.Compiled);
+    private static readonly Regex TableNameRegex = new("[^a-zA-Z0-9]", RegexOptions.Compiled, Regex.InfiniteMatchTimeout);
+    private static readonly Regex TableNameValidationRegex = new("^[A-Za-z][A-Za-z0-9]{2,62}$", RegexOptions.Compiled, Regex.InfiniteMatchTimeout);
 
     public static string BuildPartitionKey(object value)
         => int.TryParse(value.ToString(), out var valueAsInt) ? $"{valueAsInt:D10}" : value.ToString();

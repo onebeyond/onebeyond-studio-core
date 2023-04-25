@@ -4,8 +4,6 @@ using System.Text.RegularExpressions;
 
 namespace OneBeyond.Studio.Crosscuts.Utilities;
 
-/// <summary>
-/// </summary>
 public static class Base64Util
 {
     /// <summary>Encode a plain text to Base64</summary>
@@ -36,6 +34,8 @@ public static class Base64Util
         base64String = base64String.Trim();
 
         return base64String.Length % 4 == 0 &&
-               Regex.IsMatch(base64String, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+               Regex.IsMatch(base64String, @"^[a-zA-Z0-9\+/]*={0,3}$", 
+               RegexOptions.None, 
+               Regex.InfiniteMatchTimeout);
     }
 }
