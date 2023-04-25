@@ -13,27 +13,27 @@ public sealed class AllowDataAccessPolicyProvider<TEntity> : IRWDataAccessPolicy
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<DataAccessPolicy<TEntity>?> GetCreateDataAccessPolicyAsync(CancellationToken cancellationToken)
+    public Task<DataAccessPolicy<TEntity>?> GetCreateDataAccessPolicyAsync(CancellationToken cancellationToken = default)
         => Task.FromResult(default(DataAccessPolicy<TEntity>?));
 
     /// <summary>
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<DataAccessPolicy<TEntity>?> GetUpdateDataAccessPolicyAsync(CancellationToken cancellationToken)
+    public Task<DataAccessPolicy<TEntity>?> GetUpdateDataAccessPolicyAsync(CancellationToken cancellationToken = default)
         => Task.FromResult(default(DataAccessPolicy<TEntity>?));
 
     /// <summary>
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<DataAccessPolicy<TEntity>?> GetDeleteDataAccessPolicyAsync(CancellationToken cancellationToken)
+    public Task<DataAccessPolicy<TEntity>?> GetDeleteDataAccessPolicyAsync(CancellationToken cancellationToken = default)
         => Task.FromResult(default(DataAccessPolicy<TEntity>?));
 
     /// <summary>
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<DataAccessPolicy<TEntity>?> GetReadDataAccessPolicyAsync(CancellationToken cancellationToken)
+    public Task<DataAccessPolicy<TEntity>?> GetReadDataAccessPolicyAsync(CancellationToken cancellationToken = default)
         => Task.FromResult(default(DataAccessPolicy<TEntity>?));
 }
