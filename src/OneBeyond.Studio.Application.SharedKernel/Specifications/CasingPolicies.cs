@@ -68,7 +68,7 @@ public abstract class CasingPolicy : SmartEnum<CasingPolicy>
                 .FirstOrDefault(prop => prop.Name.Equals(transformedPropName))!;
         }
 
-        private class FirstLetterLowerCase : IStringTransformer
+        private sealed class FirstLetterLowerCase : IStringTransformer
         {
             public string Transform(string input)
             {
