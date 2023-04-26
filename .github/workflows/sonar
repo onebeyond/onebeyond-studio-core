@@ -1,0 +1,36 @@
+name: "Sonar"
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - "src/**"
+    merged: true
+  workflow_dispatch:
+
+concurrency:
+  group: "${{github.workflow}}-${{github.head_ref}}"
+  cancel-in-progress: true
+
+jobs:
+  sonarcloud:
+    name: "Sonar Cloud"  
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: SonarScanner for .NET 7 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.2.2
+      with:
+        sonarProjectKey: onebeyond-studio-core
+        sonarProjectName: onebeyond-studio-core        
+        sonarOrganization: dcslsoftwareltd
+        dotnetTestArguments: --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
+      env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
