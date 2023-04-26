@@ -28,7 +28,7 @@ public sealed class IntegrationEventTypeRegistryTests
 
         var integrationEventTypes = integrationEventTypeRegistry.IntegrationEventTypes;
 
-        Assert.AreEqual(integrationEventTypes.Count, 5);
+        Assert.AreEqual(5, integrationEventTypes.Count);
         Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.1m
@@ -61,16 +61,16 @@ public sealed class IntegrationEventTypeRegistryTests
             1, 4);
 
         Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(integrationEventType!.TypeName, TestableIntegrationEvents.ThisHappenedTypeName);
-        Assert.AreEqual(integrationEventType.Version, 1.4m);
+        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.AreEqual(1.4m, integrationEventType.Version);
 
         integrationEventType = integrationEventTypeRegistry.FindIntegrationEventType(
             TestableIntegrationEvents.ThisHappenedTypeName.ToLower(),
             1, 4);
 
         Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(integrationEventType!.TypeName, TestableIntegrationEvents.ThisHappenedTypeName);
-        Assert.AreEqual(integrationEventType.Version, 1.4m);
+        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.AreEqual(1.4m, integrationEventType.Version);
     }
 
     [TestMethod]
@@ -83,8 +83,8 @@ public sealed class IntegrationEventTypeRegistryTests
             1, 3);
 
         Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(integrationEventType!.TypeName, TestableIntegrationEvents.ThisHappenedTypeName);
-        Assert.AreEqual(integrationEventType.Version, 1.2m);
+        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.AreEqual(1.2m, integrationEventType.Version);
     }
 
     [TestMethod]
