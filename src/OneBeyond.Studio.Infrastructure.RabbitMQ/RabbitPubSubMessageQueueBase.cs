@@ -44,7 +44,7 @@ internal abstract class RabbitPubSubMessageQueueBase<TMessage>
         _connection.Dispose();
     }
 
-    public Task PublishAsync(TMessage message, CancellationToken cancellationToken)
+    public Task PublishAsync(TMessage message, CancellationToken cancellationToken = default)
     {
         var messageJson = JsonConvert.SerializeObject(message);
         var messageBytes = Encoding.UTF8.GetBytes(messageJson);
