@@ -77,11 +77,12 @@ public sealed class AmbientContextAccessorOverrider<TAmbientContext> : IAmbientC
             var ambientContextAccessorStack =
                 LogicalCallContext.FindData<Stack<IAmbientContextAccessor<TAmbientContext>>>(AmbientContextAccessorStackName)
                 ?? throw new InvalidOperationException("Unable to retrieve disposed ambient context accessor override.");
-            if (ReferenceEquals(ambientContextAccessorStack.Peek(), _ambientContextAccessor))
+            if (!ReferenceEquals(ambientContextAccessorStack.Peek(), _ambientContextAccessor))
             {
-                ambientContextAccessorStack.Pop();
-                _ambientContextAccessor = null;
+                throw new InvalidOperationException("Ambient context accessor overriding order is broken.");
             }
+            ambientContextAccessorStack.Pop();
+            _ambientContextAccessor = null;
         }
     }
 }
