@@ -35,9 +35,9 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
         => throw new NotSupportedException();
 
     public override Task<object> InsertEventAsync(Audit.Core.AuditEvent auditEvent, CancellationToken cancellationToken = default)
-        => ProcessEventAsync(auditEvent, cancellationToken);
+        => ProcessEventAsync(auditEvent);
 
-    private async Task<object> ProcessEventAsync(Audit.Core.AuditEvent auditEvent, CancellationToken cancellationToken)
+    private async Task<object> ProcessEventAsync(Audit.Core.AuditEvent auditEvent)
     {
         if (auditEvent is not AuditEventEntityFramework efAudit)
         {
