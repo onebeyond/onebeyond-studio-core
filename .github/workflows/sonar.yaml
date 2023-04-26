@@ -1,13 +1,9 @@
 name: "Sonar"
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
-    paths:
-      - "src/**"
-    merged: true
   workflow_dispatch:
 
 concurrency:
