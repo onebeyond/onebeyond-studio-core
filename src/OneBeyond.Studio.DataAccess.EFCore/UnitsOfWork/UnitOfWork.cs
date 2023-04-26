@@ -31,19 +31,16 @@ internal sealed class UnitOfWork : IUnitOfWork
     Task IUnitOfWork.CompleteAsync(CancellationToken cancellationToken)
     {
         _transactionScope.Complete();
-        Dispose(true); // This call is required for changes being applied right away.
+        DisposeUnit(); // This call is required for changes being applied right away.
         return Task.CompletedTask;
     }
 
     void IDisposable.Dispose()
-        => Dispose(true);
+        => DisposeUnit();
 
-    private void Dispose(bool disposing)
+    private void DisposeUnit()
     {
-        if (disposing)
-        {
-            _transactionScope.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        _transactionScope.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
