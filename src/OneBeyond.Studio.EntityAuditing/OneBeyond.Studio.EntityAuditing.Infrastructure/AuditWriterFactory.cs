@@ -9,7 +9,7 @@ using OneBeyond.Studio.EntityAuditing.Domain;
 
 namespace OneBeyond.Studio.EntityAuditing.Infrastructure;
 
-internal sealed class AuditWriterFactory
+internal static class AuditWriterFactory
 {
     private static readonly MethodInfo _auditWriterWriteMethodInfoAsync =
         Reflector.MethodFrom(() => WriteEntityEventAsync<object>(default, default, default))
