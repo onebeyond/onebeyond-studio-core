@@ -38,10 +38,19 @@ internal abstract class RabbitMessageQueueBase<TMessage>
 
     public void Dispose()
     {
-        _channel.Close();
-        _channel.Dispose();
-        _connection.Close();
-        _connection.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _channel.Close();
+            _channel.Dispose();
+            _connection.Close();
+            _connection.Dispose();
+        }
     }
 
     public Task PublishAsync(TMessage message, CancellationToken cancellationToken = default)
