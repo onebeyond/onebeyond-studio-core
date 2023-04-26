@@ -20,7 +20,6 @@ namespace OneBeyond.Studio.Application.SharedKernel.Specifications;
 public static class FilterExpressionBuilder<T>
 {
     private static readonly ILogger Logger = LogManager.CreateLogger(typeof(FilterExpressionBuilder<T>).Name);
-    private static readonly Type DateTimeType = typeof(DateTime);
     private static readonly Type TType = typeof(T);
     private static readonly MethodInfo GetSmartEnumFromValueMethodInfo =
         typeof(FilterExpressionBuilder<T>).GetMethod(
