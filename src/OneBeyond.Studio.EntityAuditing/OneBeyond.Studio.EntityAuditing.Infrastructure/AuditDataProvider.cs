@@ -364,41 +364,51 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
 
     private void AddChangesForUpdatedEntry(EventEntry entry, List<AuditChange> actualChanges)
     {
-        if (entry.Changes != null)
+        if (entry.Changes is null)
         {
-            var changes = entry.Changes
-                .Where((change) => change.ColumnName != nameof(ISoftDeletable.IsDeleted))
-                .Where((change) => !AuditAttributesHelper.IgnoreProperty(entry, change.ColumnName));
+            return;
+        }
 
-            foreach (var change in changes)
+        var changes = entry.Changes
+            .Where((change) => change.ColumnName != nameof(ISoftDeletable.IsDeleted))
+            .Where((change) => !AuditAttributesHelper.IgnoreProperty(entry, change.ColumnName));
+
+        foreach (var change in changes)
+        {
+            var auditChange = CreateAuditChange(change, entry);
+
+            if (ChangeCanBeAdded(auditChange))
             {
-                var auditChange = new AuditChange();
-
-                var originalColumnName = change.ColumnName;
-                auditChange.PropertyName = AuditAttributesHelper.GetCustomPropertyName(entry, originalColumnName, change.ColumnName);
-                auditChange.OriginalValue = AuditAttributesHelper.GetValueOrOverride(_serviceProvider, entry, originalColumnName, change.OriginalValue);
-                auditChange.NewValue = AuditAttributesHelper.GetValueOrOverride(_serviceProvider, entry, originalColumnName, change.NewValue);
-                auditChange.PropertyType = auditChange.NewValue != null
-                    ? auditChange.NewValue.GetType().ToString()
-                    : auditChange.OriginalValue != null ? auditChange.OriginalValue.GetType().ToString() : "";
-
-                if (auditChange.OriginalValue == null || auditChange.NewValue == null)
-                {
-                    if (auditChange.OriginalValue == null && auditChange.NewValue == null)
-                    {
-                        continue;
-                    }
-                    actualChanges.Add(auditChange);
-                }
-                else
-                {
-                    if (!auditChange.OriginalValue.Equals(auditChange.NewValue))
-                    {
-                        actualChanges.Add(auditChange);
-                    }
-                }
+                actualChanges.Add(auditChange);
             }
         }
+    }
+
+    private bool ChangeCanBeAdded(AuditChange auditChange)
+    {
+        if (auditChange.OriginalValue == null || auditChange.NewValue == null)
+        {
+            return auditChange.OriginalValue != null || auditChange.NewValue != null;
+        }
+        else
+        {
+            return !auditChange.OriginalValue.Equals(auditChange.NewValue);
+        }
+    }
+
+    private AuditChange CreateAuditChange(EventEntryChange change, EventEntry entry)
+    {
+        var auditChange = new AuditChange();
+
+        var originalColumnName = change.ColumnName;
+        auditChange.PropertyName = AuditAttributesHelper.GetCustomPropertyName(entry, originalColumnName, change.ColumnName);
+        auditChange.OriginalValue = AuditAttributesHelper.GetValueOrOverride(_serviceProvider, entry, originalColumnName, change.OriginalValue);
+        auditChange.NewValue = AuditAttributesHelper.GetValueOrOverride(_serviceProvider, entry, originalColumnName, change.NewValue);
+        auditChange.PropertyType = auditChange.NewValue != null
+            ? auditChange.NewValue.GetType().ToString()
+            : auditChange.OriginalValue != null ? auditChange.OriginalValue.GetType().ToString() : "";
+
+        return auditChange;
     }
 
     private void AddChangesForCreatedEntry(EventEntry entry, List<AuditChange> actualChanges)
