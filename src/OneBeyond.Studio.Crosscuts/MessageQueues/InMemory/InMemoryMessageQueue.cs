@@ -17,7 +17,7 @@ internal class InMemoryMessageQueue<TMessage>
         _queue = queue;
     }
 
-    public Task PublishAsync(TMessage message, CancellationToken cancellationToken)
+    public Task PublishAsync(TMessage message, CancellationToken cancellationToken = default)
     {
         _queue.Enqueue(message);
         return Task.CompletedTask;

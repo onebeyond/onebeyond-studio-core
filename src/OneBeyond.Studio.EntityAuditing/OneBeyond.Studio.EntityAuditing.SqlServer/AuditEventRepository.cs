@@ -20,7 +20,7 @@ internal sealed class AuditEventRepository : IAuditEventRepository
         _dbSet = new Lazy<DbSet<AuditEvent>>(() => _dbContext.Set<AuditEvent>());
     }
 
-    public Task AddAsync(AuditEvent auditEvent, CancellationToken cancellationToken)
+    public Task AddAsync(AuditEvent auditEvent, CancellationToken cancellationToken = default)
     {
         EnsureArg.IsNotNull(auditEvent, nameof(auditEvent));
 
