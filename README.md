@@ -6,7 +6,7 @@
 
 [![Nuget version](https://img.shields.io/nuget/v/OneBeyond.Studio.Crosscuts?style=plastic)](https://www.nuget.org/packages/OneBeyond.Studio.Crosscuts)
 [![Nuget downloads](https://img.shields.io/nuget/dt/OneBeyond.Studio.Crosscuts?style=plastic)](https://www.nuget.org/packages/OneBeyond.Studio.Crosscuts)
-[![License](https://img.shields.io/github/license/OneBeyond/OneBeyond.Studio.Crosscuts?style=plastic)](LICENSE)
+[![License](https://img.shields.io/github/license/OneBeyond/onebeyond-studio-core?style=plastic)](LICENSE)
 
 
 # One Beyond Studio Core Libraries Dependencies
