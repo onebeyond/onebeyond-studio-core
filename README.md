@@ -7,6 +7,7 @@
 [![Nuget version](https://img.shields.io/nuget/v/OneBeyond.Studio.Crosscuts?style=plastic)](https://www.nuget.org/packages/OneBeyond.Studio.Crosscuts)
 [![Nuget downloads](https://img.shields.io/nuget/dt/OneBeyond.Studio.Crosscuts?style=plastic)](https://www.nuget.org/packages/OneBeyond.Studio.Crosscuts)
 [![License](https://img.shields.io/github/license/OneBeyond/onebeyond-studio-core?style=plastic)](LICENSE)
+[![Release to NuGet](https://github.com/onebeyond/onebeyond-studio-core/actions/workflows/release.yaml/badge.svg)](https://github.com/onebeyond/onebeyond-studio-core/actions/workflows/release.yaml)
 
 # Introduction
 Beyond Studio Core is a set of .NET libraries that can be used by developers to create their solutions based on Clean Architecture principles.
