@@ -10,6 +10,7 @@
 
 # Introduction
 Beyond Studio Core is a set of .NET libraries that can be used by developers as a foundation to create their solutions based on Clean Architecture principles.
+
 One of the examples on how these libraries can be used in a project can be found [here](https://github.com/onebeyond/onebeyond-studio-obelisk).
 
 # Getting Started
