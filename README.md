@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/github/license/OneBeyond/onebeyond-studio-core?style=plastic)](LICENSE)
 
 # Introduction
-Beyond Studio Core is a set of .NET libraries that can be used by developers as a foundation to create their solutions based on Clean Architecture principles.
+One Beyond Studio Core is a set of .NET libraries that can be used by developers as a foundation to create their solutions based on Clean Architecture principles.
 
 One of the examples on how these libraries can be used in a project can be found [here](https://github.com/onebeyond/onebeyond-studio-obelisk).
 
