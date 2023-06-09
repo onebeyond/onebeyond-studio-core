@@ -43,7 +43,7 @@ public static class HttpContextAccessorExtensions
         return GetClaimFromIdentity(userIdentity, claimType);
     }
 
-    [Obsolete("This method will soon be deleted, please GetUserClaimValue instead.")]
+    [Obsolete("This method will soon be deleted, please use GetUserClaimValue instead.")]
     public static string GetUserAuthId(
         this IHttpContextAccessor httpContextAccessor, 
         string claimType)
