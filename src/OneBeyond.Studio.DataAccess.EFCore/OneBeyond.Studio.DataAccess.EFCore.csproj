@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj" />
+    <ProjectReference Include="..\OneBeyond.Studio.ChangeTracker.Infrastructure\OneBeyond.Studio.ChangeTracker.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

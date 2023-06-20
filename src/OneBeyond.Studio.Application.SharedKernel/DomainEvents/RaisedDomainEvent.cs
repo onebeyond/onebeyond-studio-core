@@ -19,12 +19,29 @@ public sealed class RaisedDomainEvent
         DomainEvent domainEvent,
         AmbientContext? ambientContext,
         Activity? activity)
+        :this(
+             domainEntity.IdAsString, 
+             domainEntity.GetType().FullName!, 
+             domainEvent, 
+             ambientContext, 
+             activity)
     {
-        EnsureArg.IsNotNull(domainEntity, nameof(domainEntity));
+    }
+
+    //Used by Change Tracker
+    public RaisedDomainEvent(
+        string entityId,
+        string entityType,
+        DomainEvent domainEvent,
+        AmbientContext? ambientContext,
+        Activity? activity)
+    {
+        EnsureArg.IsNotNullOrWhiteSpace(entityId, nameof(entityId));
+        EnsureArg.IsNotNullOrWhiteSpace(entityType, nameof(entityType));
         EnsureArg.IsNotNull(domainEvent, nameof(domainEvent));
 
-        EntityId = domainEntity.IdAsString;
-        EntityType = domainEntity.GetType().FullName!;
+        EntityId = entityId;
+        EntityType = entityType;
         DomainEventJson = DomainEventSerializer.SerializeToJson(domainEvent);
         AmbientContextJson = ambientContext is not null
                 ? JsonConvert.SerializeObject(ambientContext)

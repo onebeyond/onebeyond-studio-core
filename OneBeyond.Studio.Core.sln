@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Applicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel.Tests", "src\OneBeyond.Studio.Application.SharedKernel.Tests\OneBeyond.Studio.Application.SharedKernel.Tests.csproj", "{EF09109A-F856-47D0-AAA5-A8985821E988}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBeyond.Studio.ChangeTracker.Domain", "src\OneBeyond.Studio.ChangeTracker.Domain\OneBeyond.Studio.ChangeTracker.Domain.csproj", "{810A1768-DF12-439C-9750-DE4C7DD00242}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBeyond.Studio.ChangeTracker.Infrastructure", "src\OneBeyond.Studio.ChangeTracker.Infrastructure\OneBeyond.Studio.ChangeTracker.Infrastructure.csproj", "{502D60F7-26AB-464A-883C-4875D1868C30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +131,14 @@ Global
 		{EF09109A-F856-47D0-AAA5-A8985821E988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF09109A-F856-47D0-AAA5-A8985821E988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF09109A-F856-47D0-AAA5-A8985821E988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{810A1768-DF12-439C-9750-DE4C7DD00242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810A1768-DF12-439C-9750-DE4C7DD00242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810A1768-DF12-439C-9750-DE4C7DD00242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810A1768-DF12-439C-9750-DE4C7DD00242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{502D60F7-26AB-464A-883C-4875D1868C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502D60F7-26AB-464A-883C-4875D1868C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502D60F7-26AB-464A-883C-4875D1868C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502D60F7-26AB-464A-883C-4875D1868C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

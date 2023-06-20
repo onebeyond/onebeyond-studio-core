@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
+using OneBeyond.Studio.ChangeTracker.Infrastructure.Extensions;
 using OneBeyond.Studio.Crosscuts.DynamicProxy;
 using OneBeyond.Studio.Crosscuts.Reflection;
 using OneBeyond.Studio.Crosscuts.Utilities.LogicalCallContext;
-using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
-using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 
@@ -25,15 +26,19 @@ internal sealed class DomainEventsProcessor : InterceptorBase
     private readonly IPreSaveDomainEventDispatcher _preSaveDomainEventDispatcher;
     private readonly IAmbientContextAccessor? _ambientContextAccessor;
 
+    private readonly bool _isChangeTrackerEnabled;
+
     public DomainEventsProcessor(
         IPreSaveDomainEventDispatcher preSaveDomainEventDispatcher,
-        IEnumerable<IAmbientContextAccessor> ambientContextAccessors)
+        IEnumerable<IAmbientContextAccessor> ambientContextAccessors,
+        bool enableChangeTracker)
     {
         EnsureArg.IsNotNull(preSaveDomainEventDispatcher, nameof(preSaveDomainEventDispatcher));
         EnsureArg.IsNotNull(ambientContextAccessors, nameof(ambientContextAccessors));
 
         _preSaveDomainEventDispatcher = preSaveDomainEventDispatcher;
         _ambientContextAccessor = ambientContextAccessors.SingleOrDefault();
+        _isChangeTrackerEnabled = enableChangeTracker;
     }
 
     protected override T Execute<T>(ISyncExecution<T> execution)
@@ -49,6 +54,7 @@ internal sealed class DomainEventsProcessor : InterceptorBase
                     .GetResult();
                 var ambientContext = _ambientContextAccessor?.AmbientContext;
                 var activity = Activity.Current;
+
                 entityDomainEvents.ForEach(
                     (item) =>
                     {
@@ -56,10 +62,17 @@ internal sealed class DomainEventsProcessor : InterceptorBase
                                 (domainEvent) => new RaisedDomainEvent(item.Entity, domainEvent, ambientContext, activity));
                         saveChangesCall.RaisedDomainEvents.AddRange(raisedDomainEvents);
                     });
+
                 if (CollectDomainEvents(saveChangesCall.DbContext).Count > 0)
                 {
                     throw new InvalidOperationException("Raising domain events in pre-save domain event handlers is not allowed.");
                 }
+
+                if (_isChangeTrackerEnabled)
+                {
+                    RaiseChangeTrackerEvents(saveChangesCall, ambientContext, activity);
+                }
+
             }
 
             return base.Execute(execution);
@@ -77,6 +90,7 @@ internal sealed class DomainEventsProcessor : InterceptorBase
                 await DispatchDomainEventsOnPreSaveAsync(entityDomainEvents).ConfigureAwait(false);
                 var ambientContext = _ambientContextAccessor?.AmbientContext;
                 var activity = Activity.Current;
+
                 entityDomainEvents.ForEach(
                     (item) =>
                     {
@@ -84,14 +98,35 @@ internal sealed class DomainEventsProcessor : InterceptorBase
                                 (domainEvent) => new RaisedDomainEvent(item.Entity, domainEvent, ambientContext, activity));
                         saveChangesCall.RaisedDomainEvents.AddRange(raisedDomainEvents);
                     });
+
                 if (CollectDomainEvents(saveChangesCall.DbContext).Count > 0)
                 {
                     throw new InvalidOperationException("Raising domain events in pre-save domain event handlers is not allowed.");
                 }
+
+                if (_isChangeTrackerEnabled)
+                {
+                    RaiseChangeTrackerEvents(saveChangesCall, ambientContext, activity);
+                }
+
             }
 
             return await base.ExecuteAsync(execution).ConfigureAwait(false);
         }
+    }
+
+    private void RaiseChangeTrackerEvents(
+        SaveChangesCall saveChangesCall, 
+        AmbientContext? ambientContext, 
+        Activity? activity)
+    {
+        var entityChanges = saveChangesCall.DbContext.GetEntityChanges();
+
+        entityChanges.ForEach(
+            (entityChange) =>
+            {
+                saveChangesCall.RaisedDomainEvents.Add(new RaisedDomainEvent(entityChange.EntityId, entityChange.EntityTypeFullName, entityChange, ambientContext, activity));
+            });
     }
 
     private async Task DispatchDomainEventsOnPreSaveAsync(EntityDomainEventList entityDomainEvents)

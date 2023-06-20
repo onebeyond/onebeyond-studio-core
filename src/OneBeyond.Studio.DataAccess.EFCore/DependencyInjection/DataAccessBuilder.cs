@@ -5,16 +5,16 @@ using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Options;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
 using OneBeyond.Studio.DataAccess.EFCore.RelationalTypeMappings;
 using OneBeyond.Studio.DataAccess.EFCore.UnitsOfWork;
-using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using Thinktecture;
 using Z.EntityFramework.Extensions;
-using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 
@@ -26,11 +26,15 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
 
         EntityFrameworkManager.IsCommunity = true; //To raise an exception in case if any paid features of Z.EntityFramework.Extensions library are used.
         AreDomainEventsEnabled = false;
+        IsChangeTrackerEnabled = false;
         Services = services;
     }
 
     protected static ProxyGenerator ProxyGenerator { get; } = new();
+
     protected bool AreDomainEventsEnabled { get; private set; }
+    protected bool IsChangeTrackerEnabled { get; private set; }
+
     protected IServiceCollection Services { get; }
 
     public IDataAccessBuilder WithDomainEvents()
@@ -38,6 +42,21 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
         AreDomainEventsEnabled = true;
         Services.AddTransient<IPreSaveDomainEventDispatcher, DIBasedPreSaveDomainEventDispatcher>();
         Services.AddTransient<IPostSaveDomainEventDispatcher, DIBasedPostSaveDomainEventDispatcher>();
+        return this;
+    }
+
+    public IDataAccessBuilder WithChangeTracking()
+    {
+        //Entity change tracking is based on domain events handling.
+        //When we track changes - we add ChangeTrackerEvent domain events to raised domain events.
+        //So change tracking can only be used if domain events are enabled.
+        if (!AreDomainEventsEnabled)
+        {
+            WithDomainEvents();
+        }
+
+        IsChangeTrackerEnabled = true;
+
         return this;
     }
 
@@ -86,7 +105,7 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
                 {
                     var preSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPreSaveDomainEventDispatcher>();
                     var ambientContextAccessors = serviceProvider.GetServices<IAmbientContextAccessor>();
-                    var domainEventsProcessor = new DomainEventsProcessor(preSaveDomainEventDispatcher, ambientContextAccessors);
+                    var domainEventsProcessor = new DomainEventsProcessor(preSaveDomainEventDispatcher, ambientContextAccessors, IsChangeTrackerEnabled);
                     dbContext = (TDbContext)ProxyGenerator.CreateClassProxyWithTarget(
                         typeof(TDbContext),
                         new[] { typeof(IInfrastructure<IServiceProvider>) }, // Potentially it requires intercepting all interfaces implemented by DbContext
