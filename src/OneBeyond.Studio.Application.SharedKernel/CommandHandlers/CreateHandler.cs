@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -17,6 +18,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 /// <typeparam name="TAggregateRootCreateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
+[Obsolete("We no longer recommend to use Generic Create/Update commands. This generic CreateHandler will soon be deleted.")]
 public class CreateHandler<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId>
     : IRequestHandler<Create<TAggregateRootCreateDto, TAggregateRoot, TAggregateRootId>, TAggregateRootId>
     where TAggregateRoot : AggregateRoot<TAggregateRootId>

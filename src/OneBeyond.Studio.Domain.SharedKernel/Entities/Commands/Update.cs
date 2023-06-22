@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using EnsureThat;
 using OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
@@ -10,6 +11,7 @@ namespace OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 /// <typeparam name="TAggregateRootUpdateDto"></typeparam>
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
+[Obsolete("We no longer recommend to use Generic Create/Update commands. This generic Update command will soon be deleted.")]
 public record Update<TAggregateRootUpdateDto, TAggregateRoot, TAggregateRootId>
     : IAuditableRequest<TAggregateRootId>
     where TAggregateRoot : AggregateRoot<TAggregateRootId>
