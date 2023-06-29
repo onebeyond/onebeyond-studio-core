@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+    <PackageReference Include="OneBeyond.Studio.Hosting.AspNet" Version="7.1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OneBeyond.Studio.Application.SharedKernel\OneBeyond.Studio.Application.SharedKernel.csproj" />
+    <ProjectReference Include="..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

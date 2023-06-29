@@ -9,7 +9,7 @@ namespace OneBeyond.Studio.Domain.SharedKernel.Authorization;
 /// <summary>
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-public sealed class AuthorizationPolicyAttribute : Attribute
+public class AuthorizationPolicyAttribute : Attribute
 {
     /// <summary>
     /// </summary>
