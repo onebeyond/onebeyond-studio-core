@@ -35,7 +35,7 @@ jobs:
         run: dotnet pack
           --no-restore --no-build
           --configuration "Release"
-          --property:PackageOutputPath="../../nupkgs"
+          --output "nupkgs"
 
       - name: "Upload NuGets to Artifacts"
         uses: actions/upload-artifact@v3
@@ -44,4 +44,4 @@ jobs:
           path: "nupkgs"
 
       - name: "Upload NuGets to nuget.org"
-        run: dotnet nuget push "nupkgs/**/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "nupkgs/**/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json --skip-duplicate
