@@ -24,9 +24,9 @@ namespace OneBeyond.Studio.EntityAuditing.SqlServer.Migrations
 
             modelBuilder.Entity("Waterloo.EntityAuditing.SqlServer.Entities.AuditEvent", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ChangedData")

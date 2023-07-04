@@ -15,7 +15,7 @@ public partial class InitialMigration : Migration
             schema: "audit",
             columns: table => new
             {
-                Id = table.Column<int>(nullable: false)
+                Id = table.Column<long>(type: "bigint", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
                 UserId = table.Column<string>(nullable: true),
                 EventType = table.Column<string>(nullable: true),

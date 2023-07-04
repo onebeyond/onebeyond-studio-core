@@ -33,17 +33,20 @@ public class AuditDbWriter<TEntity> : IAuditWriter<TEntity>
         EnsureArg.IsNotNull(entity, nameof(entity));
         EnsureArg.IsNotNull(auditEntityEvent, nameof(auditEntityEvent));
 
-        var auditEvent = Entities.AuditEvent.FromAuditInfo(auditEntityEvent);
-        auditEvent.EntityName = _auditEntityTypeBuilder.GetEntityName();
         var changes = await _auditStringBuilder.SerializeAsync(entity, auditEntityEvent, cancellationToken);
 
         if (auditEntityEvent.EventType == AuditActionType.Update.Name && changes.IsEmpty)
         {
-            // Do not write anything if there are no changes to record
-            return;
+            return; // Do not write anything if there are no changes to record
         }
 
-        auditEvent.ChangedData = changes.Data.ToString();
+        var entityName = _auditEntityTypeBuilder.GetEntityName();
+
+        var auditEvent = Entities.AuditEvent.FromAuditInfo(
+            auditEntityEvent, 
+            _auditEntityTypeBuilder.GetEntityName(), 
+            changes.Data.ToString());
+
         await _repository.AddAsync(auditEvent, cancellationToken);
     }
 }

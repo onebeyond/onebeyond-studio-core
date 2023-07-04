@@ -3,6 +3,6 @@ using OneBeyond.Studio.EntityAuditing.SqlServer.Entities;
 
 namespace OneBeyond.Studio.EntityAuditing.SqlServer.Configuration;
 
-internal sealed class AuditEventConfiguration : BaseEntityTypeConfiguration<AuditEvent, int>
+internal sealed class AuditEventConfiguration : BaseEntityTypeConfiguration<AuditEvent, long>
 {
 }
