@@ -50,6 +50,9 @@ namespace OneBeyond.Studio.EntityAuditing.SqlServer.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Context")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("AuditEvents");

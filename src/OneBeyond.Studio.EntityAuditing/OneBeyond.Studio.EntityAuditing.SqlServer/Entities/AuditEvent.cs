@@ -1,7 +1,6 @@
 using System;
 using Audit.EntityFramework;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
-using OneBeyond.Studio.EntityAuditing.Domain.AuditEventSerializers;
 
 namespace OneBeyond.Studio.EntityAuditing.SqlServer.Entities;
 
@@ -15,6 +14,7 @@ public sealed class AuditEvent : DomainEntity<long>
     public string EntityDescription { get; init; }
     public DateTimeOffset InsertedDate { get; init; }
     public string ChangedData { get; init; }
+    public string Context { get; init; }
 
     public static AuditEvent FromAuditInfo(
         Domain.AuditEvent auditEntityEvent,
@@ -28,6 +28,7 @@ public sealed class AuditEvent : DomainEntity<long>
                 EntityId = auditEntityEvent.EntityId.ToString(),
                 EntityName = entityName,
                 EntityDescription = auditEntityEvent.EntityDescription,
-                ChangedData = changesData
-            };
+                ChangedData = changesData, 
+                Context = auditEntityEvent.Context
+        };
 }

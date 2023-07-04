@@ -78,7 +78,8 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
                 InsertedDate = DateTime.UtcNow,
                 EntityId = string.Join(":", entry.PrimaryKey.Values),
                 EntityDescription = AuditAttributesHelper.GetPropertyDescriptorValue(entry)?.ToString(),
-                UserId = auditContext?.AuthorId ?? Guid.Empty.ToString()
+                UserId = auditContext?.AuthorId ?? Guid.Empty.ToString(),
+                Context = auditContext?.Context ?? string.Empty
             };
 
             GetChangesFromNavigationProperty(entries, entry, auditEventEntity);

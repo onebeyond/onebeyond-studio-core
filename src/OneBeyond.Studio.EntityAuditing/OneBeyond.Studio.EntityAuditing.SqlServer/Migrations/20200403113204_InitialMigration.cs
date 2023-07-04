@@ -23,7 +23,8 @@ public partial class InitialMigration : Migration
                 EntityName = table.Column<string>(nullable: true),
                 EntityDescription = table.Column<string>(nullable: true),
                 InsertedDate = table.Column<DateTimeOffset>(nullable: false),
-                ChangedData = table.Column<string>(nullable: true)
+                ChangedData = table.Column<string>(nullable: true),
+                Context = table.Column<string>(nullable: true)
             },
             constraints: table =>
             {

@@ -15,14 +15,17 @@ public sealed class AuditEvent
         _navigationPropertyAuditEvents = new List<AuditNavigationPropertyEvent>();
     }
 
-    public DateTimeOffset InsertedDate { get; set; }
-    public string EventType { get; set; }
-    public string UserId { get; set; }
-    public object EntityId { get; set; }
-    public string EntityDescription { get; set; }
-    public string AdditionalInformation { get; set; }
+    public DateTimeOffset InsertedDate { get; init; }
+    public string EventType { get; init; }
+    public string UserId { get; init; }
+    public object EntityId { get; init; }
+    public string EntityDescription { get; init; }
+    public string AdditionalInformation { get; init; }
+    public string Context { get; init; }
+
     public IEnumerable<AuditChange> EntityChanges
         => _entityChanges.AsReadOnly();
+
     public IEnumerable<AuditNavigationPropertyEvent> NavigationPropertyAuditEvents
         => _navigationPropertyAuditEvents.AsReadOnly();
 
