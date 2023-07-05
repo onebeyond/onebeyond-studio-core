@@ -15,7 +15,7 @@ public partial class InitialMigration : Migration
             schema: "audit",
             columns: table => new
             {
-                Id = table.Column<int>(nullable: false)
+                Id = table.Column<long>(type: "bigint", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
                 UserId = table.Column<string>(nullable: true),
                 EventType = table.Column<string>(nullable: true),
@@ -23,7 +23,8 @@ public partial class InitialMigration : Migration
                 EntityName = table.Column<string>(nullable: true),
                 EntityDescription = table.Column<string>(nullable: true),
                 InsertedDate = table.Column<DateTimeOffset>(nullable: false),
-                ChangedData = table.Column<string>(nullable: true)
+                ChangedData = table.Column<string>(nullable: true),
+                Context = table.Column<string>(nullable: true)
             },
             constraints: table =>
             {
