@@ -22,7 +22,7 @@ internal abstract class StorageMessageQueueBase<TMessage> : IMessageQueue<TMessa
         options.EnsureIsValid();
 
         _messageQueue = new AsyncLazy<QueueClient>(
-            () => Queue.GetOrCreateAsync(options.ConnectionString!, options.QueueName!), //We ensured both ConnectionString and QueueName are specified above
+            () => Queue.GetOrCreateAsync(options.ResourceName, options.ConnectionString!, options.QueueName!),
             AsyncLazyFlags.RetryOnFailure);
     }
 
