@@ -26,11 +26,11 @@ internal abstract class StorageLargeMessageQueueBase<TMessage> : IMessageQueue<T
         options.EnsureIsValid();
 
         _messageBlobContainer = new AsyncLazy<BlobContainerClient>(
-            () => BlobContainer.GetOrCreateAsync(options.ConnectionString!, options.ContainerName!),
+            () => BlobContainer.GetOrCreateAsync(options.ResourceName, options.ConnectionString!, options.ContainerName!),
             AsyncLazyFlags.RetryOnFailure);
 
         _messageQueue = new AsyncLazy<QueueClient>(
-            () => Queue.GetOrCreateAsync(options.ConnectionString!, options.QueueName!),
+            () => Queue.GetOrCreateAsync(options.ResourceName, options.ConnectionString!, options.QueueName!),
             AsyncLazyFlags.RetryOnFailure);
     }
 
