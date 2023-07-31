@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using EnsureThat;
@@ -25,7 +26,10 @@ internal abstract class ServiceBusPubSubMessageQueueBase<TMessage>
         _ensureTopicExists = new AsyncLazy<bool>(
             async () =>
             {
-                var serviceBusAdminClient = new ServiceBusAdministrationClient(options.ConnectionString);
+                var serviceBusAdminClient = string.IsNullOrWhiteSpace(options.ResourceName)
+                    ? new ServiceBusAdministrationClient(options.ConnectionString)
+                    : new ServiceBusAdministrationClient($"{options.ResourceName}.servicebus.windows.net", new DefaultAzureCredential());
+
                 var queueExists = await serviceBusAdminClient.TopicExistsAsync(
                         options.TopicName)
                     .ConfigureAwait(false);
