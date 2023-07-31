@@ -13,13 +13,13 @@ public record AzureMessageQueueOptions
     {
         if (ConnectionString.IsNullOrWhiteSpace() && ResourceName.IsNullOrWhiteSpace())
         {
-            throw new ArgumentNullException(nameof(ConnectionString), "At least one connection must be provided, " +
+            throw new ArgumentException("At least one connection must be provided, " +
                 "either the connection string or the resource name (for Managed Identity usage).");
         }
 
         if (!ConnectionString.IsNullOrWhiteSpace() && !ResourceName.IsNullOrWhiteSpace())
         {
-            throw new ArgumentNullException(nameof(ConnectionString), "Only one connection can be provided, " +
+            throw new ArgumentException("Only one connection can be provided, " +
                 "either the connection string or the resource name (for Managed Identity usage).");
         }
 
