@@ -17,7 +17,7 @@ public static class BlobContainer
     {
         return string.IsNullOrWhiteSpace(storageName)
             ? await GetOrCreateConnectionStringAsync(connectionString!, queueName, cancellationToken).ConfigureAwait(false)
-            : await GetOrCreateManagedIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
+            : await GetOrCreateAzureIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<BlobContainerClient> GetOrCreateConnectionStringAsync(
@@ -35,7 +35,7 @@ public static class BlobContainer
         return blobContainerClient;
     }
 
-    private static async Task<BlobContainerClient> GetOrCreateManagedIdentityAsync(
+    private static async Task<BlobContainerClient> GetOrCreateAzureIdentityAsync(
        string storageName,
        string containerName,
        CancellationToken cancellationToken = default)

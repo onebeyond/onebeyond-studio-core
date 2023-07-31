@@ -17,7 +17,7 @@ public static class Queue
     {
         return string.IsNullOrWhiteSpace(storageName)
             ? await GetOrCreateConnectionStringAsync(connectionString!, queueName, cancellationToken).ConfigureAwait(false)
-            : await GetOrCreateManagedIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
+            : await GetOrCreateAzureIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<QueueClient> GetOrCreateConnectionStringAsync(
@@ -35,7 +35,7 @@ public static class Queue
         return queueClient;
     }
 
-    private static async Task<QueueClient> GetOrCreateManagedIdentityAsync(
+    private static async Task<QueueClient> GetOrCreateAzureIdentityAsync(
         string storageName,
         string queueName,
         CancellationToken cancellationToken = default)
