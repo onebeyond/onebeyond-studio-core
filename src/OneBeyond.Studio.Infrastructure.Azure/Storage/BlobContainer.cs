@@ -15,40 +15,34 @@ public static class BlobContainer
         string queueName,
         CancellationToken cancellationToken = default)
     {
-        return string.IsNullOrWhiteSpace(storageName)
-            ? await GetOrCreateConnectionStringAsync(connectionString!, queueName, cancellationToken).ConfigureAwait(false)
-            : await GetOrCreateAzureIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
+        var blobContainerClient = string.IsNullOrWhiteSpace(storageName)
+            ? GetConnectionStringClient(connectionString!, queueName)
+            : GetAzureIdentityClient(storageName!, queueName);
+
+        await blobContainerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        return blobContainerClient;
     }
 
-    private static async Task<BlobContainerClient> GetOrCreateConnectionStringAsync(
+    private static BlobContainerClient GetConnectionStringClient(
         string connectionString,
-        string containerName,
-        CancellationToken cancellationToken = default)
+        string containerName)
     {
         EnsureArg.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
         EnsureArg.IsNotNullOrWhiteSpace(containerName, nameof(containerName));
 
-        var blobContainerClient = new BlobContainerClient(connectionString, containerName);
-
-        await blobContainerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        return blobContainerClient;
+        return new BlobContainerClient(connectionString, containerName);
     }
 
-    private static async Task<BlobContainerClient> GetOrCreateAzureIdentityAsync(
+    private static BlobContainerClient GetAzureIdentityClient(
        string storageName,
-       string containerName,
-       CancellationToken cancellationToken = default)
+       string containerName)
     {
         EnsureArg.IsNotNullOrWhiteSpace(storageName, nameof(storageName));
         EnsureArg.IsNotNullOrWhiteSpace(containerName, nameof(containerName));
 
-        var blobContainerClient = new BlobContainerClient(
+        return new BlobContainerClient(
            new Uri($"https://{storageName}.blob.core.windows.net/{containerName}"),
            new DefaultAzureCredential());
-
-        await blobContainerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        return blobContainerClient;
     }
 }

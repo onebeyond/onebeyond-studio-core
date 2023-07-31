@@ -15,40 +15,34 @@ public static class Queue
         string queueName,
         CancellationToken cancellationToken = default)
     {
-        return string.IsNullOrWhiteSpace(storageName)
-            ? await GetOrCreateConnectionStringAsync(connectionString!, queueName, cancellationToken).ConfigureAwait(false)
-            : await GetOrCreateAzureIdentityAsync(storageName!, queueName, cancellationToken).ConfigureAwait(false);
+        var queueClient = string.IsNullOrWhiteSpace(storageName)
+            ? GetConnectionStringClient(connectionString!, queueName)
+            : GetAzureIdentityClient(storageName!, queueName);
+
+        await queueClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        return queueClient;
     }
 
-    private static async Task<QueueClient> GetOrCreateConnectionStringAsync(
+    private static QueueClient GetConnectionStringClient(
         string connectionString,
-        string queueName,
-        CancellationToken cancellationToken = default)
+        string queueName)
     {
         EnsureArg.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
         EnsureArg.IsNotNullOrWhiteSpace(queueName, nameof(queueName));
 
-        var queueClient = new QueueClient(connectionString, queueName);
-
-        await queueClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        return queueClient;
+        return new QueueClient(connectionString, queueName);
     }
 
-    private static async Task<QueueClient> GetOrCreateAzureIdentityAsync(
+    private static QueueClient GetAzureIdentityClient(
         string storageName,
-        string queueName,
-        CancellationToken cancellationToken = default)
+        string queueName)
     {
         EnsureArg.IsNotNullOrWhiteSpace(storageName, nameof(storageName));
         EnsureArg.IsNotNullOrWhiteSpace(queueName, nameof(queueName));
 
-        var queueClient = new QueueClient(
+        return new QueueClient(
             new Uri($"https://{storageName}.queue.core.windows.net/{queueName}"), 
             new DefaultAzureCredential());
-
-        await queueClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        return queueClient;
     }
 }
