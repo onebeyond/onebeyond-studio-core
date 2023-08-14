@@ -57,7 +57,10 @@ internal abstract class ServiceBusMessageQueueBase<TMessage>
                 return true;
             },
             AsyncLazyFlags.RetryOnFailure);
-        _serviceBusClient = new ServiceBusClient(options.ConnectionString);
+        
+        _serviceBusClient = string.IsNullOrWhiteSpace(options.ResourceName)
+                  ? new ServiceBusClient(options.ConnectionString)
+                  : new ServiceBusClient($"{options.ResourceName}.servicebus.windows.net", new DefaultAzureCredential());
         _serviceBusSender = _serviceBusClient.CreateSender(options.QueueName);
         _sessionIdToken = options.SessionId;
     }

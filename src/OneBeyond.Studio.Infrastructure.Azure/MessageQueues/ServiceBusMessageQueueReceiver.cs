@@ -52,7 +52,10 @@ internal sealed class ServiceBusMessageQueueReceiver<TMessage>
             AsyncLazyFlags.RetryOnFailure);
 
         var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
-        _client = new ServiceBusClient(options.ConnectionString, clientOptions);
+
+        _client = string.IsNullOrWhiteSpace(options.ResourceName)
+                   ? new ServiceBusClient(options.ConnectionString, clientOptions)
+                   : new ServiceBusClient($"{options.ResourceName}.servicebus.windows.net", new DefaultAzureCredential(), clientOptions);
         _messageReceiver = _client.CreateReceiver(options.QueueName);
     }
 
