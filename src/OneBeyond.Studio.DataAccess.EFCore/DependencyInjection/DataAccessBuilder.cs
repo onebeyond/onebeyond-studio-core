@@ -15,6 +15,8 @@ using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using Thinktecture;
 using Z.EntityFramework.Extensions;
 using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
+using System.Collections.Generic;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 
@@ -31,6 +33,7 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
 
     protected static ProxyGenerator ProxyGenerator { get; } = new();
     protected bool AreDomainEventsEnabled { get; private set; }
+    protected bool AreIntegrationEventsEnabled { get; private set; }
     protected IServiceCollection Services { get; }
 
     public IDataAccessBuilder WithDomainEvents()
@@ -39,6 +42,14 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
         Services.AddTransient<IPreSaveDomainEventDispatcher, DIBasedPreSaveDomainEventDispatcher>();
         Services.AddTransient<IPostSaveDomainEventDispatcher, DIBasedPostSaveDomainEventDispatcher>();
         return this;
+    }
+
+    public IDataAccessBuilder WithIntegrationEvents<TIntegrationEventDispatcher>()
+        where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher
+    {
+        AreIntegrationEventsEnabled = true;
+        Services.AddTransient<IIntegrationEventDispatcher, TIntegrationEventDispatcher>();
+        return WithDomainEvents();
     }
 
     public IDataAccessBuilder WithUnitOfWork(TimeSpan? timeout = default, IsolationLevel? isolationLevel = default)
@@ -61,7 +72,7 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
         IServiceCollection services,
         DataAccessOptions options,
         Action<IServiceProvider, DbContextOptionsBuilder<TDbContext>> configureDbContext,
-        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, TDbContext> createDbContext)
+        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, bool, TDbContext> createDbContext)
         : base(services)
     {
         EnsureArg.IsNotNull(options, nameof(options));
@@ -81,18 +92,28 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
                 configureDbContext(serviceProvider, dbContextOptionsBuilder);
                 dbContextOptionsBuilder.AddRelationalTypeMappingSourcePlugin<SmartEnumTypeMappingSourcePlugin>();
                 var dbContextOptions = dbContextOptionsBuilder.Options;
-                var dbContext = createDbContext(serviceProvider, dbContextOptions, AreDomainEventsEnabled);
+                var dbContext = createDbContext(serviceProvider, dbContextOptions, AreDomainEventsEnabled, AreIntegrationEventsEnabled);
                 if (AreDomainEventsEnabled)
                 {
                     var preSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPreSaveDomainEventDispatcher>();
                     var ambientContextAccessors = serviceProvider.GetServices<IAmbientContextAccessor>();
                     var domainEventsProcessor = new DomainEventsProcessor(preSaveDomainEventDispatcher, ambientContextAccessors);
+                    var processors = new List<IInterceptor> { domainEventsProcessor };
+
+                    if (AreIntegrationEventsEnabled)
+                    {
+                        var integrationEventDispatcher = serviceProvider.GetRequiredService<IIntegrationEventDispatcher>();
+                        var integrationEventsProcessor = new IntegrationEventsProcessor(integrationEventDispatcher);
+                        processors.Add(integrationEventsProcessor);
+                    }
+
                     dbContext = (TDbContext)ProxyGenerator.CreateClassProxyWithTarget(
                         typeof(TDbContext),
                         new[] { typeof(IInfrastructure<IServiceProvider>) }, // Potentially it requires intercepting all interfaces implemented by DbContext
                         dbContext,
-                        domainEventsProcessor);
+                        processors.ToArray());
                 }
+
                 return dbContext;
             });
 

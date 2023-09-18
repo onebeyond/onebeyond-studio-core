@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
                     options.ConnectionString,
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "audit"));
             },
-            (serviceProvider, dbContextOptions, areDomainEventsEnabled) => new AuditDbContext(dbContextOptions));
+            (serviceProvider, dbContextOptions, areDomainEventsEnabled, areIntegrationEventsEnabled) => new AuditDbContext(dbContextOptions));
 
 
         services.AddScoped(typeof(IAuditEventRepository), typeof(AuditEventRepository));

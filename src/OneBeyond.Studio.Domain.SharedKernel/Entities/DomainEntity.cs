@@ -2,20 +2,25 @@ using System.Collections.Generic;
 using System.Linq;
 using EnsureThat;
 using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 /// <summary>
-/// Base class for entity with domain event handling.
+/// Base class for entity with domain event and integration event handling.
 /// </summary>
 public abstract class DomainEntity
 {
     private readonly List<DomainEvent> _domainEvents;
+    private readonly List<IntegrationEvent> _integrationEvents;
 
     /// <summary>
     /// </summary>
     protected DomainEntity()
-        => _domainEvents = new List<DomainEvent>();
+    {
+        _domainEvents = new List<DomainEvent>();
+        _integrationEvents = new List<IntegrationEvent>();
+    }
 
     /// <summary>
     /// Entity's ID as string.
@@ -47,6 +52,38 @@ public abstract class DomainEntity
         var domainEvents = _domainEvents.ToList();
         _domainEvents.Clear();
         return domainEvents;
+    }
+
+    /// <summary>
+    /// Raises a domain event with regard to this entity. The time the event gets dispatched depends on integration event dispatcher implementation.
+    /// </summary>
+    /// <param name="integrationEvent"></param>
+    public void RaiseIntegrationEvent(IntegrationEvent integrationEvent)
+    {
+        EnsureArg.IsNotNull(integrationEvent, nameof(integrationEvent));
+        _integrationEvents.Add(integrationEvent);
+
+        if (integrationEvent.IsAlsoDomainEvent)
+        {
+            _domainEvents.Add(integrationEvent);
+        }
+    }
+
+    /// <summary>
+    /// Lists integration events raised so far. The method is supposed to be used by integration event processors only.
+    /// </summary>
+    /// <returns></returns>
+    public IReadOnlyCollection<IntegrationEvent> ListIntegrationEvents()
+        => _integrationEvents.AsReadOnly();
+
+    /// <summary>
+    /// Releases integration events raised so far. The method is supposed to be used by integration event processors only.
+    /// </summary>
+    public IReadOnlyCollection<IntegrationEvent> ReleaseIntegrationEvents()
+    {
+        var integrationEvents = _integrationEvents.ToList();
+        _integrationEvents.Clear();
+        return integrationEvents;
     }
 }
 

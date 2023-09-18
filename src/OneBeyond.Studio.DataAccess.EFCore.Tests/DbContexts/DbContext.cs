@@ -6,10 +6,11 @@ namespace OneBeyond.Studio.DataAccess.EFCore.Tests.DbContexts;
 
 internal class DbContext : Microsoft.EntityFrameworkCore.DbContext
 {
-    public DbContext(DbContextOptions options, bool areDomainEventsEnabled)
+    public DbContext(DbContextOptions options, bool areDomainEventsEnabled, bool areIntegrationEventsEnabled)
         : base(options)
     {
         AreDomainEventsEnabled = areDomainEventsEnabled;
+        AreIntegrationEventsEnabled = areIntegrationEventsEnabled;
     }
 
     /// <summary>
@@ -22,6 +23,7 @@ internal class DbContext : Microsoft.EntityFrameworkCore.DbContext
     }
 
     public bool AreDomainEventsEnabled { get; }
+    public bool AreIntegrationEventsEnabled { get; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

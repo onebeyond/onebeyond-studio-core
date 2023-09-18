@@ -1,23 +1,35 @@
 using System;
-using EnsureThat;
+using OneBeyond.Studio.Domain.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 
 /// <summary>
 /// </summary>
-public abstract class IntegrationEvent
+public abstract class IntegrationEvent : DomainEvent
 {
-    /// <summary>
-    /// </summary>
-    /// <param name="raisedAt"></param>
-    protected IntegrationEvent(DateTimeOffset raisedAt)
+    protected IntegrationEvent()
+        : base(DateTime.UtcNow)
     {
-        EnsureArg.IsNotDefault(raisedAt, nameof(raisedAt));
-
-        RaisedAt = raisedAt;
+        IsAlsoDomainEvent = true;
     }
 
-    /// <summary>
-    /// </summary>
-    public DateTimeOffset RaisedAt { get; }
+    protected IntegrationEvent(bool isAlsoDomainEvent)
+        : base(DateTime.UtcNow)
+    {
+        IsAlsoDomainEvent = isAlsoDomainEvent;
+    }
+
+    protected IntegrationEvent(DateTimeOffset raisedAt)
+        : base(raisedAt)
+    {
+        IsAlsoDomainEvent = true;
+    }
+
+    protected IntegrationEvent(DateTimeOffset raisedAt, bool isAlsoDomainEvent)
+        : base(raisedAt)
+    {
+        IsAlsoDomainEvent = isAlsoDomainEvent;
+    }
+
+    public bool IsAlsoDomainEvent { get; }
 }
