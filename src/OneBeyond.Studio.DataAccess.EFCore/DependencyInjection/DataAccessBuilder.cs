@@ -72,7 +72,7 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
         IServiceCollection services,
         DataAccessOptions options,
         Action<IServiceProvider, DbContextOptionsBuilder<TDbContext>> configureDbContext,
-        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, bool, TDbContext> createDbContext)
+        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, TDbContext> createDbContext)
         : base(services)
     {
         EnsureArg.IsNotNull(options, nameof(options));
@@ -92,7 +92,7 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
                 configureDbContext(serviceProvider, dbContextOptionsBuilder);
                 dbContextOptionsBuilder.AddRelationalTypeMappingSourcePlugin<SmartEnumTypeMappingSourcePlugin>();
                 var dbContextOptions = dbContextOptionsBuilder.Options;
-                var dbContext = createDbContext(serviceProvider, dbContextOptions, AreDomainEventsEnabled, AreIntegrationEventsEnabled);
+                var dbContext = createDbContext(serviceProvider, dbContextOptions, AreDomainEventsEnabled);
                 if (AreDomainEventsEnabled)
                 {
                     var preSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPreSaveDomainEventDispatcher>();
