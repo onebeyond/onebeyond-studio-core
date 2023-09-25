@@ -18,7 +18,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 public class AuthorizationRequirementBehavior<TRequest, TResponse>
     : AuthorizationRequirementBehavior
     , IPipelineBehavior<TRequest, TResponse>
-    where TRequest : class, IRequest<TResponse>
+    where TRequest : class, IBaseRequest
 {
     private readonly ILifetimeScope _container;
     private readonly AuthorizationOptions _authorizationOptions;
