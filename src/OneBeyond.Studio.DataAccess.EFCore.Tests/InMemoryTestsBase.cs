@@ -33,8 +33,8 @@ public abstract class InMemoryTestsBase : TestsBase
                     .UseInMemoryDatabase(databaseName)
                     .ReplaceService<IModelCacheKeyFactory, ModelCacheKeyFactory>();
             },
-            (serviceProvider, dbContextOptions, areDomainEventsEnabled, areIntegrationEventsEnabled) =>
-                new DbContexts.DbContext(dbContextOptions, areDomainEventsEnabled, areIntegrationEventsEnabled));
+            (serviceProvider, dbContextOptions, areDomainEventsEnabled) =>
+                new DbContexts.DbContext(dbContextOptions, areDomainEventsEnabled));
 
         if (_withDomainEvents)
         {

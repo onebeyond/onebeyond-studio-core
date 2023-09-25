@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         DataAccessOptions options,
         Action<IServiceProvider, DbContextOptionsBuilder<TDbContext>> configureDbContext,
-        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, bool, TDbContext> createDbContext)
+        Func<IServiceProvider, DbContextOptions<TDbContext>, bool, TDbContext> createDbContext)
         where TDbContext : DbContext
         => new DataAccessBuilder<TDbContext>(
             services,
