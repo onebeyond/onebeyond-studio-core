@@ -55,10 +55,11 @@ public abstract class DomainEntity
     }
 
     /// <summary>
-    /// Raises a domain event with regard to this entity. The time the event gets dispatched depends on integration event dispatcher implementation.
+    /// Raises a domain event with regard to this entity. 
+    /// The time the event gets dispatched depends on integration event dispatcher implementation.
     /// </summary>
-    /// <param name="integrationEvent"></param>
-    /// <param name="raiseAsDomainEvent"></param>
+    /// <param name="integrationEvent">The integration event</param>
+    /// <param name="raiseAsDomainEvent">Set to true if the integration event should be treated also as a domain event</param>
     public void RaiseIntegrationEvent(
         IntegrationEvent integrationEvent,
         bool raiseAsDomainEvent = false)
