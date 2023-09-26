@@ -24,9 +24,9 @@ public interface IDataAccessBuilder
     IDataAccessBuilder WithDomainEvents();
 
     /// <summary>
-    /// Enables integration events.
+    /// Enables domain and integration events.
     /// </summary>
     /// <returns></returns>
-    IDataAccessBuilder WithIntegrationEvents<TIntegrationEventDispatcher>()
+    IDataAccessBuilder WithDomainAndIntegrationEvents<TIntegrationEventDispatcher>()
         where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher;
 }

@@ -44,11 +44,12 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
         return this;
     }
 
-    public IDataAccessBuilder WithIntegrationEvents<TIntegrationEventDispatcher>()
+    public IDataAccessBuilder WithDomainAndIntegrationEvents<TIntegrationEventDispatcher>()
         where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher
     {
         AreIntegrationEventsEnabled = true;
         Services.AddTransient<IIntegrationEventDispatcher, TIntegrationEventDispatcher>();
+
         return WithDomainEvents();
     }
 
