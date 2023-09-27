@@ -1,23 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Transactions;
 using Castle.DynamicProxy;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
+using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
+using OneBeyond.Studio.DataAccess.EFCore.IntegrationEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Options;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
 using OneBeyond.Studio.DataAccess.EFCore.RelationalTypeMappings;
 using OneBeyond.Studio.DataAccess.EFCore.UnitsOfWork;
-using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using Thinktecture;
 using Z.EntityFramework.Extensions;
-using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
-using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
-using System.Collections.Generic;
-using OneBeyond.Studio.DataAccess.EFCore.IntegrationEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 
