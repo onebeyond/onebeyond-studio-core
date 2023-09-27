@@ -17,6 +17,7 @@ using Z.EntityFramework.Extensions;
 using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using System.Collections.Generic;
+using OneBeyond.Studio.DataAccess.EFCore.IntegrationEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 

@@ -13,7 +13,7 @@ using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 
-namespace OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
+namespace OneBeyond.Studio.DataAccess.EFCore.IntegrationEvents;
 
 using EntityIntegrationEventList = IReadOnlyCollection<(DomainEntity Entity, IReadOnlyCollection<IntegrationEvent> IntegrationEvents)>;
 
