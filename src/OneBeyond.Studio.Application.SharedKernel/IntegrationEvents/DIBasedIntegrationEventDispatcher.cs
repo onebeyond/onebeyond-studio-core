@@ -21,7 +21,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 
 /// <summary>
 /// </summary>
-internal sealed class DIBasedIntegrationEventDispatcher : IIntegrationEventDispatcher
+public sealed class DIBasedIntegrationEventDispatcher : IIntegrationEventDispatcher
 {
     private static readonly ILogger Logger = LogManager.CreateLogger<DIBasedIntegrationEventDispatcher>();
     private static readonly MethodInfo CreateHandlerWrapperMethod =

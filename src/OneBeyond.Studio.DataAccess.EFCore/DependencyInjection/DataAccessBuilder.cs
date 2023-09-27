@@ -53,6 +53,9 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
         return WithDomainEvents();
     }
 
+    public IDataAccessBuilder WithDomainAndIntegrationEvents()
+        => WithDomainAndIntegrationEvents<DIBasedIntegrationEventDispatcher>();
+
     public IDataAccessBuilder WithUnitOfWork(TimeSpan? timeout = default, IsolationLevel? isolationLevel = default)
     {
         Services.Configure<UnitOfWorkOptions>(

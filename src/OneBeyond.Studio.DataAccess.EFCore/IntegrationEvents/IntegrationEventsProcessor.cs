@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using OneBeyond.Studio.Crosscuts.DynamicProxy;
 using OneBeyond.Studio.Crosscuts.Reflection;
 using OneBeyond.Studio.Crosscuts.Utilities.LogicalCallContext;
-using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
@@ -51,11 +50,11 @@ internal sealed class IntegrationEventsProcessor : InterceptorBase
     {
         using (var saveChangesCall = InterceptSaveChangesCall(execution))
         {
-            var entityDomainEvents = default(EntityIntegrationEventList);
+            var entityIntegrationEvents = default(EntityIntegrationEventList);
             if (saveChangesCall?.IsFirstOnStack == true)
             {
-                entityDomainEvents = CollectIntegrationEvents(saveChangesCall.DbContext);
-                await DispatchIntegrationEventsOnPreSaveAsync(entityDomainEvents).ConfigureAwait(false);
+                entityIntegrationEvents = CollectIntegrationEvents(saveChangesCall.DbContext);
+                await DispatchIntegrationEventsOnPreSaveAsync(entityIntegrationEvents).ConfigureAwait(false);
             }
 
             return await base.ExecuteAsync(execution).ConfigureAwait(false);
@@ -93,23 +92,22 @@ internal sealed class IntegrationEventsProcessor : InterceptorBase
             .ToList();
     }
 
-    private static SaveChangesCall? InterceptSaveChangesCall(IExecution execution)
+    private static SaveChangesCallIntegration? InterceptSaveChangesCall(IExecution execution)
     {
-        return SaveChangesCall.MethodInfoList.Any(
+        return SaveChangesCallIntegration.MethodInfoList.Any(
                 (methodInfo) =>
                     methodInfo.Equals(execution.Method.GetBaseDefinition())) // SaveChanges can be overriden by a derived class
-            ? new SaveChangesCall((DbContext)execution.Target)
+            ? new SaveChangesCallIntegration((DbContext)execution.Target)
             : default;
     }
 
-    private sealed class SaveChangesCall : IDisposable
+    private sealed class SaveChangesCallIntegration : IDisposable
     {
-        public SaveChangesCall(DbContext dbContext)
+        public SaveChangesCallIntegration(DbContext dbContext)
         {
             EnsureArg.IsNotNull(dbContext, nameof(dbContext));
 
             DbContext = dbContext;
-            RaisedDomainEvents = dbContext.Set<RaisedDomainEvent>();
             if (LogicalCallContext.FindData<bool?>(SAVE_CHANGES_CALL_DATA) == true)
             {
                 IsFirstOnStack = false;
@@ -121,7 +119,7 @@ internal sealed class IntegrationEventsProcessor : InterceptorBase
             }
         }
 
-        private const string SAVE_CHANGES_CALL_DATA = nameof(SaveChangesCall);
+        private const string SAVE_CHANGES_CALL_DATA = nameof(SaveChangesCallIntegration);
 
         public static MethodInfo[] MethodInfoList { get; } = new[]
         {
@@ -136,7 +134,6 @@ internal sealed class IntegrationEventsProcessor : InterceptorBase
             };
 
         public DbContext DbContext { get; }
-        public DbSet<RaisedDomainEvent> RaisedDomainEvents { get; }
         public bool IsFirstOnStack { get; }
 
         public void Dispose()

@@ -29,4 +29,10 @@ public interface IDataAccessBuilder
     /// <returns></returns>
     IDataAccessBuilder WithDomainAndIntegrationEvents<TIntegrationEventDispatcher>()
         where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher;
+
+    /// <summary>
+    /// Enables domain and integration events (using default DI dispatcher).
+    /// </summary>
+    /// <returns></returns>
+    IDataAccessBuilder WithDomainAndIntegrationEvents();
 }
