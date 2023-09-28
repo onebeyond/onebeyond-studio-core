@@ -1,5 +1,6 @@
 using System;
 using System.Transactions;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 
@@ -21,4 +22,17 @@ public interface IDataAccessBuilder
     /// </summary>
     /// <returns></returns>
     IDataAccessBuilder WithDomainEvents();
+
+    /// <summary>
+    /// Enables domain and integration events.
+    /// </summary>
+    /// <returns></returns>
+    IDataAccessBuilder WithDomainAndIntegrationEvents<TIntegrationEventDispatcher>()
+        where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher;
+
+    /// <summary>
+    /// Enables domain and integration events (using default DI dispatcher).
+    /// </summary>
+    /// <returns></returns>
+    IDataAccessBuilder WithDomainAndIntegrationEvents();
 }

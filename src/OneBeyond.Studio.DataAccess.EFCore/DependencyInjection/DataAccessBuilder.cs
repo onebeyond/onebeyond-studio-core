@@ -1,20 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Transactions;
 using Castle.DynamicProxy;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
+using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
+using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
+using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using OneBeyond.Studio.DataAccess.EFCore.DomainEvents;
+using OneBeyond.Studio.DataAccess.EFCore.IntegrationEvents;
 using OneBeyond.Studio.DataAccess.EFCore.Options;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
 using OneBeyond.Studio.DataAccess.EFCore.RelationalTypeMappings;
 using OneBeyond.Studio.DataAccess.EFCore.UnitsOfWork;
-using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
-using OneBeyond.Studio.Application.SharedKernel.UnitsOfWork;
 using Thinktecture;
 using Z.EntityFramework.Extensions;
-using OneBeyond.Studio.Application.SharedKernel.DomainEvents;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.DependencyInjection;
 
@@ -31,6 +34,7 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
 
     protected static ProxyGenerator ProxyGenerator { get; } = new();
     protected bool AreDomainEventsEnabled { get; private set; }
+    protected bool AreIntegrationEventsEnabled { get; private set; }
     protected IServiceCollection Services { get; }
 
     public IDataAccessBuilder WithDomainEvents()
@@ -40,6 +44,18 @@ internal abstract class DataAccessBuilder : IDataAccessBuilder
         Services.AddTransient<IPostSaveDomainEventDispatcher, DIBasedPostSaveDomainEventDispatcher>();
         return this;
     }
+
+    public IDataAccessBuilder WithDomainAndIntegrationEvents<TIntegrationEventDispatcher>()
+        where TIntegrationEventDispatcher : class, IIntegrationEventDispatcher
+    {
+        AreIntegrationEventsEnabled = true;
+        Services.AddTransient<IIntegrationEventDispatcher, TIntegrationEventDispatcher>();
+
+        return WithDomainEvents();
+    }
+
+    public IDataAccessBuilder WithDomainAndIntegrationEvents()
+        => WithDomainAndIntegrationEvents<DIBasedIntegrationEventDispatcher>();
 
     public IDataAccessBuilder WithUnitOfWork(TimeSpan? timeout = default, IsolationLevel? isolationLevel = default)
     {
@@ -87,12 +103,22 @@ internal sealed class DataAccessBuilder<TDbContext> : DataAccessBuilder
                     var preSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPreSaveDomainEventDispatcher>();
                     var ambientContextAccessors = serviceProvider.GetServices<IAmbientContextAccessor>();
                     var domainEventsProcessor = new DomainEventsProcessor(preSaveDomainEventDispatcher, ambientContextAccessors);
+                    var processors = new List<IInterceptor> { domainEventsProcessor };
+
+                    if (AreIntegrationEventsEnabled)
+                    {
+                        var integrationEventDispatcher = serviceProvider.GetRequiredService<IIntegrationEventDispatcher>();
+                        var integrationEventsProcessor = new IntegrationEventsProcessor(integrationEventDispatcher);
+                        processors.Add(integrationEventsProcessor);
+                    }
+
                     dbContext = (TDbContext)ProxyGenerator.CreateClassProxyWithTarget(
                         typeof(TDbContext),
                         new[] { typeof(IInfrastructure<IServiceProvider>) }, // Potentially it requires intercepting all interfaces implemented by DbContext
                         dbContext,
-                        domainEventsProcessor);
+                        processors.ToArray());
                 }
+
                 return dbContext;
             });
 
