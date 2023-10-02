@@ -8,7 +8,7 @@ using Xunit;
 
 namespace OneBeyond.Studio.Crosscuts.Tests;
 
-public sealed class FileSignatureValidatorsTest
+public sealed class FileUploadValidatorsTest
 {
     [Fact]
     public void TestFileValidatorShouldAcceptDocuments()
@@ -245,6 +245,48 @@ public sealed class FileSignatureValidatorsTest
         };
 
         action.Should().Throw<FileContentValidatorException>();
+    }
+
+    [Fact]
+    public void TestFileValidatorShouldAcceptFileOfLessThan20Bytes()
+    {
+        var validator = new FileValidatorBuilder()
+            .AllowSimpleText()
+            .HasMaxSize(20);
+
+        var action = () =>
+        {
+            using (var stream = GetFile("TestFiles/Text.txt"))
+            {
+                validator.ValidateFile(
+                    "Text.txt",
+                    "text/plain",
+                    stream);
+            }
+        };
+
+        action.Should().NotThrow<FileSizeValidatorException>();
+    }
+
+    [Fact]
+    public void TestFileValidatorShouldNotAcceptFileMoreThan10Bytes()
+    {
+        var validator = new FileValidatorBuilder()
+            .AllowSimpleText()
+            .HasMaxSize(10);
+
+        var action = () =>
+        {
+            using (var stream = GetFile("TestFiles/Text.txt"))
+            {
+                validator.ValidateFile(
+                    "Text.txt",
+                    "text/plain",
+                    stream);
+            }
+        };
+
+        action.Should().Throw<FileSizeValidatorException>();
     }
 
     private static Stream GetFile(string filePath)

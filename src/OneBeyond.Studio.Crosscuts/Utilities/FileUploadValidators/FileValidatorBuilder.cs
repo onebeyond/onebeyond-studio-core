@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using EnsureThat;
+using OneBeyond.Studio.Crosscuts.Streams;
 using OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators.ImageValidators;
 using OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators.OfficeValidators;
 using OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators.OtherValidators;
@@ -11,6 +12,7 @@ namespace OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators;
 public sealed class FileValidatorBuilder
 {
     private readonly Dictionary<string, IFileContentValidator> _validators = new();
+    private int? _maxFileSize = null;
 
     public FileValidatorBuilder AddValidator(IFileContentValidator validator)
     {
@@ -80,6 +82,12 @@ public sealed class FileValidatorBuilder
     public FileValidatorBuilder AllowSimpleText()
         => AddValidator(new TxtValidator());
 
+    public FileValidatorBuilder HasMaxSize(int maxFileSize)
+    {
+        _maxFileSize = maxFileSize;
+        return this;
+    }
+
     public void ValidateFile(string fileName, string contentType, Stream content)
     {
         EnsureArg.IsNotEmptyOrWhiteSpace(fileName, nameof(fileName));
@@ -91,7 +99,9 @@ public sealed class FileValidatorBuilder
             throw new FileContentValidatorException($"Unable to find a validator for contet type: {contentType}.");
         }
 
-        validator.ValidateFileContent(fileName, contentType, content);
+        var contentInByte = content.ToByteArray();
+        ValidateFileSize(contentInByte);
+        validator.ValidateFileContent(fileName, contentType, contentInByte);
     }
 
     public void ValidateFile(string fileName, string contentType, byte[] content)
@@ -105,7 +115,16 @@ public sealed class FileValidatorBuilder
             throw new FileContentValidatorException($"Unable to find a validator for contet type: {contentType}.");
         }
 
+        ValidateFileSize(content);
         validator.ValidateFileContent(fileName, contentType, content);
+    }
+
+    public void ValidateFileSize(byte[] content)
+    {
+        if (_maxFileSize.HasValue && content.Length > _maxFileSize.Value)
+        {
+            throw new FileSizeValidatorException($"The file exceeds the maximum allowed size ({_maxFileSize / 1_000_000} Mb)");
+        }
     }
 
     public FileValidatorBuilder AllowImages()
