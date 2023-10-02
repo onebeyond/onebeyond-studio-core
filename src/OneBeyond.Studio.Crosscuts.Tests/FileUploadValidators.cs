@@ -248,19 +248,19 @@ public sealed class FileUploadValidatorsTest
     }
 
     [Fact]
-    public void TestFileValidatorShouldAcceptFileOfLessThan20Bytes()
+    public void TestFileValidatorShouldAcceptImageOfLessThan400KB()
     {
         var validator = new FileValidatorBuilder()
-            .AllowSimpleText()
-            .HasMaxSize(20);
+            .AllowImages()
+            .HasMaxSizeInKB(400);
 
         var action = () =>
         {
-            using (var stream = GetFile("TestFiles/Text.txt"))
+            using (var stream = GetFile("TestFiles/image.gif"))
             {
                 validator.ValidateFile(
-                    "Text.txt",
-                    "text/plain",
+                    "image.gif",
+                    "image/gif",
                     stream);
             }
         };
@@ -269,19 +269,19 @@ public sealed class FileUploadValidatorsTest
     }
 
     [Fact]
-    public void TestFileValidatorShouldNotAcceptFileMoreThan10Bytes()
+    public void TestFileValidatorShouldNotAcceptImageOfMoreThan300KB()
     {
         var validator = new FileValidatorBuilder()
-            .AllowSimpleText()
-            .HasMaxSize(10);
+            .AllowImages()
+            .HasMaxSizeInKB(300);
 
         var action = () =>
         {
-            using (var stream = GetFile("TestFiles/Text.txt"))
+            using (var stream = GetFile("TestFiles/image.gif"))
             {
                 validator.ValidateFile(
-                    "Text.txt",
-                    "text/plain",
+                    "image.gif",
+                    "image/gif",
                     stream);
             }
         };
