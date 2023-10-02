@@ -12,7 +12,7 @@ namespace OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators;
 public sealed class FileValidatorBuilder
 {
     private readonly Dictionary<string, IFileContentValidator> _validators = new();
-    private long? _maxFileSizeInBytes = null;
+    private int? _maxFileSizeInBytes = null;
 
     public FileValidatorBuilder AddValidator(IFileContentValidator validator)
     {
@@ -82,19 +82,19 @@ public sealed class FileValidatorBuilder
     public FileValidatorBuilder AllowSimpleText()
         => AddValidator(new TxtValidator());
 
-    public FileValidatorBuilder HasMaxSize(long maxFileSizeInBytes)
+    public FileValidatorBuilder HasMaxSize(int maxFileSizeInBytes)
     {
         _maxFileSizeInBytes = maxFileSizeInBytes;
         return this;
     }
 
-    public FileValidatorBuilder HasMaxSizeInKB(long maxFileSizeInKB)
+    public FileValidatorBuilder HasMaxSizeInKB(int maxFileSizeInKB)
         => HasMaxSize(maxFileSizeInKB * 1024);
 
-    public FileValidatorBuilder HasMaxSizeInMB(long maxFileSizeInMB)
+    public FileValidatorBuilder HasMaxSizeInMB(int maxFileSizeInMB)
         => HasMaxSize(maxFileSizeInMB * 1024 * 1024);
 
-    public FileValidatorBuilder HasMaxSizeInGB(long maxFileSizeInGB)
+    public FileValidatorBuilder HasMaxSizeInGB(int maxFileSizeInGB)
         => HasMaxSize(maxFileSizeInGB * 1024 * 1024 * 1024);
 
     public void ValidateFile(string fileName, string contentType, Stream content)
@@ -132,7 +132,7 @@ public sealed class FileValidatorBuilder
     {
         if (_maxFileSizeInBytes.HasValue && content.Length > _maxFileSizeInBytes.Value)
         {
-            throw new FileSizeValidatorException($"The file exceeds the maximum allowed size ({_maxFileSizeInBytes / 1_000_000} Mb)");
+            throw new FileSizeValidatorException($"The file exceeds the maximum allowed size ({_maxFileSizeInBytes / 1024} MB)");
         }
     }
 
