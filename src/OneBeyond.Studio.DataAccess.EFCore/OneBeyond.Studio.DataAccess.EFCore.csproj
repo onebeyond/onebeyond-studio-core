@@ -17,13 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
-    <PackageReference Include="Scrutor" Version="4.2.2" />
-    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.18.0" />
-    <PackageReference Include="Thinktecture.EntityFrameworkCore.Relational" Version="7.2.1" />
-    <PackageReference Include="DelegateDecompiler.EntityFrameworkCore5" Version="0.32.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Nito.AsyncEx.Coordination" />
+    <PackageReference Include="Scrutor" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" />
+    <PackageReference Include="Thinktecture.EntityFrameworkCore.Relational" />
+    <PackageReference Include="DelegateDecompiler.EntityFrameworkCore5" />
   </ItemGroup>
 
   <ItemGroup>
