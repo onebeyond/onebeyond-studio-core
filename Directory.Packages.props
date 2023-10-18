@@ -54,7 +54,7 @@
     <PackageVersion Include="Scrutor" Version="4.2.2" />
     <PackageVersion Include="Serilog" Version="3.0.1" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageVersion Include="Thinktecture.EntityFrameworkCore.Relational" Version="7.2.1" />
+    <PackageVersion Include="Thinktecture.EntityFrameworkCore.Relational" Version="7.2.2" />
     <PackageVersion Include="TimeZoneConverter" Version="6.1.0" />
     <PackageVersion Include="xunit" Version="2.5.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.1" />
