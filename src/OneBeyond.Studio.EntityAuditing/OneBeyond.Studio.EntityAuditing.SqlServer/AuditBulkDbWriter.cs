@@ -38,7 +38,10 @@ public class AuditBulkDbWriter : IAuditBulkWriter
         if (auditConverter is not null)
         {
             var auditEvent = await (auditConverter as AuditDbConverter<TEntity>)!.ConvertAsync(entity, auditEntityEvent, cancellationToken);
-            _auditEvents.Add(auditEvent);
+            if (auditEvent is not null)
+            {
+                _auditEvents.Add(auditEvent);
+            }
         }
     }
 
