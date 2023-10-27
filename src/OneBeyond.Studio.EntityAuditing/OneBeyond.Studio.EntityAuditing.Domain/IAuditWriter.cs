@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +11,4 @@ public interface IAuditWriter<in TEntity> : IAuditWriter
     where TEntity : class
 {
     Task WriteAsync(TEntity entity, AuditEvent @event, CancellationToken cancellationToken);
-
-    Task WriteBulkAsync<T>(IReadOnlyCollection<(T Entity, AuditEvent Event)> entires, CancellationToken cancellationToken)
-        where T : TEntity;
 }

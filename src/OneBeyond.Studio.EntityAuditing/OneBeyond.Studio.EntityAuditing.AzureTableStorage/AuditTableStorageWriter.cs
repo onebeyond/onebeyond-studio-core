@@ -60,9 +60,6 @@ public class AuditTableStorageWriter<TEntity> : IAuditWriter<TEntity>
         await tableClient.AddEntityAsync(dynamicTableEntity, cancellationToken);
     }
 
-    public Task WriteBulkAsync<T>(IReadOnlyCollection<(T Entity, AuditEvent Event)> entires, CancellationToken cancellationToken) where T : TEntity
-        => throw new NotImplementedException();
-
     private async Task<TableClient> GetTableClientAsync(string tableName, CancellationToken cancellationToken)
     {
         tableName = StorageTableUtils.SanitiseTableName($"{_tablePrefix}{tableName}".ToLowerInvariant());
