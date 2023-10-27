@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -47,7 +48,10 @@ public class AuditBulkDbWriter : IAuditBulkWriter
 
     public async Task FlushAsync(CancellationToken cancellationToken)
     {
-        await _repository.AddBulkAsync(_auditEvents, cancellationToken);
-        _auditEvents.Clear();
+        if (_auditEvents.Any())
+        {
+            await _repository.AddBulkAsync(_auditEvents, cancellationToken);
+            _auditEvents.Clear();
+        }
     }
 }
