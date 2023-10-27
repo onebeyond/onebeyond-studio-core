@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -33,18 +34,41 @@ public class AuditDbWriter<TEntity> : IAuditWriter<TEntity>
         EnsureArg.IsNotNull(entity, nameof(entity));
         EnsureArg.IsNotNull(auditEntityEvent, nameof(auditEntityEvent));
 
+        var auditEvent = await GetAuditEventAsync(entity, auditEntityEvent, cancellationToken);
+        await _repository.AddAsync(auditEvent, cancellationToken);
+    }
+
+    public virtual async Task WriteBulkAsync<T>(IReadOnlyCollection<(T Entity, AuditEvent Event)> entires, CancellationToken cancellationToken) where T : TEntity 
+    {
+        EnsureArg.IsNotNull(entires, nameof(entires));
+
+        List<Entities.AuditEvent> auditEvents = new();
+
+        foreach(var entry in entires)
+        {
+            var ev = await GetAuditEventAsync(entry.Entity, entry.Event, cancellationToken);
+
+            if (ev is not null)
+            {
+                auditEvents.Add(ev); 
+            }
+        }
+        await _repository.AddBulkAsync(auditEvents, cancellationToken);
+    }
+
+    private async Task<Entities.AuditEvent> GetAuditEventAsync(TEntity entity, AuditEvent auditEntityEvent, CancellationToken cancellationToken)
+    {
         var changes = await _auditStringBuilder.SerializeAsync(entity, auditEntityEvent, cancellationToken);
 
         if (auditEntityEvent.EventType == AuditActionType.Update.Name && changes.IsEmpty)
         {
-            return; // Do not write anything if there are no changes to record
+            return null; // Do not write anything if there are no changes to record
         }
 
-        var auditEvent = Entities.AuditEvent.FromAuditInfo(
-            auditEntityEvent, 
-            _auditEntityTypeBuilder.GetEntityName(), 
+        return Entities.AuditEvent.FromAuditInfo(
+            auditEntityEvent,
+            _auditEntityTypeBuilder.GetEntityName(),
             changes.Data.ToString());
 
-        await _repository.AddAsync(auditEvent, cancellationToken);
     }
 }
