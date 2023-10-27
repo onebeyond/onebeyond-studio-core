@@ -40,8 +40,6 @@ public class AuditDbWriter<TEntity> : IAuditWriter<TEntity>
             return; // Do not write anything if there are no changes to record
         }
 
-        var entityName = _auditEntityTypeBuilder.GetEntityName();
-
         var auditEvent = Entities.AuditEvent.FromAuditInfo(
             auditEntityEvent, 
             _auditEntityTypeBuilder.GetEntityName(), 
