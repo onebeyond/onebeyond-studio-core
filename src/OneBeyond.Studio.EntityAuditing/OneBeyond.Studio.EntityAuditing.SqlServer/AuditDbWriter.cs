@@ -28,7 +28,10 @@ public class AuditDbWriter<TEntity> : IAuditWriter<TEntity>
         EnsureArg.IsNotNull(auditEntityEvent, nameof(auditEntityEvent));
 
         var auditEvent = await _converter.ConvertAsync(entity, auditEntityEvent, cancellationToken);
-        await _repository.AddAsync(auditEvent, cancellationToken);
+        if (auditEvent is not null)
+        {
+            await _repository.AddAsync(auditEvent, cancellationToken);
+        }
     }
 }
 
