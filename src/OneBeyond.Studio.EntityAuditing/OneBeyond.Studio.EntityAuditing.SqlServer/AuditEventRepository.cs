@@ -134,7 +134,7 @@ internal sealed class AuditEventRepository : IAuditEventRepository
     {
         using var sqlBulkCopy = new SqlBulkCopy(_dbContext.Database.GetConnectionString());
 
-        sqlBulkCopy.DestinationTableName = _dbContext.Model.FindEntityType(typeof(AuditEvent))!.GetTableName()!;
+        sqlBulkCopy.DestinationTableName = _dbContext.Model.FindEntityType(typeof(AuditEvent))!.GetSchemaQualifiedTableName()!;
 
         _typeMappings
             .ForEach((column) =>
