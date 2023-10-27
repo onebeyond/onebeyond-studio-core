@@ -58,6 +58,8 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
             .Where((entry) => entry.Entity is not RaisedDomainEvent) // ignore domain events
             .Where((entry) => IsEntityTracked(entry)); // Respect attributes and mode
 
+        var auditContext = _serviceProvider.GetRequiredService<IAuditContext>();
+
         // Split out individual entities from event to track
         foreach (var entry in entries)
         {
@@ -71,7 +73,6 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
                 continue;
             }
 
-            var auditContext = _serviceProvider.GetRequiredService<IAuditContext>();
             var auditEventEntity = new AuditEvent
             {
                 EventType = entry.Action,
