@@ -22,6 +22,8 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
     private readonly IServiceProvider _serviceProvider;
     private readonly EntityAuditingOptions _options;
 
+    private IAuditBulkWriter _auditBulkWriter;
+
     public AuditDataProvider(IServiceProvider serviceProvider)
     {
         EnsureArg.IsNotNull(serviceProvider);
@@ -35,9 +37,21 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
         => throw new NotSupportedException();
 
     public override Task<object> InsertEventAsync(Audit.Core.AuditEvent auditEvent, CancellationToken cancellationToken = default)
-        => ProcessEventAsync(auditEvent);
+        => ProcessEventAsync(auditEvent, cancellationToken);
 
-    private async Task<object> ProcessEventAsync(Audit.Core.AuditEvent auditEvent)
+    private IAuditBulkWriter GetBulkWriter()
+    {
+        if (_auditBulkWriter is null)
+        {
+            _auditBulkWriter = _serviceProvider.GetService<IAuditBulkWriter>();
+        }
+
+        return _auditBulkWriter;
+    }
+
+    private async Task<object> ProcessEventAsync(
+        Audit.Core.AuditEvent auditEvent, 
+        CancellationToken cancellationToken)
     {
         if (auditEvent is not AuditEventEntityFramework efAudit)
         {
@@ -58,6 +72,8 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
             .Where((entry) => entry.Entity is not RaisedDomainEvent) // ignore domain events
             .Where((entry) => IsEntityTracked(entry)); // Respect attributes and mode
 
+        var auditContext = _serviceProvider.GetRequiredService<IAuditContext>();
+
         // Split out individual entities from event to track
         foreach (var entry in entries)
         {
@@ -71,7 +87,6 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
                 continue;
             }
 
-            var auditContext = _serviceProvider.GetRequiredService<IAuditContext>();
             var auditEventEntity = new AuditEvent
             {
                 EventType = entry.Action,
@@ -85,11 +100,28 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
             GetChangesFromNavigationProperty(entries, entry, auditEventEntity);
 
             auditEventEntity.AddChanges(GetActualChanges(entry));
+
             if (!auditEventEntity.EntityChanges.Any() && !auditEventEntity.NavigationPropertyAuditEvents.Any())
             {
                 continue;
             }
 
+            await WriteEntryAsync(entry, auditEventEntity, cancellationToken);
+        }
+
+        await FinishWriteAsync(cancellationToken);
+
+        return 1;
+    }
+
+    private async Task WriteEntryAsync(EventEntry entry, AuditEvent auditEventEntity, CancellationToken cancellationToken)
+    {
+        if (_options.UseBulkInsert)
+        {
+            await GetBulkWriter().WriteAsync(entry, auditEventEntity, cancellationToken);
+        }
+        else
+        {
             var entityType = entry.Entity.GetType();
             var auditWriterType = typeof(IAuditWriter<>).GetGenericTypeDefinition().MakeGenericType(entityType);
 
@@ -100,8 +132,14 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
                 await writeAsyncFunc(auditWriter, entry.Entity, auditEventEntity);
             }
         }
+    }
 
-        return 1;
+    private async Task FinishWriteAsync(CancellationToken cancellationToken)
+    {
+        if (_options.UseBulkInsert)
+        {
+            await GetBulkWriter().FlushAsync(cancellationToken);
+        }
     }
 
     /// <summary>

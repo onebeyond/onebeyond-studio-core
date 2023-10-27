@@ -42,6 +42,8 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped(typeof(IAuditEventRepository), typeof(AuditEventRepository));
         services.AddTransient(typeof(IAuditWriter<>), typeof(AuditDbWriter<>));
+        services.AddTransient(typeof(IAuditBulkWriter), typeof(AuditBulkDbWriter));
+        services.AddTransient(typeof(AuditDbConverter<>), typeof(AuditDbConverter<>));
 
         services.AddSingleton(options);
         services.AddSingleton(typeof(IAuditingInitialiser), typeof(SqlEntityAuditingInitialiser));
