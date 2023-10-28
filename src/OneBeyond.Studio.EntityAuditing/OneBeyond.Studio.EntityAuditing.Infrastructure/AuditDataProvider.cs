@@ -118,7 +118,7 @@ public sealed class AuditDataProvider : Audit.Core.AuditDataProvider
     {
         if (_options.UseBulkInsert)
         {
-            await GetBulkWriter().WriteAsync(entry, auditEventEntity, cancellationToken);
+            await GetBulkWriter().WriteAsync(entry.Entity, auditEventEntity, cancellationToken);
         }
         else
         {
