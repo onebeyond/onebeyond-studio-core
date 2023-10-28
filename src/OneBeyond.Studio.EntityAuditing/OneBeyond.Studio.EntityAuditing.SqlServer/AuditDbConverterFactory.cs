@@ -51,7 +51,7 @@ internal static class AuditDbConverterFactory
         return lambda.Compile();
     }
 
-    private static Task ConvertEntityEventAsync<TEntity>(
+    private static Task<Entities.AuditEvent> ConvertEntityEventAsync<TEntity>(
         IAuditDbConverter auditConverter,
         object entity,
         AuditEvent @event)
