@@ -7,7 +7,11 @@ using OneBeyond.Studio.EntityAuditing.Domain.AuditEventSerializers;
 
 namespace OneBeyond.Studio.EntityAuditing.SqlServer;
 
-public class AuditDbConverter<TEntity> 
+public interface IAuditDbConverter
+{
+}
+
+public class AuditDbConverter<TEntity> : IAuditDbConverter
     where TEntity : class
 {
     private readonly IJsonAuditEventSerializer<TEntity> _auditStringBuilder;
