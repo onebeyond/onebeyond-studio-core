@@ -26,8 +26,7 @@ public class AuditBulkDbWriter : IAuditBulkWriter
         _repository = repository;
     }
 
-    public async Task WriteAsync<TEntity>(TEntity entity, AuditEvent auditEntityEvent, CancellationToken cancellationToken)
-        where TEntity : class
+    public async Task WriteAsync(object entity, AuditEvent auditEntityEvent, CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(entity, nameof(entity));
         EnsureArg.IsNotNull(auditEntityEvent, nameof(auditEntityEvent));
@@ -35,10 +34,13 @@ public class AuditBulkDbWriter : IAuditBulkWriter
         var entityType = entity.GetType();
         var auditConverterType = typeof(AuditDbConverter<>).GetGenericTypeDefinition().MakeGenericType(entityType);
 
-        var auditConverter = _serviceProvider.GetService(auditConverterType);
+        var auditConverter = (IAuditDbConverter)_serviceProvider.GetService(auditConverterType);
         if (auditConverter is not null)
         {
-            var auditEvent = await (auditConverter as AuditDbConverter<TEntity>)!.ConvertAsync(entity, auditEntityEvent, cancellationToken);
+            //var auditEvent = await (auditConverter as AuditDbConverter<TEntity>)!.ConvertAsync(entity, auditEntityEvent, cancellationToken);
+            var converAsyncFunc = AuditDbConverterFactory.GetOrCompileConvertFunction(entityType);
+            var auditEvent = await converAsyncFunc(auditConverter, entity, auditEntityEvent);
+
             if (auditEvent is not null)
             {
                 _auditEvents.Add(auditEvent);
