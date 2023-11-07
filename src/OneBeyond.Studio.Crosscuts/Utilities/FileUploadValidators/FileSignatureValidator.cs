@@ -86,7 +86,10 @@ public abstract class FileSignatureValidator : IFileContentValidator
         ValidateFileContent(
             fileName,
             contentType,
-            (sizeToRead) => new ReadOnlySpan<byte>(content, 0, sizeToRead).ToArray());
+            (sizeToRead) => new ReadOnlySpan<byte>(content, 0, sizeToRead > content.Length 
+                ? content.Length
+                : sizeToRead
+                ).ToArray());
     }
 
     /// <summary>
