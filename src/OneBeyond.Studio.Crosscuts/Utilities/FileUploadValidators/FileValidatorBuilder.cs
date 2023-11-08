@@ -74,7 +74,8 @@ public sealed class FileValidatorBuilder
             .AddValidator(new MpegValidator());
 
     public FileValidatorBuilder AllowAudio()
-        => AddValidator(new WavValidator());
+        => AddValidator(new WavValidator())
+            .AddValidator(new Mp3Validator());
 
     public FileValidatorBuilder AllowVisio()
         => AddValidator(new VisioValidator());
