@@ -32,13 +32,4 @@ public sealed class FileContentValidatorException : OneBeyondException
         : base(message, innerException)
     {
     }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    private FileContentValidatorException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
 }

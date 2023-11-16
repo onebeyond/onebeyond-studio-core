@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Exceptions;
 
@@ -15,12 +14,6 @@ public sealed class AuthorizationPolicyMissingException : AuthorizationException
         : base($"Request of the {requestType.FullName} type does not have any authorization policy assigned to it.")
     {
         RequestType = requestType;
-    }
-
-    private AuthorizationPolicyMissingException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-        RequestType = null!;
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Exceptions;
@@ -21,11 +20,6 @@ public sealed class IntegrationEventException : OneBeyondException
 
     internal IntegrationEventException(string message, Exception innerException)
         : base(message, innerException)
-    {
-    }
-
-    private IntegrationEventException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }

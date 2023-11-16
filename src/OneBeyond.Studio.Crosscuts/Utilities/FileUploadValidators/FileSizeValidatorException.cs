@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 
 namespace OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators;
@@ -30,15 +29,6 @@ public sealed class FileSizeValidatorException : OneBeyondException
     /// <param name="innerException"></param>
     public FileSizeValidatorException(string message, Exception innerException)
         : base(message, innerException)
-    {
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    private FileSizeValidatorException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Exceptions;
@@ -30,15 +29,6 @@ public abstract class AuthorizationException : OneBeyondException
     /// <param name="innerException"></param>
     protected AuthorizationException(string message, Exception innerException)
         : base(message, innerException)
-    {
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected AuthorizationException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 
 namespace OneBeyond.Studio.Infrastructure.Azure.Exceptions;
@@ -18,11 +17,6 @@ public class AzureInfrastructureException : OneBeyondException
 
     public AzureInfrastructureException(string message, Exception innerException)
         : base(message, innerException)
-    {
-    }
-
-    protected AzureInfrastructureException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
@@ -33,15 +32,6 @@ public abstract class EntityAccessDeniedException : OneBeyondException
         : base(message, innerException)
     {
     }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected EntityAccessDeniedException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
 }
 
 /// <summary>
@@ -64,15 +54,6 @@ public sealed class EntityAccessDeniedException<TEntity, TEntityId> : EntityAcce
     /// <param name="entityId"></param>
     public EntityAccessDeniedException(TEntityId entityId)
         : base($"Access to entity #{entityId} is denied")
-    {
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    private EntityAccessDeniedException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }
