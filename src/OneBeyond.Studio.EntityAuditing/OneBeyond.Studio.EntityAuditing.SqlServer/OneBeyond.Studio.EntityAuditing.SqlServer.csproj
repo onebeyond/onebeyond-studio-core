@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>OneBeyond.Studio.EntityAuditing.SqlServer</Title>
     <PackageId>OneBeyond.Studio.EntityAuditing.SqlServer</PackageId>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
