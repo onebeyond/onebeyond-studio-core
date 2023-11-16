@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>OneBeyond.Studio.Infrastructure.RabbitMQ</Title>
     <PackageId>OneBeyond.Studio.Infrastructure.RabbitMQ</PackageId>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
