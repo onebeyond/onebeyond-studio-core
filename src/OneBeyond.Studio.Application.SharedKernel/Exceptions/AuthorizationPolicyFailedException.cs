@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Exceptions;
@@ -29,14 +28,6 @@ public sealed class AuthorizationPolicyFailedException : AuthorizationException
         Policy = policy;
         RequestType = requestType;
         Exceptions = exceptions;
-    }
-
-    private AuthorizationPolicyFailedException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-        Policy = null!;
-        RequestType = null!;
-        Exceptions = null!;
     }
 
     /// <summary>

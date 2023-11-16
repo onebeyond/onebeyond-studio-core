@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 
 namespace OneBeyond.Studio.Crosscuts.Exceptions;
 
@@ -22,10 +21,4 @@ public sealed class ExpressionException : OneBeyondException
         : base(message, innerException)
     {
     }
-
-    private ExpressionException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
-
 }

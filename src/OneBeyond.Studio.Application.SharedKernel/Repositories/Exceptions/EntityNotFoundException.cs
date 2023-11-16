@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
@@ -33,15 +32,6 @@ public abstract class EntityNotFoundException : OneBeyondException
         : base(message, innerException)
     {
     }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected EntityNotFoundException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
 }
 
 /// <summary>
@@ -64,15 +54,6 @@ public sealed class EntityNotFoundException<TEntity, TEntityId> : EntityNotFound
     /// <param name="entityId"></param>
     public EntityNotFoundException(TEntityId entityId)
         : base($"Entity #{entityId} is not found")
-    {
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    private EntityNotFoundException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     {
     }
 }
