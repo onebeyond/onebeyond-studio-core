@@ -17,7 +17,7 @@ One of the examples on how these libraries can be used in a project can be found
 
 ### Supported .NET version:
 
-7.0
+8.0
 
 ### Documentation
 
