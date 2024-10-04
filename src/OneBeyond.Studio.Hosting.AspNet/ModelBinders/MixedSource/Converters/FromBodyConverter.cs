@@ -2,7 +2,6 @@ using System.IO;
 using System.Threading.Tasks;
 using EnsureThat;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 
 namespace OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource.Converters;
@@ -17,7 +16,7 @@ internal sealed class FromBodyConverter : IRequestToJTokenConverter
         {
             var body = await streamReader.ReadToEndAsync();
 
-            return body.IsNullOrEmpty()
+            return string.IsNullOrEmpty(body)
                 ? new JObject() 
                 : JToken.Parse(body);
         }
