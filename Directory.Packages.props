@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Ardalis.SmartEnum" Version="8.1.0" />
-    <PackageVersion Include="Audit.EntityFramework.Core" Version="27.0.3" />
+    <PackageVersion Include="Audit.EntityFramework.Core" Version="25.0.6" />
     <PackageVersion Include="Autofac" Version="8.1.0" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
