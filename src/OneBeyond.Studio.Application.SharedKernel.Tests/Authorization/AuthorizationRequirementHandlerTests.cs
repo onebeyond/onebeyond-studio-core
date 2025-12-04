@@ -298,11 +298,12 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
     {
         containerBuilder.RegisterType<Queue<string>>()
             .AsSelf()
-            .InstancePerLifetimeScope();
-
+            .InstancePerLifetimeScope();        
         containerBuilder.RegisterGeneric(typeof(TestableCommandHandlers.GenericCommandHandler<>))
             .AsImplementedInterfaces()
             .InstancePerLifetimeScope();
+
+        containerBuilder.AddMediatorRequestHandlers(Assembly.GetExecutingAssembly());
 
         containerBuilder.AddAuthorizationRequirementHandlers(
             new SharedKernel.Authorization.AuthorizationOptions

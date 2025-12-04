@@ -11,6 +11,7 @@ using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 using OneBeyond.Studio.Application.SharedKernel.RequestAuditors;
 using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
 using OneBeyond.Studio.Core.Mediator.Queries;
 using OneBeyond.Studio.Crosscuts.MessageQueues;
@@ -44,8 +45,8 @@ public static class ContainerBuilderExtensions
         containerBuilder.RegisterGeneric(typeof(ListHandler<,,>))
             .Keyed(typeof(List<,,>), typeof(IQueryHandler<,>))
             .InstancePerLifetimeScope();
-        
-        containerBuilder.AddMediatorRequestHandlers(requestHandlersAssemblies);
+
+        containerBuilder.AddMediatorHandlers(requestHandlersAssemblies);
 
         containerBuilder.RegisterGeneric(typeof(CommandHandlerDispatcher<,>))
             .As(typeof(ICommandHandler<,>));
