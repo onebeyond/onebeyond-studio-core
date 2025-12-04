@@ -31,13 +31,7 @@ public static class ContainerBuilderExtensions
         params Assembly[] requestHandlersAssemblies)
     {
         EnsureArg.IsNotNull(containerBuilder, nameof(containerBuilder));
-
-        containerBuilder.RegisterGeneric(typeof(CreateHandler<,,>))
-            .Keyed(typeof(Create<,,>), typeof(IRequestHandler<,>))
-            .InstancePerLifetimeScope();
-        containerBuilder.RegisterGeneric(typeof(UpdateHandler<,,>))
-            .Keyed(typeof(Update<,,>), typeof(IRequestHandler<,>))
-            .InstancePerLifetimeScope();
+        
         containerBuilder.RegisterGeneric(typeof(DeleteHandler<,>))
             .Keyed(typeof(Delete<,>), typeof(IRequestHandler<,>))
             .InstancePerLifetimeScope();

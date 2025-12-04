@@ -1,6 +1,5 @@
 using System.Reflection;
 using Autofac;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,13 +22,7 @@ public sealed class GenericRequestHandlersRegistrationTests
     {
         var containerBuilder = new ContainerBuilder();
         containerBuilder.AddMediatorRequestHandlers();
-        var container = containerBuilder.Build();
-
-        var createHandler = container.Resolve<IRequestHandler<Create<SomeDto, SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(createHandler, typeof(RequestHandlerDispatcher<Create<SomeDto, SomeAggregateRoot, int>, int>));
-
-        var updateHandler = container.Resolve<IRequestHandler<Update<SomeDto, SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(updateHandler, typeof(RequestHandlerDispatcher<Update<SomeDto, SomeAggregateRoot, int>, int>));
+        var container = containerBuilder.Build();        
 
         var deleteHandler = container.Resolve<IRequestHandler<Delete<SomeAggregateRoot, int>, int>>();
         Assert.IsInstanceOfType(deleteHandler, typeof(RequestHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
@@ -46,13 +39,7 @@ public sealed class GenericRequestHandlersRegistrationTests
     {
         var containerBuilder = new ContainerBuilder();
         containerBuilder.AddMediatorRequestHandlers(Assembly.GetExecutingAssembly());
-        var container = containerBuilder.Build();
-
-        var createHandler = container.Resolve<IRequestHandler<Create<SomeDto, SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(createHandler, typeof(ClosedCreateHandler));
-
-        var updateHandler = container.Resolve<IRequestHandler<Update<SomeDto, SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(updateHandler, typeof(RequestHandlerDispatcher<Update<SomeDto, SomeAggregateRoot, int>, int>));
+        var container = containerBuilder.Build();        
 
         var deleteHandler = container.Resolve<IRequestHandler<Delete<SomeAggregateRoot, int>, int>>();
         Assert.IsInstanceOfType(deleteHandler, typeof(RequestHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
@@ -70,16 +57,10 @@ public sealed class GenericRequestHandlersRegistrationTests
         var containerBuilder = new ContainerBuilder();
         containerBuilder.Register((ctx) => new Mock<IRWRepository<SomeAggregateRoot, int>>().Object).AsImplementedInterfaces();
         containerBuilder.Register((ctx) => new Mock<IRORepository<SomeEntity, int>>().Object).AsImplementedInterfaces();
-        containerBuilder.Register((ctx) => new Mock<IValidator<SomeAggregateRoot>>().Object).AsImplementedInterfaces();
-        containerBuilder.Register((ctx) => new Mock<IMapper>().Object).AsImplementedInterfaces();
+        containerBuilder.Register((ctx) => new Mock<IValidator<SomeAggregateRoot>>().Object).AsImplementedInterfaces();        
         containerBuilder.AddMediatorRequestHandlers(Assembly.GetExecutingAssembly());
         var container = containerBuilder.Build();
-
-        var createHandler = container.ResolveKeyed<IRequestHandler<Create<SomeDto, SomeAggregateRoot, int>, int>>(typeof(Create<,,>));
-        Assert.IsInstanceOfType(createHandler, typeof(CreateHandler<SomeDto, SomeAggregateRoot, int>));
-
-        var updateHandler = container.ResolveKeyed<IRequestHandler<Update<SomeDto, SomeAggregateRoot, int>, int>>(typeof(Update<,,>));
-        Assert.IsInstanceOfType(updateHandler, typeof(UpdateHandler<SomeDto, SomeAggregateRoot, int>));
+               
 
         var deleteHandler = container.ResolveKeyed<IRequestHandler<Delete<SomeAggregateRoot, int>, int>>(typeof(Delete<,>));
         Assert.IsInstanceOfType(deleteHandler, typeof(DeleteHandler<SomeAggregateRoot, int>));

@@ -1,4 +1,3 @@
-using AutoMapper;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,16 +6,12 @@ namespace OneBeyond.Studio.DataAccess.EFCore.Projections;
 public sealed record ProjectionContext
 {
     internal ProjectionContext(
-        DbContext dbContext,
-        IConfigurationProvider mapperConfigurationProvider)
+        DbContext dbContext)
     {
-        EnsureArg.IsNotNull(dbContext, nameof(dbContext));
-        EnsureArg.IsNotNull(mapperConfigurationProvider, nameof(mapperConfigurationProvider));
+        EnsureArg.IsNotNull(dbContext, nameof(dbContext));        
 
-        DbContext = dbContext;
-        MapperConfigurationProvider = mapperConfigurationProvider;
+        DbContext = dbContext;        
     }
 
-    public DbContext DbContext { get; }
-    public IConfigurationProvider MapperConfigurationProvider { get; }
+    public DbContext DbContext { get; }    
 }
