@@ -1,5 +1,8 @@
 using EnsureThat;
 using Microsoft.Extensions.DependencyInjection;
+using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator.Notifications;
+using OneBeyond.Studio.Core.Mediator.Queries;
 
 namespace OneBeyond.Studio.Core.Mediator;
 

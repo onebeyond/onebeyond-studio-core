@@ -1,4 +1,4 @@
-namespace OneBeyond.Studio.Core.Mediator;
+namespace OneBeyond.Studio.Core.Mediator.Commands;
 
 public interface ICommandHandler<in TCommand, TResult> where TCommand : ICommand<TResult>
 {

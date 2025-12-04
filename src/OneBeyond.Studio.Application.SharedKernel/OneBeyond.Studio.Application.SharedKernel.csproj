@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OneBeyond.Studio.Core.Mediator\OneBeyond.Studio.Core.Mediator.csproj" />
     <ProjectReference Include="..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
   </ItemGroup>
 

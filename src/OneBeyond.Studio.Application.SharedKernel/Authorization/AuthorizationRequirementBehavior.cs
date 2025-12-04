@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using EnsureThat;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using OneBeyond.Studio.Application.SharedKernel.Exceptions;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Crosscuts.Logging;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
@@ -17,8 +17,8 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 
 public class AuthorizationRequirementBehavior<TRequest, TResponse>
     : AuthorizationRequirementBehavior
-    , IPipelineBehavior<TRequest, TResponse>
-    where TRequest : class, IBaseRequest
+    , IMediatorPipelineBehaviour<TRequest, TResponse>
+    where TRequest : class
 {
     private readonly ILifetimeScope _container;
     private readonly AuthorizationOptions _authorizationOptions;
@@ -37,9 +37,9 @@ public class AuthorizationRequirementBehavior<TRequest, TResponse>
     private static readonly ILogger Logger = LogManager.CreateLogger<AuthorizationRequirementBehavior<TRequest, TResponse>>();
     private static readonly ConcurrentDictionary<Type, AuthorizationRequirementHandler> AuthorizationRequirementHandlerWrappers = new();
 
-    public async Task<TResponse> Handle(
+    public async Task<TResponse> HandleAsync(
         TRequest request,
-        RequestHandlerDelegate<TResponse> next,
+        Func<Task<TResponse>> next,
         CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(request, nameof(request));

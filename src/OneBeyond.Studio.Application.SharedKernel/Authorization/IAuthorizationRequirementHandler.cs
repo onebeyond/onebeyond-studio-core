@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 /// <typeparam name="TRequest"></typeparam>
 public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     where TRequirement : AuthorizationRequirement
-    where TRequest : IBaseRequest
+    where TRequest : class
 {
     /// <summary>
     /// </summary>
@@ -19,5 +19,5 @@ public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task HandleAsync(TRequirement requirement, TRequest request, CancellationToken cancellationToken);
+    public Task HandleAsync(TRequirement requirement, TRequest request, CancellationToken cancellationToken);
 }
