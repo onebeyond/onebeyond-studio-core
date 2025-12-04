@@ -19,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" />
     <PackageReference Include="Autofac" />
-    <PackageReference Include="AutoMapper" />
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="Ensure.That" />
     <PackageReference Include="Handlebars.Net" />
