@@ -19,8 +19,8 @@ public sealed class Mediator : IMediator
     {
         EnsureArg.IsNotNull(command, nameof(command));
 
-        var handler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand>>();
-
+        var handler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+        
         // Low risk - as handlers should be DIed by assembly scan - namely just to catch mistakes.
         if (handler is null)
         {
@@ -43,7 +43,7 @@ public sealed class Mediator : IMediator
     {
         EnsureArg.IsNotNull(command, nameof(command));
 
-        var handler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand, TResult>>();
+        var handler = _serviceProvider.GetService<ICommandHandler<TCommand, TResult>>();
 
         // Low risk - as handlers should be DIed by assembly scan - namely just to catch mistakes.
         if (handler is null)

@@ -125,14 +125,28 @@ public static class ContainerBuilderExtensions
                 (assembly) => assembly.GetTypes())
             .Where(
                 (type) =>
-                    !type.IsAbstract
-                    && type.IsGenericTypeDefinition
-                    && type.GetGenericArguments().Length == 1
-                    && (typeof(ICommand<>).IsAssignableFrom(type.GetGenericArguments()[0]) 
-                        || typeof(IQuery<>).IsAssignableFrom(type.GetGenericArguments()[0]))
-                    && type.GetInterfaces().Any(
-                        (iface) => iface.IsGenericType
-                            && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
+                {
+                    if (!type.IsAbstract)
+                    {
+                        if (type.IsGenericTypeDefinition)
+                        {
+                            if (type.GetGenericArguments().Length >= 1)
+                            {
+                                var genericArguments = type.GetGenericArguments();
+                                if (typeof(ICommand).IsAssignableFrom(genericArguments[0]))
+                                {
+                                    if (type.GetInterfaces().Any(
+                                        (iface) => iface.IsGenericType
+                                            && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                })                                
             .ForEach(
                 (handlerOpenGenericType) =>
                 {

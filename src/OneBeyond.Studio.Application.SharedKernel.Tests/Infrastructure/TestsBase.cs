@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 using OneBeyond.Studio.Crosscuts.Logging;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
