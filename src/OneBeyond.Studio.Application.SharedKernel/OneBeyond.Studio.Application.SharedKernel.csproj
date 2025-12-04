@@ -20,7 +20,6 @@
     <PackageReference Include="DelegateDecompiler" />
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Humanizer.Core" />
-    <PackageReference Include="MediatR" />
     <PackageReference Include="morelinq" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace OneBeyond.Studio.Core.Mediator.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
-    public static ServiceCollection AddCoreMediator(this ServiceCollection services)
+    public static IServiceCollection AddCoreMediator(this IServiceCollection services)
     {
         services.AddSingleton<IMediator, IMediator>();        
 

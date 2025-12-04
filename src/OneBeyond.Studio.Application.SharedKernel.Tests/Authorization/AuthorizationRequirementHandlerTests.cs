@@ -9,6 +9,7 @@ using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 using OneBeyond.Studio.Application.SharedKernel.Exceptions;
 using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 using OneBeyond.Studio.Core.Mediator;
+using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
@@ -288,7 +289,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
         IConfiguration configuration,
         IServiceCollection serviceCollection)
     {
-        serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        serviceCollection.AddCoreMediator();
     }
 
     protected override void ConfigureTestServices(
