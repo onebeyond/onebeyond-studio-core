@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using MediatR;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
+using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 
@@ -14,7 +14,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
 public class DeleteHandler<TAggregateRoot, TAggregateRootId>
-    : IRequestHandler<Delete<TAggregateRoot, TAggregateRootId>, TAggregateRootId>
+    : ICommandHandler<Delete<TAggregateRoot, TAggregateRootId>, TAggregateRootId>
     where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
@@ -33,18 +33,18 @@ public class DeleteHandler<TAggregateRoot, TAggregateRootId>
 
     /// <summary>
     /// </summary>
-    public Task<TAggregateRootId> Handle(
+    public Task<TAggregateRootId> HandleAsync(
         Delete<TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(command, nameof(command));
 
-        return HandleAsync(command, cancellationToken);
+        return HandleDeleteAsync(command, cancellationToken);
     }
 
     /// <summary>
     /// </summary>
-    protected virtual async Task<TAggregateRootId> HandleAsync(
+    protected virtual async Task<TAggregateRootId> HandleDeleteAsync(
         Delete<TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {

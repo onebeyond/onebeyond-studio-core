@@ -20,12 +20,12 @@
     <PackageReference Include="DelegateDecompiler" />
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Humanizer.Core" />
-    <PackageReference Include="MediatR" />
     <PackageReference Include="morelinq" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OneBeyond.Studio.Core.Mediator\OneBeyond.Studio.Core.Mediator.csproj" />
     <ProjectReference Include="..\OneBeyond.Studio.Domain.SharedKernel\OneBeyond.Studio.Domain.SharedKernel.csproj" />
   </ItemGroup>
 

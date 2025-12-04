@@ -3,23 +3,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
 using EnsureThat;
-using MediatR;
+using OneBeyond.Studio.Core.Mediator.Queries;
 
 namespace OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 
 /// <summary>
-/// Dispatches generic request handler with use of Autofac keyed registrations
+/// Dispatches generic query handlers with use of Autofac keyed registrations
 /// </summary>
 /// <typeparam name="TRequest"></typeparam>
 /// <typeparam name="TResponse"></typeparam>
-public class RequestHandlerDispatcher<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class QueryHandlerDispatcher<TRequest, TResponse> : IQueryHandler<TRequest, TResponse>
+    where TRequest : IQuery<TResponse>
 {
-    private readonly IIndex<Type, IRequestHandler<TRequest, TResponse>> _requestHandlers;
-
+    private readonly IIndex<Type, IQueryHandler<TRequest, TResponse>> _requestHandlers;
     /// <summary>
     /// </summary>
-    public RequestHandlerDispatcher(IIndex<Type, IRequestHandler<TRequest, TResponse>> requestHandlers)
+    public QueryHandlerDispatcher(IIndex<Type, IQueryHandler<TRequest, TResponse>> requestHandlers)
     {
         EnsureArg.IsNotNull(requestHandlers, nameof(requestHandlers));
 
@@ -28,11 +27,9 @@ public class RequestHandlerDispatcher<TRequest, TResponse> : IRequestHandler<TRe
 
     private static Type RequestTypeDefinition { get; } = typeof(TRequest).GetGenericTypeDefinition();
 
-    /// <summary>
-    /// </summary>
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+    public Task<TResponse> HandleAsync(TRequest query, CancellationToken cancellationToken = default)
     {
         var requestHandler = _requestHandlers[RequestTypeDefinition];
-        return requestHandler.Handle(request, cancellationToken);
+        return requestHandler.HandleAsync(query, cancellationToken);
     }
 }

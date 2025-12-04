@@ -1,14 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using MediatR;
+using OneBeyond.Studio.Core.Mediator.Pipelines;
 using OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
 
 namespace OneBeyond.Studio.Application.SharedKernel.RequestAuditors;
 
-internal sealed class RequestAuditor<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+internal sealed class RequestAuditor<TRequest, TResponse> : IMediatorPipelineBehaviour<TRequest, TResponse>
     where TRequest : IAuditableRequest<TResponse>
 {
     private readonly IRequestAuditRecordBuilder<TRequest> _requestAuditRecordBuilder;
@@ -25,7 +26,7 @@ internal sealed class RequestAuditor<TRequest, TResponse> : IPipelineBehavior<TR
         _requestAuditRecordWriters = requestAuditRecordWriters.ToList();
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> HandleAsync(TRequest request, Func<Task<TResponse>> next, CancellationToken cancellationToken)
     {
         var response = await next().ConfigureAwait(false);
 

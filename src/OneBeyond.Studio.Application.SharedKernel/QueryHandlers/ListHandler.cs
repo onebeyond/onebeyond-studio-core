@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using MediatR;
 using OneBeyond.Studio.Application.SharedKernel.Entities.Dto;
 using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
 using OneBeyond.Studio.Application.SharedKernel.Specifications;
+using OneBeyond.Studio.Core.Mediator.Queries;
 using OneBeyond.Studio.Crosscuts.Expressions;
 using OneBeyond.Studio.Crosscuts.Strings;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
@@ -41,7 +41,7 @@ public class ListHandler<TResultDto, TEntity, TEntityId>
 /// <summary>
 /// </summary>
 public abstract class ListHandler<TQuery, TResultDto, TEntity, TEntityId>
-    : IRequestHandler<TQuery, PagedList<TResultDto>>
+    : IQueryHandler<TQuery, PagedList<TResultDto>>
     where TQuery : List<TResultDto, TEntity, TEntityId>
     where TEntity : DomainEntity<TEntityId>
     where TEntityId : notnull
@@ -62,7 +62,7 @@ public abstract class ListHandler<TQuery, TResultDto, TEntity, TEntityId>
 
     /// <summary>
     /// </summary>
-    public virtual async Task<PagedList<TResultDto>> Handle(
+    public virtual async Task<PagedList<TResultDto>> HandleAsync(
         TQuery query,
         CancellationToken cancellationToken)
     {
