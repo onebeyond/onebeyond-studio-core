@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
 using OneBeyond.Studio.Crosscuts.Reflection;
@@ -18,20 +16,16 @@ internal class EntityTypeProjections<TEntity> : IEntityTypeProjections<TEntity>
         .MethodFrom(() => DoProject<object>(default!, default!, default!))
         .GetGenericMethodDefinition();
 
-    private readonly IReadOnlyDictionary<Type, DoProjectFunc> _doProjectFuncMap;
-    private readonly IConfigurationProvider _mapperConfigurationProvider;
+    private readonly IReadOnlyDictionary<Type, DoProjectFunc> _doProjectFuncMap;    
 
     public EntityTypeProjections(
-        IEnumerable<IEntityTypeProjection<TEntity>> entityTypeProjections,
-        IConfigurationProvider mapperConfigurationProvider)
+        IEnumerable<IEntityTypeProjection<TEntity>> entityTypeProjections)
     {
-        EnsureArg.IsNotNull(entityTypeProjections, nameof(entityTypeProjections));
-        EnsureArg.IsNotNull(mapperConfigurationProvider, nameof(mapperConfigurationProvider));
+        EnsureArg.IsNotNull(entityTypeProjections, nameof(entityTypeProjections));        
 
         _doProjectFuncMap = entityTypeProjections
             .SelectMany(CreateDoProjectFuncMap)
-            .ToDictionary((item) => item.ResultType, (item) => item.DoProject);
-        _mapperConfigurationProvider = mapperConfigurationProvider;
+            .ToDictionary((item) => item.ResultType, (item) => item.DoProject);        
     }
 
     public IQueryable<TResult> ProjectTo<TResult>(IQueryable<TEntity> entityQuery, DbContext dbContext)
@@ -39,18 +33,13 @@ internal class EntityTypeProjections<TEntity> : IEntityTypeProjections<TEntity>
         EnsureArg.IsNotNull(entityQuery, nameof(entityQuery));
         EnsureArg.IsNotNull(dbContext, nameof(dbContext));
 
-        var projectionContext = new ProjectionContext(dbContext, _mapperConfigurationProvider);
+        var projectionContext = new ProjectionContext(dbContext);
         return _doProjectFuncMap.TryGetValue(typeof(TResult), out var doProject)
             ? (IQueryable<TResult>)doProject(
                 entityQuery,
                 projectionContext)
-            : DoProjectDefault<TResult>(entityQuery, projectionContext);
-    }
-
-    public virtual IQueryable<TResult> DoProjectDefault<TResult>(
-        IQueryable<TEntity> entityQuery,
-        ProjectionContext context)
-        => entityQuery.ProjectTo<TResult>(_mapperConfigurationProvider);
+            : throw new InvalidOperationException("Please specify a projection");
+    }    
 
     private static IReadOnlyCollection<(Type ResultType, DoProjectFunc DoProject)> CreateDoProjectFuncMap(
         IEntityTypeProjection<TEntity> entityTypeProjection)

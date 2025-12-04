@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -35,9 +34,7 @@ public abstract class TestsBase
 
         serviceCollection.AddScoped(typeof(IRWRepository<,>), typeof(RWRepository<,>));
 
-        serviceCollection.AddScoped(typeof(IAggregateRootRWRepository<,,>), typeof(AggregateRootRWRepository<,,>));
-
-        serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
+        serviceCollection.AddScoped(typeof(IAggregateRootRWRepository<,,>), typeof(AggregateRootRWRepository<,,>));        
 
         ConfigureTestServices(configuration, serviceCollection);
 
