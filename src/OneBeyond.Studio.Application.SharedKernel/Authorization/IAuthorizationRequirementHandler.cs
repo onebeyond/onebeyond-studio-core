@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Authorization;

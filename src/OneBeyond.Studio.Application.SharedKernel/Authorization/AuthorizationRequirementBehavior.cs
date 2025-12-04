@@ -8,7 +8,7 @@ using Autofac;
 using EnsureThat;
 using Microsoft.Extensions.Logging;
 using OneBeyond.Studio.Application.SharedKernel.Exceptions;
-using OneBeyond.Studio.Core.Mediator;
+using OneBeyond.Studio.Core.Mediator.Pipelines;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Crosscuts.Logging;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;

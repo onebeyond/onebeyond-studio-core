@@ -25,13 +25,13 @@ public sealed class GenericRequestHandlersRegistrationTests
         var container = containerBuilder.Build();        
 
         var deleteHandler = container.Resolve<IRequestHandler<Delete<SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(deleteHandler, typeof(RequestHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
+        Assert.IsInstanceOfType(deleteHandler, typeof(CommandHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
 
         var getByIdHandler = container.Resolve<IRequestHandler<GetById<SomeDto, SomeEntity, int>, SomeDto>>();
-        Assert.IsInstanceOfType(getByIdHandler, typeof(RequestHandlerDispatcher<GetById<SomeDto, SomeEntity, int>, SomeDto>));
+        Assert.IsInstanceOfType(getByIdHandler, typeof(CommandHandlerDispatcher<GetById<SomeDto, SomeEntity, int>, SomeDto>));
 
         var readHandler = container.Resolve<IRequestHandler<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>>();
-        Assert.IsInstanceOfType(readHandler, typeof(RequestHandlerDispatcher<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>));
+        Assert.IsInstanceOfType(readHandler, typeof(CommandHandlerDispatcher<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>));
     }
 
     [TestMethod]
@@ -42,13 +42,13 @@ public sealed class GenericRequestHandlersRegistrationTests
         var container = containerBuilder.Build();        
 
         var deleteHandler = container.Resolve<IRequestHandler<Delete<SomeAggregateRoot, int>, int>>();
-        Assert.IsInstanceOfType(deleteHandler, typeof(RequestHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
+        Assert.IsInstanceOfType(deleteHandler, typeof(CommandHandlerDispatcher<Delete<SomeAggregateRoot, int>, int>));
 
         var getByIdHandler = container.Resolve<IRequestHandler<GetById<SomeDto, SomeEntity, int>, SomeDto>>();
-        Assert.IsInstanceOfType(getByIdHandler, typeof(RequestHandlerDispatcher<GetById<SomeDto, SomeEntity, int>, SomeDto>));
+        Assert.IsInstanceOfType(getByIdHandler, typeof(CommandHandlerDispatcher<GetById<SomeDto, SomeEntity, int>, SomeDto>));
 
         var readHandler = container.Resolve<IRequestHandler<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>>();
-        Assert.IsInstanceOfType(readHandler, typeof(RequestHandlerDispatcher<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>));
+        Assert.IsInstanceOfType(readHandler, typeof(CommandHandlerDispatcher<List<SomeDto, SomeEntity, int>, PagedList<SomeDto>>));
     }
 
     [TestMethod]

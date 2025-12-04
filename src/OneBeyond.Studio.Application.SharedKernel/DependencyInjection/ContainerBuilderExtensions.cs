@@ -2,7 +2,6 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using EnsureThat;
-using MediatR;
 using MoreLinq;
 using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
 using OneBeyond.Studio.Application.SharedKernel.Authorization;
@@ -11,6 +10,9 @@ using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 using OneBeyond.Studio.Application.SharedKernel.RequestAuditors;
+using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator.Pipelines;
+using OneBeyond.Studio.Core.Mediator.Queries;
 using OneBeyond.Studio.Crosscuts.MessageQueues;
 using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 
@@ -22,7 +24,8 @@ namespace OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 public static class ContainerBuilderExtensions
 {
     /// <summary>
-    /// Registers <see cref="IRequestHandler{TRequest, TResponse}"/> for CRUD operations
+    /// Registers <see cref="ICommandHandler{TRequest, TResponse}"/> for CRUD operations <br/>
+    /// Registers <see cref="IQueryHandler{TRequest, TResponse}"/> for CRUD operations
     /// </summary>
     /// <param name="containerBuilder"></param>
     /// <param name="requestHandlersAssemblies"></param>
@@ -33,22 +36,25 @@ public static class ContainerBuilderExtensions
         EnsureArg.IsNotNull(containerBuilder, nameof(containerBuilder));
         
         containerBuilder.RegisterGeneric(typeof(DeleteHandler<,>))
-            .Keyed(typeof(Delete<,>), typeof(IRequestHandler<,>))
+            .Keyed(typeof(Delete<,>), typeof(ICommandHandler<,>))
             .InstancePerLifetimeScope();
         containerBuilder.RegisterGeneric(typeof(GetByIdHandler<,,>))
-            .Keyed(typeof(GetById<,,>), typeof(IRequestHandler<,>))
+            .Keyed(typeof(GetById<,,>), typeof(IQueryHandler<,>))
             .InstancePerLifetimeScope();
         containerBuilder.RegisterGeneric(typeof(ListHandler<,,>))
-            .Keyed(typeof(List<,,>), typeof(IRequestHandler<,>))
+            .Keyed(typeof(List<,,>), typeof(IQueryHandler<,>))
             .InstancePerLifetimeScope();
-        containerBuilder.RegisterAssemblyTypes(requestHandlersAssemblies)
-            .AsClosedTypesOf(typeof(IRequestHandler<,>))
-            .InstancePerLifetimeScope();
-        containerBuilder.RegisterGeneric(typeof(RequestHandlerDispatcher<,>))
-            .As(typeof(IRequestHandler<,>));
+        
+        containerBuilder.AddMediatorRequestHandlers(requestHandlersAssemblies);
+
+        containerBuilder.RegisterGeneric(typeof(CommandHandlerDispatcher<,>))
+            .As(typeof(ICommandHandler<,>));
+
+        containerBuilder.RegisterGeneric(typeof(QueryHandlerDispatcher<,>))
+            .As(typeof(IQueryHandler<,>));
 
         containerBuilder.RegisterGeneric(typeof(RequestAuditor<,>))
-            .As(typeof(IPipelineBehavior<,>))
+            .As(typeof(IMediatorPipelineBehaviour<,>))
             .InstancePerLifetimeScope();
         containerBuilder.RegisterGeneric(typeof(RequestAuditRecordBuilder<>))
             .As(typeof(IRequestAuditRecordBuilder<>))
@@ -107,7 +113,7 @@ public static class ContainerBuilderExtensions
             .SingleInstance();
 
         containerBuilder.RegisterGeneric(typeof(AuthorizationRequirementBehavior<,>))
-            .As(typeof(IPipelineBehavior<,>))
+            .As(typeof(IMediatorPipelineBehaviour<,>))
             .InstancePerLifetimeScope();
 
         // NB: It may turn out this code needs further tweaking. At the moment it covers
@@ -121,7 +127,8 @@ public static class ContainerBuilderExtensions
                     !type.IsAbstract
                     && type.IsGenericTypeDefinition
                     && type.GetGenericArguments().Length == 1
-                    && typeof(IBaseRequest).IsAssignableFrom(type.GetGenericArguments()[0])
+                    && (typeof(ICommand<>).IsAssignableFrom(type.GetGenericArguments()[0]) 
+                        || typeof(IQuery<>).IsAssignableFrom(type.GetGenericArguments()[0]))
                     && type.GetInterfaces().Any(
                         (iface) => iface.IsGenericType
                             && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))

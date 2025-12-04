@@ -1,4 +1,4 @@
-namespace OneBeyond.Studio.Core.Mediator;
+namespace OneBeyond.Studio.Core.Mediator.Pipelines;
 
 public interface IMediatorPipelineBehaviour<in TInput, TOutput>
 {
