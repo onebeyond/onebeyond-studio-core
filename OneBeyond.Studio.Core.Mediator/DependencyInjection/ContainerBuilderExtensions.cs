@@ -23,6 +23,11 @@ public static class ContainerBuilderExtensions
 
         containerBuilder
             .RegisterAssemblyTypes(assemblies)
+            .AsClosedTypesOf(typeof(ICommandHandler<>))
+            .InstancePerLifetimeScope();
+
+        containerBuilder
+            .RegisterAssemblyTypes(assemblies)
             .AsClosedTypesOf(typeof(IQueryHandler<,>))
             .InstancePerLifetimeScope();
 

@@ -24,9 +24,12 @@ public class QueryHandlerDispatcher<TRequest, TResponse> : IQueryHandler<TReques
 
         _requestHandlers = requestHandlers;
     }
+
+    private static Type RequestTypeDefinition { get; } = typeof(TRequest).GetGenericTypeDefinition();
+
     public Task<TResponse> HandleAsync(TRequest query, CancellationToken cancellationToken = default)
     {
         var requestHandler = _requestHandlers[RequestTypeDefinition];
-        return requestHandler.HandleAsync(request, cancellationToken);
+        return requestHandler.HandleAsync(query, cancellationToken);
     }
 }

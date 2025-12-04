@@ -15,6 +15,30 @@ public sealed class Mediator : IMediator
         _serviceProvider = EnsureArg.IsNotNull(serviceProvider, nameof(serviceProvider));
     }
 
+    public async Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand
+    {
+        EnsureArg.IsNotNull(command, nameof(command));
+
+        var handler = _serviceProvider.GetRequiredService<ICommandHandler<TCommand>>();
+
+        // Low risk - as handlers should be DIed by assembly scan - namely just to catch mistakes.
+        if (handler is null)
+        {
+            throw new InvalidOperationException($"A handler needs to be registered for Command {typeof(TCommand)}");
+        }
+
+        var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TCommand>>();
+        var handlerDelegate = () => handler.HandleAsync(command, cancellationToken);
+
+        foreach (var behaviour in pipeline)
+        {
+            var next = handlerDelegate;
+            handlerDelegate = () => behaviour.HandleAsync(command, next, cancellationToken);
+        }
+
+        await handlerDelegate();
+    }
+
     public async Task<TResult> CommandAsync<TCommand, TResult>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand<TResult>
     {
         EnsureArg.IsNotNull(command, nameof(command));

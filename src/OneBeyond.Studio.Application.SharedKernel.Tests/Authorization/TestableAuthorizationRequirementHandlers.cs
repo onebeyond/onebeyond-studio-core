@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using MediatR;
 using OneBeyond.Studio.Application.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
@@ -12,7 +11,7 @@ internal static class TestableAuthorizationRequirementHandlers
 {
     public sealed class Requirement2Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement2, TRequest>
-        where TRequest : IBaseRequest
+        where TRequest : class
     {
         private readonly Queue<string> _testableContainer;
 
@@ -35,7 +34,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement2ViaSomething1Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement2, TRequest>
-        where TRequest : TestableCommands.IRequestWithSomething1
+        where TRequest : class, TestableCommands.IRequestWithSomething1
     {
         private readonly Queue<string> _testableContainer;
 
@@ -58,7 +57,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement2ViaSomething2Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement2, TRequest>
-        where TRequest : TestableCommands.IRequestWithSomething2
+        where TRequest : class, TestableCommands.IRequestWithSomething2
     {
         private readonly Queue<string> _testableContainer;
 
@@ -81,7 +80,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement1Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement1, TRequest>
-        where TRequest : IBaseRequest
+        where TRequest : class
     {
         private readonly Queue<string> _testableContainer;
 
@@ -114,7 +113,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement3Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement3, TRequest>
-        where TRequest : IBaseRequest
+        where TRequest : class
     {
         private readonly Queue<string> _testableContainer;
 
