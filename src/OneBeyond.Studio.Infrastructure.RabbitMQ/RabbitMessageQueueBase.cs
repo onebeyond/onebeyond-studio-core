@@ -16,7 +16,7 @@ internal abstract class RabbitMessageQueueBase<TMessage>
 {
     private readonly string _queueName;
     private readonly IConnection _connection;
-    private IModel _channel;
+    private IChannel _channel;
     private readonly RabbitMessageQueuePoisonSetup _poisonSetup;
 
     protected RabbitMessageQueueBase(RabbitMessageQueueOptions options)
@@ -45,7 +45,7 @@ internal abstract class RabbitMessageQueueBase<TMessage>
     protected virtual void Dispose(bool disposing)
     {
         if (disposing)
-        {
+        {            
             _channel.Close();
             _channel.Dispose();
             _connection.Close();
@@ -64,7 +64,7 @@ internal abstract class RabbitMessageQueueBase<TMessage>
             {
                 _channel = _connection.CreateModel();
             }
-
+            
             _channel.QueueDeclare(
                 _queueName,
                 durable: true,

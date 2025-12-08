@@ -8,6 +8,7 @@
     <PackageVersion Include="Audit.EntityFramework.Core" Version="31.3.0" />
     <PackageVersion Include="Autofac" Version="9.0.0" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageVersion Include="AwesomeAssertions" Version="9.3.0" />
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.4.0" />
     <PackageVersion Include="Azure.Identity" Version="1.17.1" />
@@ -19,8 +20,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="DelegateDecompiler" Version="0.35.3" />
     <PackageVersion Include="DelegateDecompiler.EntityFrameworkCore5" Version="0.35.3" />
-    <PackageVersion Include="Ensure.That" Version="10.1.0" />
-    <PackageVersion Include="FluentAssertions" Version="7.2.0" />
+    <PackageVersion Include="Ensure.That" Version="10.1.0" />    
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="Handlebars.Net" Version="2.1.6" />
     <PackageVersion Include="Humanizer.Core" Version="3.0.1" />

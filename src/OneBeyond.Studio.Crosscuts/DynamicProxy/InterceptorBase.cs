@@ -36,7 +36,7 @@ public abstract class InterceptorBase : IInterceptor
 
         PreExecute(invocation);
 
-        var returnValueType = invocation.MethodInvocationTarget.ReturnType;
+        var returnValueType = invocation!.MethodInvocationTarget?.ReturnType;
 
         if (TaskType == returnValueType)
         {
@@ -71,7 +71,7 @@ public abstract class InterceptorBase : IInterceptor
         else
         {
             var executeFunc = GenericExecuteFuncs.GetOrAdd(
-                returnValueType,
+                returnValueType!,
                 (returnValueType) =>
                 {
                     var interceptorParameter = Expression.Parameter(typeof(InterceptorBase));
@@ -90,7 +90,7 @@ public abstract class InterceptorBase : IInterceptor
                         invocationParameter);
                     return lambda.Compile();
                 });
-            invocation.ReturnValue = executeFunc(this, invocation);
+            invocation!.ReturnValue = executeFunc(this, invocation);
         }
     }
 
@@ -233,8 +233,8 @@ public abstract class InterceptorBase : IInterceptor
         }
 
         public MethodInfo Method => Invocation.Method;
-        public object Target => Invocation.InvocationTarget;
-        public IReadOnlyCollection<object> Arguments => Invocation.Arguments;
+        public object Target => Invocation.InvocationTarget!;
+        public IReadOnlyCollection<object> Arguments => Invocation.Arguments!;
         protected IInvocation Invocation { get; }
     }
 
@@ -261,7 +261,7 @@ public abstract class InterceptorBase : IInterceptor
         T ISyncExecution<T>.Execute()
         {
             Invocation.Proceed();
-            return (T)Invocation.ReturnValue;
+            return (T)Invocation.ReturnValue!;
         }
     }
 
@@ -275,7 +275,7 @@ public abstract class InterceptorBase : IInterceptor
         Task IAsyncExecution.ExecuteAsync()
         {
             Invocation.Proceed();
-            return (Task)Invocation.ReturnValue;
+            return (Task)Invocation.ReturnValue!;
         }
     }
 
@@ -289,7 +289,7 @@ public abstract class InterceptorBase : IInterceptor
         Task<T> IAsyncExecution<T>.ExecuteAsync()
         {
             Invocation.Proceed();
-            return (Task<T>)Invocation.ReturnValue;
+            return (Task<T>)Invocation.ReturnValue!;
         }
     }
 }

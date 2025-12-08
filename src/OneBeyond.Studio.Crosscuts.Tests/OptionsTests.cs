@@ -10,22 +10,20 @@ namespace OneBeyond.Studio.Crosscuts.Tests;
 [TestClass]
 public sealed class OptionsTests : TestsBase
 {
-    [TestMethod]
-    [ExpectedException(typeof(OptionsException))]
+    [TestMethod]    
     public void TestOptionsExceptionThrownWhenSectionNotFound()
     {
         var configuration = ServiceProvider.GetRequiredService<IConfiguration>();
 
-        configuration.GetOptions<OptionsTestsOptions>("OptionsTestsNonExisting");
+        Assert.Throws<OptionsException>(() => configuration.GetOptions<OptionsTestsOptions>("OptionsTestsNonExisting"));        
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(OptionsException))]
+    [TestMethod]    
     public void TestOptionsExceptionThrownWhenSectionEmpty()
     {
         var configuration = ServiceProvider.GetRequiredService<IConfiguration>();
-
-        configuration.GetOptions<OptionsTestsOptions>("OptionsTests:Empty");
+        
+        Assert.Throws<OptionsException>(() => configuration.GetOptions<OptionsTestsOptions>("OptionsTests:Empty\""));
     }
 
     [TestMethod]

@@ -22,7 +22,7 @@ internal sealed class RabbitMessageQueueReceiver<TMessage>
 
     private readonly string _queueName;
     private readonly IConnection _connection;
-    private readonly IModel _channel;
+    private readonly IChannel _channel;
 
     public RabbitMessageQueueReceiver(RabbitMessageQueueOptions options)
     {
@@ -33,7 +33,7 @@ internal sealed class RabbitMessageQueueReceiver<TMessage>
         var connectionFactory = new ConnectionFactory
         {
             Uri = options.Connection,
-            DispatchConsumersAsync = true
+            ConsumerDispatchConcurrency = 4            
         };
 
         _queueName = options.QueueName!;
@@ -50,7 +50,7 @@ internal sealed class RabbitMessageQueueReceiver<TMessage>
             arguments: poisonSetup.GetRoutingArguments());
 
         _channel.BasicQos(0, 10, false); // TODO: Needs to be configurable. Align with Azure queue defaults.
-    }
+    }    
 
     public void Dispose()
     {
