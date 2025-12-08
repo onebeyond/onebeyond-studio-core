@@ -10,6 +10,12 @@ namespace OneBeyond.Studio.Core.Mediator.DependencyInjection;
 
 public static class ContainerBuilderExtensions
 {
+    /// <summary>
+    /// Registers all Mediator request handlers found in a given Autofac container
+    /// </summary>
+    /// <param name="containerBuilder"></param>
+    /// <param name="assemblies">Parameter list of assemblies to scan for mediator handlers</param>
+    /// <returns></returns>
     public static ContainerBuilder AddMediatorHandlers(
         this ContainerBuilder containerBuilder,
         params Assembly[] assemblies)
