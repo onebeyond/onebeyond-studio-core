@@ -15,6 +15,7 @@ public sealed class Mediator : IMediator
         _serviceProvider = EnsureArg.IsNotNull(serviceProvider, nameof(serviceProvider));
     }
 
+    /// <inheritdoc/>
     public async Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand
     {
         EnsureArg.IsNotNull(command, nameof(command));
@@ -39,6 +40,7 @@ public sealed class Mediator : IMediator
         await handlerDelegate();
     }
 
+    /// <inheritdoc/>
     public async Task<TResult> CommandAsync<TCommand, TResult>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand<TResult>
     {
         EnsureArg.IsNotNull(command, nameof(command));
@@ -64,6 +66,7 @@ public sealed class Mediator : IMediator
         
     }
 
+    /// <inheritdoc/>
     public async Task NotifyAsync<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification: class, INotification
     {
         EnsureArg.IsNotNull(notification);
@@ -75,6 +78,7 @@ public sealed class Mediator : IMediator
         await Task.WhenAll(delegateList);
     }
 
+    /// <inheritdoc/>
     public async Task<TResult> QueryAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default) where TQuery : class, IQuery<TResult>
     {
         EnsureArg.IsNotNull(query, nameof(query));
