@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 /// <typeparam name="TRequest"></typeparam>
 public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     where TRequirement : AuthorizationRequirement
-    where TRequest : ICommand
+    where TRequest : IRequest
 {
     /// <summary>
     /// </summary>

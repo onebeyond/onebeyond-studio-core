@@ -1,3 +1,4 @@
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 

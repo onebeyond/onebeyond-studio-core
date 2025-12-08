@@ -8,7 +8,7 @@ using Autofac;
 using EnsureThat;
 using Microsoft.Extensions.Logging;
 using OneBeyond.Studio.Application.SharedKernel.Exceptions;
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Crosscuts.Logging;
@@ -19,7 +19,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 public class AuthorizationRequirementBehavior<TRequest, TResponse>
     : AuthorizationRequirementBehavior
     , IMediatorPipelineBehaviour<TRequest, TResponse>
-    where TRequest : ICommand
+    where TRequest : IRequest
 {
     private readonly ILifetimeScope _container;
     private readonly AuthorizationOptions _authorizationOptions;

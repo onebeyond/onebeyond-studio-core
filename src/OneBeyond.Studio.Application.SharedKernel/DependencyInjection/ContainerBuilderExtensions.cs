@@ -10,6 +10,7 @@ using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 using OneBeyond.Studio.Application.SharedKernel.RequestAuditors;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
@@ -133,7 +134,7 @@ public static class ContainerBuilderExtensions
                             if (type.GetGenericArguments().Length >= 1)
                             {
                                 var genericArguments = type.GetGenericArguments();
-                                if (typeof(ICommand).IsAssignableFrom(genericArguments[0]))
+                                if (typeof(IRequest).IsAssignableFrom(genericArguments[0]))
                                 {
                                     if (type.GetInterfaces().Any(
                                         (iface) => iface.IsGenericType
