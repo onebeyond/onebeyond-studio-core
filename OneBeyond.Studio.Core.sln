@@ -50,7 +50,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Applicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBeyond.Studio.Application.SharedKernel.Tests", "src\OneBeyond.Studio.Application.SharedKernel.Tests\OneBeyond.Studio.Application.SharedKernel.Tests.csproj", "{EF09109A-F856-47D0-AAA5-A8985821E988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBeyond.Studio.Core.Mediator", "OneBeyond.Studio.Core.Mediator\OneBeyond.Studio.Core.Mediator.csproj", "{397128FF-BEFE-466A-A993-515E3C4D0BCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBeyond.Studio.Core.Mediator", "src\OneBeyond.Studio.Core.Mediator\OneBeyond.Studio.Core.Mediator.csproj", "{397128FF-BEFE-466A-A993-515E3C4D0BCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
