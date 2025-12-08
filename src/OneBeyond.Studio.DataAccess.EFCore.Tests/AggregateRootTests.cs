@@ -61,7 +61,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
 
             var vendorVasya = aggregateRoot.AddVendor("VendorVasya");
 
-            Assert.ThrowsException<ValidationException>(() => aggregateRoot.AddVendor("VendorVasya"));
+            Assert.Throws<ValidationException>(() => aggregateRoot.AddVendor("VendorVasya"));
 
             var vendorPetya = aggregateRoot.AddVendor("VendorPetya");
 
@@ -112,7 +112,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
 
             var updateAggregateRoot = await vendorsRWRepository.GetAsync(x => true, default);
 
-            Assert.ThrowsException<ValidationException>(() => updateAggregateRoot.UpdateVendor(vendorPetyaId, "VendorVasya"));
+            Assert.Throws<ValidationException>(() => updateAggregateRoot.UpdateVendor(vendorPetyaId, "VendorVasya"));
 
             updateAggregateRoot.UpdateVendor(vendorVasyaId, "SuperVendorVasya");
             updateAggregateRoot.UpdateVendor(vendorPetyaId, "SuperVendorPetya");
