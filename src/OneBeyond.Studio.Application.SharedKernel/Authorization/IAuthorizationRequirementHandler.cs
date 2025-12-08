@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 /// <typeparam name="TRequest"></typeparam>
 public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     where TRequirement : AuthorizationRequirement
-    where TRequest : IBaseRequest
+    where TRequest : IRequest
 {
     /// <summary>
     /// </summary>
@@ -19,5 +19,5 @@ public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task HandleAsync(TRequirement requirement, TRequest request, CancellationToken cancellationToken);
+    public Task HandleAsync(TRequirement requirement, TRequest request, CancellationToken cancellationToken);
 }

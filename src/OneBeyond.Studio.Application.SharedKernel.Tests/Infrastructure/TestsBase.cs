@@ -26,7 +26,7 @@ public abstract class TestsBase
 
         serviceCollection.AddLogging();
 
-        serviceCollection.AddSingleton<IConfiguration>(configuration);
+        serviceCollection.AddSingleton<IConfiguration>(configuration);        
 
         ConfigureTestServices(configuration, serviceCollection);
 

@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using MediatR;
 using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
+using OneBeyond.Studio.Core.Mediator.Queries;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
@@ -15,7 +15,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TEntityId"></typeparam>
 public class GetByIdHandler<TResultDto, TEntity, TEntityId>
-    : IRequestHandler<GetById<TResultDto, TEntity, TEntityId>, TResultDto>
+    : IQueryHandler<GetById<TResultDto, TEntity, TEntityId>, TResultDto>
     where TEntity : DomainEntity<TEntityId>
     where TEntityId : notnull
 {
@@ -34,18 +34,18 @@ public class GetByIdHandler<TResultDto, TEntity, TEntityId>
 
     /// <summary>
     /// </summary>
-    public Task<TResultDto> Handle(
+    public Task<TResultDto> HandleAsync(
         GetById<TResultDto, TEntity, TEntityId> query,
         CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(query, nameof(query));
 
-        return HandleAsync(query, cancellationToken);
+        return HandleGetByIdAsync(query, cancellationToken);
     }
 
     /// <summary>
     /// </summary>
-    protected virtual Task<TResultDto> HandleAsync(
+    protected virtual Task<TResultDto> HandleGetByIdAsync(
         GetById<TResultDto, TEntity, TEntityId> query,
         CancellationToken cancellationToken)
         => RoRepository.GetByIdAsync<TResultDto>(query.EntityId, cancellationToken);
