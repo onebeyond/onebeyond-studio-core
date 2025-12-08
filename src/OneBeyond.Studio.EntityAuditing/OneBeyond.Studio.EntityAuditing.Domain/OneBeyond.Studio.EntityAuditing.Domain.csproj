@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Title>OneBeyond.Studio.EntityAuditing.Domain</Title>
     <PackageId>OneBeyond.Studio.EntityAuditing.Domain</PackageId>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="readme.md" Pack="true" PackagePath="\"/>
+    <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
