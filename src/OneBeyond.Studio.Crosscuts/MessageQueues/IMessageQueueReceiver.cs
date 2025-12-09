@@ -8,13 +8,13 @@ namespace OneBeyond.Studio.Crosscuts.MessageQueues;
 /// </summary>
 /// <typeparam name="TMessage"></typeparam>
 public interface IMessageQueueReceiver<out TMessage>
-{
+{    
     /// <summary>
     /// </summary>
     /// <param name="processAsync"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task RunAsync(
+    public Task RunAsync(
         Func<TMessage, CancellationToken, Task> processAsync,
         CancellationToken cancellationToken);
 
@@ -23,7 +23,7 @@ public interface IMessageQueueReceiver<out TMessage>
     /// <param name="processAsync"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task RunAsync(
+    public Task RunAsync(
         Func<byte[], CancellationToken, Task> processAsync,
         CancellationToken cancellationToken);
 }

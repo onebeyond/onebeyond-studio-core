@@ -23,10 +23,9 @@ public sealed class TimeZoneConvertTests
         Assert.AreEqual("Asia/Tokyo", ianaId);
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(InvalidTimeZoneException))]
+    [TestMethod]    
     public void TestItThrowsForUnknownTimeZoneInfo()
     {
-        _ = TimeZoneConvert.ToIanaId("Custom Time");
+        Assert.Throws<InvalidTimeZoneException>(() => TimeZoneConvert.ToIanaId("Custom Time"));       
     }
 }

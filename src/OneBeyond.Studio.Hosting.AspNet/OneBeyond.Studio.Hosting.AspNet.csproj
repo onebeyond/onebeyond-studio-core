@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>OneBeyond.Studio.Hosting.AspNet</Title>
     <PackageId>OneBeyond.Studio.Hosting.AspNet</PackageId>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <PackageReadmeFile>readme.md</PackageReadmeFile>

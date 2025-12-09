@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using OneBeyond.Studio.Crosscuts.Utilities.Templating;
 using Xunit;
 

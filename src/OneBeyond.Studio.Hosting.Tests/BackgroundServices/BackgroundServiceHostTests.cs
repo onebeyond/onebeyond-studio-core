@@ -23,6 +23,10 @@ public sealed class BackgroundServiceHostTests
         // Act
         await backgroundServiceHost.StartAsync(CancellationToken.None);
 
+        // Technically this test contains a race condition, because StartAsync does not await the execution of the service
+        // because that would defeat the purpose of the host.
+        await Task.Delay(2000);
+
         // Assert
         backgroundServiceDependencyMock.Verify((dependency) => dependency.DoSomething(), Times.Once);
     }
@@ -41,6 +45,9 @@ public sealed class BackgroundServiceHostTests
 
         // Act
         await backgroundServiceHost.StartAsync(CancellationToken.None);
+        // Technically this test contains a race condition, because StartAsync does not await the execution of the service
+        // because that would defeat the purpose of the host.
+        await Task.Delay(2000);
 
         // Assert
         globalBackgroundServiceDependencyMock.Verify((dependency) => dependency.DoSomething(), Times.Never);
@@ -51,7 +58,7 @@ public sealed class BackgroundServiceHostTests
         ITestableBackgroundServiceDependency globalDependency,
         ITestableBackgroundServiceDependency? localDependency)
     {
-        var services = new ServiceCollection();
+        var services = new ServiceCollection();        
         services.AddSingleton(globalDependency);
         services.AddBackgroundService<TestableBackgroundService>(
             localDependency is null

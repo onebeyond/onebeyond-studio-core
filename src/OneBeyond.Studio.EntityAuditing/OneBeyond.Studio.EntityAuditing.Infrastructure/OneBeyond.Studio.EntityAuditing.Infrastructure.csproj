@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>OneBeyond.Studio.EntityAuditing.Infrastructure</Title>
     <PackageId>OneBeyond.Studio.EntityAuditing.Infrastructure</PackageId>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

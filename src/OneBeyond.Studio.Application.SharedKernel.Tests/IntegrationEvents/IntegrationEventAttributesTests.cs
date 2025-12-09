@@ -43,9 +43,8 @@ public sealed class IntegrationEventAttributesTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(IntegrationEventException))]
     public void TestIntegrationEventVersionAttributeThrowsWhenTypeIsNotExplicitlyAttributed()
     {
-        IntegrationEventVersionAttribute.GetVersion(typeof(TestableIntegrationEvents.FakeHappened_1_1));
+        Assert.Throws<IntegrationEventException>(() => IntegrationEventVersionAttribute.GetVersion(typeof(TestableIntegrationEvents.FakeHappened_1_1)));        
     }
 }
