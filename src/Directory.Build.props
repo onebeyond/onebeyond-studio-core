@@ -7,7 +7,7 @@
     <Deterministic>true</Deterministic>
     <DebugType>embedded</DebugType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <DotNetVersion>8</DotNetVersion>
+    <DotNetVersion>10</DotNetVersion>
     <MinVerTagPrefix>v$(DotNetVersion).</MinVerTagPrefix>
     <MinVerSkip Condition="'$(Configuration)' != 'Release'">true</MinVerSkip>
   </PropertyGroup>
