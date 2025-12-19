@@ -75,7 +75,10 @@ public sealed class Mediator : IMediator
 
         var delegateList = receivers.Select(r => r.HandleAsync(notification, cancellationToken));
 
-        await Task.WhenAll(delegateList);
+        foreach (var action in delegateList)
+        {
+            await action;
+        }
     }
 
     /// <inheritdoc/>
