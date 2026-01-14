@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using EnsureThat;
-using OneBeyond.Studio.Core.Mediator.Queries;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
@@ -12,7 +12,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TEntityId"></typeparam>
 public record GetById<TResultDto, TEntity, TEntityId>
-    : IQuery<TResultDto>
+    : IRequest<TResultDto>
     where TEntity : DomainEntity<TEntityId>
 {
     /// <summary>

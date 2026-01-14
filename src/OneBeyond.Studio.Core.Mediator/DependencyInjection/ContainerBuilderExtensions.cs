@@ -1,10 +1,8 @@
 using System.Reflection;
 using Autofac;
 using EnsureThat;
-using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Core.Mediator.Notifications;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
-using OneBeyond.Studio.Core.Mediator.Queries;
 
 namespace OneBeyond.Studio.Core.Mediator.DependencyInjection;
 
@@ -24,17 +22,12 @@ public static class ContainerBuilderExtensions
 
         containerBuilder
             .RegisterAssemblyTypes(assemblies)
-            .AsClosedTypesOf(typeof(ICommandHandler<,>))
+            .AsClosedTypesOf(typeof(IRequestHandler<,>))
             .InstancePerLifetimeScope();
 
         containerBuilder
             .RegisterAssemblyTypes(assemblies)
-            .AsClosedTypesOf(typeof(ICommandHandler<>))
-            .InstancePerLifetimeScope();
-
-        containerBuilder
-            .RegisterAssemblyTypes(assemblies)
-            .AsClosedTypesOf(typeof(IQueryHandler<,>))
+            .AsClosedTypesOf(typeof(IRequestHandler<>))
             .InstancePerLifetimeScope();
 
         containerBuilder

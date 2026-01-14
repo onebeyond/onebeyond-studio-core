@@ -1,9 +1,9 @@
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 
 namespace OneBeyond.Studio.Domain.SharedKernel.RequestAuditors;
 
 /// <summary>
 /// </summary>
-public interface IAuditableRequest<out TResponse> : ICommand<TResponse>
+public interface IAuditableRequest<out TResponse> : IRequest<TResponse>
 {
 }

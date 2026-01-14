@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using OneBeyond.Studio.Application.SharedKernel.Authorization;
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
@@ -12,7 +12,7 @@ internal static class TestableAuthorizationRequirementHandlers
 {
     public sealed class Requirement2Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement2, TRequest>
-        where TRequest : ICommand<bool>
+        where TRequest : IBaseRequest
     {
         private readonly Queue<string> _testableContainer;
 
@@ -81,7 +81,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement1Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement1, TRequest>
-        where TRequest : ICommand<bool>
+        where TRequest : IBaseRequest
     {
         private readonly Queue<string> _testableContainer;
 
@@ -114,7 +114,7 @@ internal static class TestableAuthorizationRequirementHandlers
 
     public sealed class Requirement3Handler<TRequest>
         : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement3, TRequest>
-        where TRequest : ICommand<bool>
+        where TRequest : IBaseRequest
     {
         private readonly Queue<string> _testableContainer;
 

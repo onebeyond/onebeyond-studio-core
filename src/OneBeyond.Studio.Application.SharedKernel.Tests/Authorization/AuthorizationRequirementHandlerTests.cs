@@ -27,7 +27,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command = new TestableCommands.Command1();
 
-            await mediator.CommandAsync<TestableCommands.Command1, bool>(command);
+            await mediator.Send(command);
 
             Assert.AreEqual(2, testableContainer.Count);
             // Auth handler is executed first
@@ -52,7 +52,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command2 = new TestableCommands.Command2();
 
-            await mediator.CommandAsync<TestableCommands.Command2, bool>(command2);
+            await mediator.Send(command2);
 
             Assert.AreEqual(2, testableContainer.Count);
             // Appropriate (based on the command interface) auth handler is executed first
@@ -73,7 +73,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command3 = new TestableCommands.Command3();
 
-            await mediator.CommandAsync<TestableCommands.Command3, bool>(command3);
+            await mediator.Send(command3);
 
             Assert.AreEqual(2, testableContainer.Count);
             // Appropriate (based on the command interface) auth handler is executed first
@@ -98,7 +98,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command4 = new TestableCommands.Command4();
 
-            await mediator.CommandAsync<TestableCommands.Command4, bool>(command4);
+            await mediator.Send(command4);
 
             Assert.AreEqual(3, testableContainer.Count);
             // First requirement handler is executed and fails
@@ -127,7 +127,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command5 = new TestableCommands.Command5();
 
-            await mediator.CommandAsync<TestableCommands.Command5, bool>(command5);
+            await mediator.Send(command5);
 
             Assert.AreEqual(2, testableContainer.Count);
             // First requirement handler is executed and succeeds
@@ -155,7 +155,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.CommandAsync<TestableCommands.Command9, bool>(command9);
+                await mediator.Send(command9);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -185,7 +185,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command6 = new TestableCommands.Command6();
 
-            await mediator.CommandAsync<TestableCommands.Command6, bool>(command6);
+            await mediator.Send(command6);
 
             Assert.AreEqual(3, testableContainer.Count);
             // First requirement handler is executed and succeeds
@@ -216,7 +216,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.CommandAsync<TestableCommands.Command7, bool>(command7);
+                await mediator.Send(command7);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -245,7 +245,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.CommandAsync<TestableCommands.Command8, bool>(command8);
+                await mediator.Send(command8);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -276,7 +276,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.CommandAsync<TestableCommands.Command10, bool>(command10);
+                await mediator.Send(command10);
             }
             catch (AuthorizationPolicyMissingException exception)
             {
@@ -304,7 +304,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
         containerBuilder.RegisterGeneric(typeof(TestableCommandHandlers.GenericCommandHandler<>))
             .AsImplementedInterfaces()
-            .InstancePerLifetimeScope();        
+            .InstancePerLifetimeScope();
 
         containerBuilder.AddAuthorizationRequirementHandlers(
             new SharedKernel.Authorization.AuthorizationOptions

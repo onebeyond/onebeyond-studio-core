@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 internal static class TestableCommandHandlers
 {
     public sealed class GenericCommandHandler<TCommand>
-        : ICommandHandler<TCommand, bool>
-        where TCommand : ICommand<bool>
+        : IRequestHandler<TCommand, bool>
+        where TCommand : IRequest<bool>
     {
         private readonly Queue<string> _testableContainer;
 
@@ -21,7 +21,7 @@ internal static class TestableCommandHandlers
             _testableContainer = testableContainer;
         }
 
-        public Task<bool> HandleAsync(TCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(TCommand request, CancellationToken cancellationToken)
         {
             _testableContainer.Enqueue(GetType().FullName!);
             return Task.FromResult(true);

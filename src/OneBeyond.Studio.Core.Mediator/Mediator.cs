@@ -1,9 +1,7 @@
 using EnsureThat;
 using Microsoft.Extensions.DependencyInjection;
-using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Core.Mediator.Notifications;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
-using OneBeyond.Studio.Core.Mediator.Queries;
 
 namespace OneBeyond.Studio.Core.Mediator;
 
@@ -16,20 +14,21 @@ public sealed class Mediator : IMediator
     }
 
     /// <inheritdoc/>
-    public async Task CommandAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand
+    public async Task Send<TRequest>(TRequest command, CancellationToken cancellationToken = default)
+        where TRequest : class, IRequest
     {
         EnsureArg.IsNotNull(command, nameof(command));
 
-        var handler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+        var handler = _serviceProvider.GetService<IRequestHandler<TRequest>>();
         
         // Low risk - as handlers should be DIed by assembly scan - namely just to catch mistakes.
         if (handler is null)
         {
-            throw new InvalidOperationException($"A handler needs to be registered for Command {typeof(TCommand)}");
+            throw new InvalidOperationException($"A handler needs to be registered for request {typeof(TRequest)}");
         }
 
-        var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TCommand>>();
-        var handlerDelegate = () => handler.HandleAsync(command, cancellationToken);
+        var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TRequest>>();
+        var handlerDelegate = () => handler.Handle(command, cancellationToken);
 
         foreach (var behaviour in pipeline)
         {
@@ -41,20 +40,20 @@ public sealed class Mediator : IMediator
     }
 
     /// <inheritdoc/>
-    public async Task<TResult> CommandAsync<TCommand, TResult>(TCommand command, CancellationToken cancellationToken = default) where TCommand : class, ICommand<TResult>
+    public async Task<TResult> Send<TResult>(IRequest<TResult> command, CancellationToken cancellationToken = default)
     {
         EnsureArg.IsNotNull(command, nameof(command));
 
-        var handler = _serviceProvider.GetService<ICommandHandler<TCommand, TResult>>();
+        var handler = _serviceProvider.GetService<IRequestHandler<IRequest<TResult>, TResult>>();
 
         // Low risk - as handlers should be DIed by assembly scan - namely just to catch mistakes.
         if (handler is null)
         {
-            throw new InvalidOperationException($"A handler needs to be registered for Command {typeof(TCommand)}");
+            throw new InvalidOperationException($"A handler needs to be registered for request {typeof(IRequest<TResult>)}");
         }
 
-        var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TCommand, TResult>>();
-        var handlerDelegate = () => handler.HandleAsync(command, cancellationToken);
+        var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<IRequest<TResult>, TResult>>();
+        var handlerDelegate = () => handler.Handle(command, cancellationToken);
 
         foreach (var behaviour in pipeline)
         {
@@ -67,7 +66,8 @@ public sealed class Mediator : IMediator
     }
 
     /// <inheritdoc/>
-    public async Task NotifyAsync<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification: class, INotification
+    public async Task NotifyAsync<TNotification>(TNotification notification, CancellationToken cancellationToken = default) 
+        where TNotification: class, INotification
     {
         EnsureArg.IsNotNull(notification);
 
@@ -79,27 +79,5 @@ public sealed class Mediator : IMediator
         {
             await action;
         }
-    }
-
-    /// <inheritdoc/>
-    public async Task<TResult> QueryAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default) where TQuery : class, IQuery<TResult>
-    {
-        EnsureArg.IsNotNull(query, nameof(query));
-
-        var handler = _serviceProvider.GetService<IQueryHandler<TQuery, TResult>>();
-        if (handler == null)
-        {
-            throw new InvalidOperationException($"A handler needs to be registered for Query {typeof(TQuery)}");
-        }
-
-        var behaviors = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TQuery, TResult>>().Reverse();
-        Func<Task<TResult>> handlerDelegate = () => handler.HandleAsync(query, cancellationToken);
-        foreach (var behavior in behaviors)
-        {
-            var next = handlerDelegate;
-            handlerDelegate = () => behavior.HandleAsync(query, next, cancellationToken);
-        }
-
-        return await handlerDelegate();
     }
 }

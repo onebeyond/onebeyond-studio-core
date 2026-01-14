@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using EnsureThat;
 using OneBeyond.Studio.Application.SharedKernel.Entities.Dto;
-using OneBeyond.Studio.Core.Mediator.Queries;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 
 /// <summary>
 /// </summary>
-public record List<TResultDto, TEntity, TEntityId> : IQuery<PagedList<TResultDto>>
+public record List<TResultDto, TEntity, TEntityId> : IRequest<PagedList<TResultDto>>
     where TEntity : DomainEntity<TEntityId>
 {
     /// <summary>

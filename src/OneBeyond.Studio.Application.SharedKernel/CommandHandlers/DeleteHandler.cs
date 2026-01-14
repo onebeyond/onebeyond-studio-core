@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
-using OneBeyond.Studio.Core.Mediator.Commands;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 
@@ -14,7 +14,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.CommandHandlers;
 /// <typeparam name="TAggregateRoot"></typeparam>
 /// <typeparam name="TAggregateRootId"></typeparam>
 public class DeleteHandler<TAggregateRoot, TAggregateRootId>
-    : ICommandHandler<Delete<TAggregateRoot, TAggregateRootId>, TAggregateRootId>
+    : IRequestHandler<Delete<TAggregateRoot, TAggregateRootId>, TAggregateRootId>
     where TAggregateRoot : AggregateRoot<TAggregateRootId>
     where TAggregateRootId : notnull
 {
@@ -33,7 +33,7 @@ public class DeleteHandler<TAggregateRoot, TAggregateRootId>
 
     /// <summary>
     /// </summary>
-    public Task<TAggregateRootId> HandleAsync(
+    public Task<TAggregateRootId> Handle(
         Delete<TAggregateRoot, TAggregateRootId> command,
         CancellationToken cancellationToken)
     {

@@ -11,7 +11,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.Authorization;
 /// <typeparam name="TRequest"></typeparam>
 public interface IAuthorizationRequirementHandler<in TRequirement, in TRequest>
     where TRequirement : AuthorizationRequirement
-    where TRequest : IRequest
+    where TRequest : IBaseRequest
 {
     /// <summary>
     /// </summary>

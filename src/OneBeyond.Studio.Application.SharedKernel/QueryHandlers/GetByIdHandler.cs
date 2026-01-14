@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using EnsureThat;
 using OneBeyond.Studio.Application.SharedKernel.Entities.Queries;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
-using OneBeyond.Studio.Core.Mediator.Queries;
+using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
@@ -15,7 +15,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TEntityId"></typeparam>
 public class GetByIdHandler<TResultDto, TEntity, TEntityId>
-    : IQueryHandler<GetById<TResultDto, TEntity, TEntityId>, TResultDto>
+    : IRequestHandler<GetById<TResultDto, TEntity, TEntityId>, TResultDto>
     where TEntity : DomainEntity<TEntityId>
     where TEntityId : notnull
 {
@@ -34,7 +34,7 @@ public class GetByIdHandler<TResultDto, TEntity, TEntityId>
 
     /// <summary>
     /// </summary>
-    public Task<TResultDto> HandleAsync(
+    public Task<TResultDto> Handle(
         GetById<TResultDto, TEntity, TEntityId> query,
         CancellationToken cancellationToken)
     {

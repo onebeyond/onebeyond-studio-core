@@ -11,10 +11,8 @@ using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Application.SharedKernel.QueryHandlers;
 using OneBeyond.Studio.Application.SharedKernel.RequestAuditors;
 using OneBeyond.Studio.Core.Mediator;
-using OneBeyond.Studio.Core.Mediator.Commands;
 using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 using OneBeyond.Studio.Core.Mediator.Pipelines;
-using OneBeyond.Studio.Core.Mediator.Queries;
 using OneBeyond.Studio.Crosscuts.MessageQueues;
 using OneBeyond.Studio.Domain.SharedKernel.Entities.Commands;
 
@@ -26,8 +24,7 @@ namespace OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 public static class ContainerBuilderExtensions
 {
     /// <summary>
-    /// Registers <see cref="ICommandHandler{TRequest, TResponse}"/> for CRUD operations <br/>
-    /// Registers <see cref="IQueryHandler{TRequest, TResponse}"/> for CRUD operations
+    /// Registers <see cref="IRequestHandler{TRequest, TResponse}"/> for CRUD operations <br/>
     /// </summary>
     /// <param name="containerBuilder"></param>
     /// <param name="requestHandlersAssemblies"></param>
@@ -38,22 +35,19 @@ public static class ContainerBuilderExtensions
         EnsureArg.IsNotNull(containerBuilder, nameof(containerBuilder));
         
         containerBuilder.RegisterGeneric(typeof(DeleteHandler<,>))
-            .Keyed(typeof(Delete<,>), typeof(ICommandHandler<,>))
+            .Keyed(typeof(Delete<,>), typeof(IRequestHandler<,>))
             .InstancePerLifetimeScope();
         containerBuilder.RegisterGeneric(typeof(GetByIdHandler<,,>))
-            .Keyed(typeof(GetById<,,>), typeof(IQueryHandler<,>))
+            .Keyed(typeof(GetById<,,>), typeof(IRequestHandler<,>))
             .InstancePerLifetimeScope();
         containerBuilder.RegisterGeneric(typeof(ListHandler<,,>))
-            .Keyed(typeof(List<,,>), typeof(IQueryHandler<,>))
+            .Keyed(typeof(List<,,>), typeof(IRequestHandler<,>))
             .InstancePerLifetimeScope();
 
         containerBuilder.AddMediatorHandlers(requestHandlersAssemblies);
 
-        containerBuilder.RegisterGeneric(typeof(CommandHandlerDispatcher<,>))
-            .As(typeof(ICommandHandler<,>));
-
-        containerBuilder.RegisterGeneric(typeof(QueryHandlerDispatcher<,>))
-            .As(typeof(IQueryHandler<,>));
+        containerBuilder.RegisterGeneric(typeof(RequestHandlerDispatcher<,>))
+            .As(typeof(IRequestHandler<,>));
 
         containerBuilder.RegisterGeneric(typeof(RequestAuditor<,>))
             .As(typeof(IMediatorPipelineBehaviour<,>))
@@ -126,28 +120,35 @@ public static class ContainerBuilderExtensions
                 (assembly) => assembly.GetTypes())
             .Where(
                 (type) =>
-                {
-                    if (!type.IsAbstract)
-                    {
-                        if (type.IsGenericTypeDefinition)
-                        {
-                            if (type.GetGenericArguments().Length >= 1)
-                            {
-                                var genericArguments = type.GetGenericArguments();
-                                if (typeof(IRequest).IsAssignableFrom(genericArguments[0]))
-                                {
-                                    if (type.GetInterfaces().Any(
-                                        (iface) => iface.IsGenericType
-                                            && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return false;
-                })                                
+                    !type.IsAbstract
+                        && type.IsGenericTypeDefinition
+                        && type.GetGenericArguments().Length == 1
+                        && typeof(IBaseRequest).IsAssignableFrom(type.GetGenericArguments()[0])
+                        && type.GetInterfaces().Any(
+                            (iface) => iface.IsGenericType
+                                && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
+                //{
+                //    if (!type.IsAbstract)
+                //    {
+                //        if (type.IsGenericTypeDefinition)
+                //        {
+                //            if (type.GetGenericArguments().Length >= 1)
+                //            {
+                //                var genericArguments = type.GetGenericArguments();
+                //                if (typeof(IRequest).IsAssignableFrom(genericArguments[0]))
+                //                {
+                //                    if (type.GetInterfaces().Any(
+                //                        (iface) => iface.IsGenericType
+                //                            && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
+                //                    {
+                //                        return true;
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //    return false;
+                //})                                
             .ForEach(
                 (handlerOpenGenericType) =>
                 {
