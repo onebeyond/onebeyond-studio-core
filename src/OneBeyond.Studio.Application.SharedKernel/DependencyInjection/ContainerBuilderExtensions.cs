@@ -127,28 +127,6 @@ public static class ContainerBuilderExtensions
                         && type.GetInterfaces().Any(
                             (iface) => iface.IsGenericType
                                 && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
-                //{
-                //    if (!type.IsAbstract)
-                //    {
-                //        if (type.IsGenericTypeDefinition)
-                //        {
-                //            if (type.GetGenericArguments().Length >= 1)
-                //            {
-                //                var genericArguments = type.GetGenericArguments();
-                //                if (typeof(IRequest).IsAssignableFrom(genericArguments[0]))
-                //                {
-                //                    if (type.GetInterfaces().Any(
-                //                        (iface) => iface.IsGenericType
-                //                            && iface.GetGenericTypeDefinition() == typeof(IAuthorizationRequirementHandler<,>)))
-                //                    {
-                //                        return true;
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //    return false;
-                //})                                
             .ForEach(
                 (handlerOpenGenericType) =>
                 {
