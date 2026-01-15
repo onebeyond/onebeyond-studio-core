@@ -142,8 +142,35 @@ public class AuthorizationRequirementBehavior<TRequest, TResponse>
             TRequest request,
             CancellationToken cancellationToken)
         {
-            return ((IAuthorizationRequirementHandler<TRequirement, TRequest>)requirementHandler)
-                .HandleAsync((TRequirement)requirement, request, cancellationToken);
+            //That's the original code. In the new version of Mediator we could not correctly cast the requirementHandler to IAuthorizationRequirementHandler.
+            //The code has not been removed, left for future investigation.
+            //return ((IAuthorizationRequirementHandler<TRequirement, TRequest>)requirementHandler)
+            //    .HandleAsync((TRequirement)requirement, request, cancellationToken);
+
+            var handlerType = requirementHandler.GetType();
+
+            var iface = handlerType
+                    .GetInterfaces()
+                    .SingleOrDefault(i =>
+                        i.IsGenericType &&
+                        i.GetGenericTypeDefinition() ==
+                            typeof(IAuthorizationRequirementHandler<,>) &&
+                        i.GetGenericArguments()[0].IsInstanceOfType(requirement) &&
+                        i.GetGenericArguments()[1].IsInstanceOfType(request));
+
+            if (iface == null)
+            {
+                throw new InvalidOperationException(
+                    $"Handler {handlerType.FullName} cannot handle request {request.GetType().FullName}");
+            }
+
+            // Get HandleAsync method from the interface
+            var handleMethod = iface.GetMethod("HandleAsync")!;
+
+            // Invoke through the interface method
+            return (Task)handleMethod.Invoke(
+                requirementHandler,
+                new object[] { requirement, request, cancellationToken })!;
         }
     }
 }
