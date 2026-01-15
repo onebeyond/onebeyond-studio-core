@@ -14,10 +14,10 @@ public sealed class Mediator : IMediator
     }
 
     /// <inheritdoc/>
-    public async Task Send<TRequest>(TRequest command, CancellationToken cancellationToken = default)
+    public async Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
         where TRequest : class, IRequest
     {
-        EnsureArg.IsNotNull(command, nameof(command));
+        EnsureArg.IsNotNull(request, nameof(request));
 
         var handler = _serviceProvider.GetService<IRequestHandler<TRequest>>();
         
@@ -28,21 +28,21 @@ public sealed class Mediator : IMediator
         }
 
         var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<TRequest>>();
-        var handlerDelegate = () => handler.Handle(command, cancellationToken);
+        var handlerDelegate = () => handler.Handle(request, cancellationToken);
 
         foreach (var behaviour in pipeline)
         {
             var next = handlerDelegate;
-            handlerDelegate = () => behaviour.HandleAsync(command, next, cancellationToken);
+            handlerDelegate = () => behaviour.HandleAsync(request, next, cancellationToken);
         }
 
         await handlerDelegate();
     }
 
     /// <inheritdoc/>
-    public async Task<TResult> Send<TResult>(IRequest<TResult> command, CancellationToken cancellationToken = default)
+    public async Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default)
     {
-        EnsureArg.IsNotNull(command, nameof(command));
+        EnsureArg.IsNotNull(request, nameof(request));
 
         var handler = _serviceProvider.GetService<IRequestHandler<IRequest<TResult>, TResult>>();
 
@@ -53,12 +53,12 @@ public sealed class Mediator : IMediator
         }
 
         var pipeline = _serviceProvider.GetServices<IMediatorPipelineBehaviour<IRequest<TResult>, TResult>>();
-        var handlerDelegate = () => handler.Handle(command, cancellationToken);
+        var handlerDelegate = () => handler.Handle(request, cancellationToken);
 
         foreach (var behaviour in pipeline)
         {
             var next = handlerDelegate;
-            handlerDelegate = () => behaviour.HandleAsync(command, next, cancellationToken);
+            handlerDelegate = () => behaviour.HandleAsync(request, next, cancellationToken);
         }
 
         return await handlerDelegate();
