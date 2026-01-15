@@ -82,8 +82,8 @@ public sealed class DomainEventsTests : InMemoryTestsBase
             var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync();
 
             Assert.AreEqual(2, raisedDomainEventCount);
-            Assert.AreEqual(1, preSaveScopedItemContainer.Items.Count);
-            Assert.AreEqual(0, postSaveScopedItemContainer.Items.Count);
+            Assert.HasCount(1, preSaveScopedItemContainer.Items);
+            Assert.IsEmpty(postSaveScopedItemContainer.Items);
 
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -102,7 +102,7 @@ public sealed class DomainEventsTests : InMemoryTestsBase
                 },
                 cancellationTokenSource.Token);
 
-            Assert.AreEqual(4, postSaveScopedItemContainer.Items.Count);
+            Assert.HasCount(4, postSaveScopedItemContainer.Items);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -130,8 +130,8 @@ public sealed class DomainEventsTests : InMemoryTestsBase
             var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync();
 
             Assert.AreEqual(1, raisedDomainEventCount);
-            Assert.AreEqual(1, preSaveScopedItemContainer.Items.Count);
-            Assert.AreEqual(0, postSaveScopedItemContainer.Items.Count);
+            Assert.HasCount(1, preSaveScopedItemContainer.Items);
+            Assert.IsEmpty(postSaveScopedItemContainer.Items);
 
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -150,7 +150,7 @@ public sealed class DomainEventsTests : InMemoryTestsBase
                 },
                 cancellationTokenSource.Token);
 
-            Assert.AreEqual(2, postSaveScopedItemContainer.Items.Count);
+            Assert.HasCount(2, postSaveScopedItemContainer.Items);
         }
     }
 }

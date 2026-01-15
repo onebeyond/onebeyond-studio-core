@@ -187,7 +187,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             await mediator.Send(command6);
 
-            Assert.AreEqual(3, testableContainer.Count);
+            Assert.HasCount(3, testableContainer);
             // First requirement handler is executed and succeeds
             Assert.AreEqual(
                 $"{typeof(TestableAuthorizationRequirementHandlers.Requirement2Handler<TestableCommands.Command6>).FullName}",
@@ -221,7 +221,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             }
             catch (AuthorizationPolicyFailedException)
             {
-                Assert.AreEqual(1, testableContainer.Count);
+                Assert.HasCount(1, testableContainer);
                 // First requirement handler is executed and fails
                 Assert.AreEqual(
                     $"{typeof(TestableAuthorizationRequirementHandlers.Requirement3Handler<TestableCommands.Command7>).FullName}: {new TestableAuthorizationRequirements.Requirement3(true)} - Failure",
@@ -250,7 +250,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             }
             catch (AuthorizationPolicyFailedException)
             {
-                Assert.AreEqual(2, testableContainer.Count);
+                Assert.HasCount(2, testableContainer);
                 // First requirement handler is executed and succeeds
                 Assert.AreEqual(
                     $"{typeof(TestableAuthorizationRequirementHandlers.Requirement1Handler<TestableCommands.Command8>).FullName}: {new TestableAuthorizationRequirements.Requirement1(false, 45, "Forty five")} - Success",

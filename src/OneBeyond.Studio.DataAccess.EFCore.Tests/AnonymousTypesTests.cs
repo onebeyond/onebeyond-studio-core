@@ -103,7 +103,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                 filter: (product) => product.Brand == "cartier");
 
             Assert.IsNotNull(productDtos);
-            Assert.AreEqual(2, productDtos.Count);
+            Assert.HasCount(2, productDtos);
 
             var product1Dto = productDtos.FirstOrDefault((product) => product.ProductId == product1.Id);
             Assert.IsNotNull(product1Dto);
@@ -129,7 +129,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                 filter: (product) => product.CountryOfOrigin == "us" && product.Price > 1000M);
 
             Assert.IsNotNull(productDtos);
-            Assert.AreEqual(2, productDtos.Count);
+            Assert.HasCount(2, productDtos);
 
             var product2Dto = productDtos.FirstOrDefault((product) => product.ProductId == product2.Id);
             Assert.IsNotNull(product2Dto);
@@ -161,7 +161,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
 
 
             Assert.IsNotNull(productDtos);
-            Assert.AreEqual(3, productDtos.Length);
+            Assert.HasCount(3, productDtos);
 
             var product3Dto = productDtos[0];
             Assert.IsNotNull(product3Dto);

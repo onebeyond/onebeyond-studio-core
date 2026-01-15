@@ -153,7 +153,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderLineComments = purchaseOrder.Lines
                 .SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments)
                 .ToArray();
-            Assert.AreEqual(4, purchaseOrderLineComments.Length);
+            Assert.HasCount(4, purchaseOrderLineComments);
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.2"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.1"));
@@ -217,7 +217,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             Assert.AreEqual(3, purchaseOrder.Lines.Count());
             Assert.AreEqual(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(4, purchaseOrder.Tags.Count);
+            Assert.HasCount(4, purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -228,7 +228,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
 
             Assert.AreEqual(0, purchaseOrder.Lines.Count());
-            Assert.AreEqual(0, purchaseOrder.Tags.Count);
+            Assert.IsEmpty(purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -253,7 +253,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
             Assert.AreEqual(0, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(4, purchaseOrder.Tags.Count);
+            Assert.HasCount(4, purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -277,7 +277,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
             Assert.AreEqual(8, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(2, purchaseOrder.Tags.Count);
+            Assert.HasCount(2, purchaseOrder.Tags);
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.A"));
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.A"));
         }
@@ -318,12 +318,12 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderLineComments = purchaseOrder.Lines
                 .SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments)
                 .ToArray();
-            Assert.AreEqual(4, purchaseOrderLineComments.Length);
+            Assert.HasCount(4, purchaseOrderLineComments);
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.2"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.2"));
-            Assert.AreEqual(2, purchaseOrder.Tags.Count);
+            Assert.HasCount(2, purchaseOrder.Tags);
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.B"));
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.B"));
         }
@@ -606,7 +606,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderLineComments = purchaseOrder.Lines
                 .SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments)
                 .ToArray();
-            Assert.AreEqual(4, purchaseOrderLineComments.Length);
+            Assert.HasCount(4, purchaseOrderLineComments);
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.2"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.1"));
@@ -670,7 +670,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             Assert.AreEqual(3, purchaseOrder.Lines.Count());
             Assert.AreEqual(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(4, purchaseOrder.Tags.Count);
+            Assert.HasCount(4, purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -681,7 +681,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
 
             Assert.AreEqual(0, purchaseOrder.Lines.Count());
-            Assert.AreEqual(0, purchaseOrder.Tags.Count);
+            Assert.IsEmpty(purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -705,7 +705,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
             Assert.AreEqual(0, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(4, purchaseOrder.Tags.Count);
+            Assert.HasCount(4, purchaseOrder.Tags);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -727,7 +727,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
             Assert.IsTrue(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
             Assert.AreEqual(8, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
-            Assert.AreEqual(2, purchaseOrder.Tags.Count);
+            Assert.HasCount(2, purchaseOrder.Tags);
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.A"));
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.A"));
         }
@@ -753,12 +753,12 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderLineComments = purchaseOrder.Lines
                 .SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments)
                 .ToArray();
-            Assert.AreEqual(4, purchaseOrderLineComments.Length);
+            Assert.HasCount(4, purchaseOrderLineComments);
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.2"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.1"));
             Assert.IsTrue(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.2"));
-            Assert.AreEqual(2, purchaseOrder.Tags.Count);
+            Assert.HasCount(2, purchaseOrder.Tags);
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.B"));
             Assert.IsTrue(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.B"));
         }

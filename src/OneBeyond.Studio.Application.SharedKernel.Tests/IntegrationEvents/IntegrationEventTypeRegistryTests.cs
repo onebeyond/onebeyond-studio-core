@@ -28,7 +28,7 @@ public sealed class IntegrationEventTypeRegistryTests
 
         var integrationEventTypes = integrationEventTypeRegistry.IntegrationEventTypes;
 
-        Assert.AreEqual(5, integrationEventTypes.Count);
+        Assert.HasCount(5, integrationEventTypes);
         Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.1m

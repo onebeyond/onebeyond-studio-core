@@ -30,20 +30,20 @@ public sealed class IncludesTests
                 .ThenInclude(includeAnotherProperty2)
                 .Where(filterYetAnotherProperty1);
 
-        Assert.AreEqual(4, includeList.Count);
+        Assert.HasCount(4, includeList);
 
         var some4 = includeList.Single((include) => include.Item1.Equals(includeSomeProperty4));
 
-        Assert.AreEqual(1, some4.Item2.Count);
+        Assert.HasCount(1, some4.Item2);
         Assert.AreEqual(filterAnotherProperty1, some4.Item2[0]);
 
         var some3 = includeList.Single((include) => include.Item1.Equals(includeSomeProperty3));
 
-        Assert.AreEqual(0, some3.Item2.Count);
+        Assert.IsEmpty(some3.Item2);
 
         var another2 = includeList.Single((include) => include.Item1.Equals(includeAnotherProperty2));
 
-        Assert.AreEqual(1, another2.Item2.Count);
+        Assert.HasCount(1, another2.Item2);
         Assert.AreEqual(filterYetAnotherProperty1, another2.Item2[0]);
     }
 
@@ -54,12 +54,12 @@ public sealed class IncludesTests
             .Include((some) => some.SomeProperty4)
                 .ThenInclude((another) => another.AnotherProperty2);
 
-        Assert.AreEqual(true, includes.HaveCartesianExplosion);
+        Assert.IsTrue(includes.HaveCartesianExplosion);
 
         includes = new Includes<SomeClass>(haveCartesianExplosion: false)
             .Include((some) => some.SomeProperty4)
                 .ThenInclude((another) => another.AnotherProperty2);
 
-        Assert.AreEqual(false, includes.HaveCartesianExplosion);
+        Assert.IsFalse(includes.HaveCartesianExplosion);
     }
 }

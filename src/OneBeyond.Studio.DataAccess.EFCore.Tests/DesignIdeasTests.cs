@@ -118,7 +118,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
                     Includes.Create((Survey survey) => survey.Company)))
                 .ToList();
 
-            Assert.AreEqual(1, surveys.Count);
+            Assert.HasCount(1, surveys);
             Assert.AreEqual("How BA did?", surveys[0].Name);
             Assert.IsNotNull(surveys[0].Company);
             Assert.IsInstanceOfType(surveys[0].Company, typeof(Airline.Company));
@@ -134,7 +134,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
             var companies = (await companyRORepository.ListAsync())
                 .ToDictionary((company) => company.Id);
 
-            Assert.AreEqual(4, companies.Count);
+            Assert.HasCount(4, companies);
             Assert.IsTrue(companies.ContainsKey(baAirlineId));
             Assert.IsTrue(companies.ContainsKey(lhAirlineId));
             Assert.IsTrue(companies.ContainsKey(lgwAirportId));

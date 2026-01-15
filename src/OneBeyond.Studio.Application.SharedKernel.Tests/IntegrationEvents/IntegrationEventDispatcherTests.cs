@@ -50,18 +50,18 @@ public sealed class IntegrationEventDispatcherTests : TestsBase
 
             var integrationEventDispatcher = serviceProvider.GetRequiredService<IIntegrationEventDispatcher>();
 
-            Assert.AreEqual(0, typeContainer.Items.Count);
-            Assert.AreEqual(0, scopedItemContainer.Items.Count);
+            Assert.IsEmpty(typeContainer.Items);
+            Assert.IsEmpty(scopedItemContainer.Items);
 
             var integrationEvent = new TestableIntegrationEvents.ThisHappened_1_1(42, DateTimeOffset.UtcNow);
 
             await integrationEventDispatcher.DispatchAsync(integrationEvent);
 
-            Assert.AreEqual(2, typeContainer.Items.Count);
+            Assert.HasCount(2, typeContainer.Items);
             Assert.IsTrue(typeContainer.Items.Contains(typeof(TestableIntegrationEventHandler1)));
             Assert.IsTrue(typeContainer.Items.Contains(typeof(TestableIntegrationEventHandler2)));
 
-            Assert.AreEqual(2, scopedItemContainer.Items.Count);
+            Assert.HasCount(2, scopedItemContainer.Items);
             Assert.IsTrue(scopedItemContainer.Items.Any((scopedItem) => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler1)));
             Assert.IsTrue(scopedItemContainer.Items.Any((scopedItem) => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler2)));
         }
