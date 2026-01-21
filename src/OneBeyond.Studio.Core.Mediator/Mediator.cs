@@ -39,6 +39,51 @@ public sealed class Mediator : IMediator
         await handlerDelegate();
     }
 
+    public async Task Send(IRequest request, CancellationToken cancellationToken = default)
+    {
+        EnsureArg.IsNotNull(request, nameof(request));
+
+        var requestType = request.GetType();
+
+        // Build IRequestHandler<TRequest> at runtime
+        var handlerType = typeof(IRequestHandler<>).MakeGenericType(requestType);
+        var handler = _serviceProvider.GetService(handlerType);
+
+        if (handler is null)
+        {
+            throw new InvalidOperationException(
+                $"A handler needs to be registered for request {requestType}");
+        }
+
+        var pipelineType = typeof(IMediatorPipelineBehaviour<>).MakeGenericType(requestType);
+        var pipeline = _serviceProvider.GetServices(pipelineType);
+
+        Func<Task> handlerDelegate = () =>
+        {
+            var handleMethod = handlerType.GetMethod(nameof(IRequestHandler<IRequest>.Handle))!;
+            return (Task)handleMethod.Invoke(
+                handler,
+                new object[] { request, cancellationToken })!;
+        };
+
+        foreach (var behaviour in pipeline)
+        {
+            var next = handlerDelegate;
+
+            handlerDelegate = () =>
+            {
+                var handleAsyncMethod = pipelineType.GetMethod(
+                    nameof(IMediatorPipelineBehaviour<IRequest>.HandleAsync))!;
+
+                return (Task)handleAsyncMethod.Invoke(
+                    behaviour,
+                    new object[] { request, next, cancellationToken })!;
+            };
+        }
+
+        await handlerDelegate();
+    }
+
     /// <inheritdoc/>
     public async Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default)
     {

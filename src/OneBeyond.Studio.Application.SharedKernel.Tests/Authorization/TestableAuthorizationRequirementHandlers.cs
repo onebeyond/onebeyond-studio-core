@@ -144,4 +144,36 @@ internal static class TestableAuthorizationRequirementHandlers
             }
         }
     }
+
+    public sealed class Requirement1ForCommand11Handler
+        : IAuthorizationRequirementHandler<TestableAuthorizationRequirements.Requirement1, TestableCommands.Command11>
+    {
+        private readonly Queue<string> _testableContainer;
+
+        public Requirement1ForCommand11Handler(Queue<string> testableContainer)
+        {
+            EnsureArg.IsNotNull(testableContainer, nameof(testableContainer));
+
+            _testableContainer = testableContainer;
+        }
+
+        public Task HandleAsync(
+            TestableAuthorizationRequirements.Requirement1 requirement,
+            TestableCommands.Command11 request,
+            CancellationToken cancellationToken)
+        {
+            if (requirement.IsFailRequested)
+            {
+                _testableContainer.Enqueue(
+                    $"{GetType().FullName}: {requirement} - Failure");
+                throw new Exception($"{nameof(TestableAuthorizationRequirements.Requirement1)} fail requested.");
+            }
+            else
+            {
+                _testableContainer.Enqueue(
+                    $"{GetType().FullName}: {requirement} - Success");
+                return Task.CompletedTask;
+            }
+        }
+    }
 }

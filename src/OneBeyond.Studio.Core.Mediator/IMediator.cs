@@ -15,6 +15,14 @@ public interface IMediator
         where TRequest : class, IRequest;
 
     /// <summary>
+    /// Send a request (a command or a query) to the domain - not expecting a return value.
+    /// </summary>
+    /// <param name="request">Request to send</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task Send(IRequest request, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Send a request (a command or a query) to the domain - expecting a response of type <see cref="TResult"/>
     /// </summary>
     /// <typeparam name="TResult">Type of result</typeparam>

@@ -27,4 +27,22 @@ internal static class TestableCommandHandlers
             return Task.FromResult(true);
         }
     }
+
+    public sealed class Command11Handler: IRequestHandler<TestableCommands.Command11>
+    {
+        private readonly Queue<string> _testableContainer;
+
+        public Command11Handler(Queue<string> testableContainer)
+        {
+            EnsureArg.IsNotNull(testableContainer, nameof(testableContainer));
+
+            _testableContainer = testableContainer;
+        }
+
+        public Task Handle(TestableCommands.Command11 request, CancellationToken cancellationToken)
+        {
+            _testableContainer.Enqueue(GetType().FullName!);
+            return Task.FromResult(true);
+        }
+    }
 }

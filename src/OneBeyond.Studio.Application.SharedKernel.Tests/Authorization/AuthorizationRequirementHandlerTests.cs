@@ -42,6 +42,37 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
     }
 
     [TestMethod]
+    public async Task TestSimpleParameterlessRequirementForConcreteCommandHandlingSucceeds()
+    {
+        using (var serviceScope = ServiceProvider.CreateScope())
+        {
+            var serviceProvider = serviceScope.ServiceProvider;
+            var testableContainer = serviceProvider.GetRequiredService<Queue<string>>();
+            var mediator = serviceProvider.GetRequiredService<IMediator>();
+
+            var command = new TestableCommands.Command11();
+
+            //Note! Mediator has separate methods for 
+            //public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
+            //and
+            //public Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default);
+            //we need to test authorization requirements for both
+
+            await mediator.Send(command);
+
+            Assert.HasCount(2, testableContainer);
+            // Auth handler is executed first
+            Assert.AreEqual(
+                typeof(TestableAuthorizationRequirementHandlers.Requirement1Handler<TestableCommands.Command11>).FullName,
+                testableContainer.Dequeue());
+            // Command handler is executed last
+            Assert.AreEqual(
+                typeof(TestableCommandHandlers.Command11Handler).FullName,
+                testableContainer.Dequeue());
+        }
+    }
+
+    [TestMethod]
     public async Task TestRequirementHandlingSucceedsWhenHandlerDependsOnCommand()
     {
         using (var serviceScope = ServiceProvider.CreateScope())

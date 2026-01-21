@@ -79,4 +79,9 @@ internal static class TestableCommands
     public sealed record Command10 : IRequest<bool>
     {
     }
+
+    [AuthorizationPolicy(typeof(TestableAuthorizationRequirements.Requirement1))]
+    public sealed record Command11 : IRequest //this command does not return anything
+    {
+    }
 }
