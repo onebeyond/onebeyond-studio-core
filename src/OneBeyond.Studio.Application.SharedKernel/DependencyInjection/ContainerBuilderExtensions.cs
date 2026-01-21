@@ -112,6 +112,10 @@ public static class ContainerBuilderExtensions
             .As(typeof(IMediatorPipelineBehaviour<,>))
             .InstancePerLifetimeScope();
 
+        containerBuilder.RegisterGeneric(typeof(AuthorizationRequirementBehavior<>))
+            .As(typeof(IMediatorPipelineBehaviour<>))
+            .InstancePerLifetimeScope();
+
         // NB: It may turn out this code needs further tweaking. At the moment it covers
         //     a case when there is open generic requirement handler with a single parameter for
         //     request and it explicitely implements IAuthorizationRequirementHandler<FixedRequirement,>

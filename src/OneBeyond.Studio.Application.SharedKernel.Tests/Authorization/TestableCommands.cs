@@ -80,7 +80,7 @@ internal static class TestableCommands
     {
     }
 
-    [AuthorizationPolicy(typeof(TestableAuthorizationRequirements.Requirement1))]
+    [AuthorizationPolicy(typeof(TestableAuthorizationRequirements.Requirement2))]
     public sealed record Command11 : IRequest //this command does not return anything
     {
     }

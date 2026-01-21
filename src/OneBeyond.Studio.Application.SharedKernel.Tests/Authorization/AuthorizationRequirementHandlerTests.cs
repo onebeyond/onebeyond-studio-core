@@ -58,12 +58,43 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             //public Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default);
             //we need to test authorization requirements for both
 
-            await mediator.Send(command);
+            await mediator.Send(command); //Note, here we pass command as TestableCommands.Command11, not as IRequest
 
             Assert.HasCount(2, testableContainer);
             // Auth handler is executed first
             Assert.AreEqual(
-                typeof(TestableAuthorizationRequirementHandlers.Requirement1Handler<TestableCommands.Command11>).FullName,
+                typeof(TestableAuthorizationRequirementHandlers.Requirement2ForCommand11Handler).FullName,
+                testableContainer.Dequeue());
+            // Command handler is executed last
+            Assert.AreEqual(
+                typeof(TestableCommandHandlers.Command11Handler).FullName,
+                testableContainer.Dequeue());
+        }
+    }
+
+    [TestMethod]
+    public async Task TestSimpleParameterlessRequirementForConcreteCommandAsIRequestHandlingSucceeds()
+    {
+        using (var serviceScope = ServiceProvider.CreateScope())
+        {
+            var serviceProvider = serviceScope.ServiceProvider;
+            var testableContainer = serviceProvider.GetRequiredService<Queue<string>>();
+            var mediator = serviceProvider.GetRequiredService<IMediator>();
+
+            IRequest command = new TestableCommands.Command11();
+
+            //Note! Mediator has separate methods for 
+            //public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
+            //and
+            //public Task Send(IRequest request, CancellationToken cancellationToken = default)
+            //we need to test authorization requirements for both
+
+            await mediator.Send(command); //Note, here we pass command as IRequest, not as TestableCommands.Command11
+
+            Assert.HasCount(2, testableContainer);
+            // Auth handler is executed first
+            Assert.AreEqual(
+                typeof(TestableAuthorizationRequirementHandlers.Requirement2ForCommand11Handler).FullName,
                 testableContainer.Dequeue());
             // Command handler is executed last
             Assert.AreEqual(
