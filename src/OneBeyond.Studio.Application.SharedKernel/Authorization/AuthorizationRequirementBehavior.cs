@@ -28,11 +28,8 @@ public class AuthorizationRequirementBehavior<TRequest, TResponse>
         ILifetimeScope container,
         AuthorizationOptions authorizationOptions)
     {
-        EnsureArg.IsNotNull(container, nameof(container));
-        EnsureArg.IsNotNull(authorizationOptions, nameof(authorizationOptions));
-
-        _container = container;
-        _authorizationOptions = authorizationOptions;
+        _container = EnsureArg.IsNotNull(container, nameof(container));
+        _authorizationOptions = EnsureArg.IsNotNull(authorizationOptions, nameof(authorizationOptions));
     }
 
     private static readonly ILogger Logger = LogManager.CreateLogger<AuthorizationRequirementBehavior<TRequest, TResponse>>();
@@ -182,11 +179,8 @@ public class AuthorizationRequirementBehavior<TRequest>
         ILifetimeScope container,
         AuthorizationOptions authorizationOptions)
     {
-        EnsureArg.IsNotNull(container, nameof(container));
-        EnsureArg.IsNotNull(authorizationOptions, nameof(authorizationOptions));
-
-        _container = container;
-        _authorizationOptions = authorizationOptions;
+        _container = EnsureArg.IsNotNull(container, nameof(container));
+        _authorizationOptions = EnsureArg.IsNotNull(authorizationOptions, nameof(authorizationOptions));
     }
 
     private static readonly ILogger Logger = LogManager.CreateLogger<AuthorizationRequirementBehavior<TRequest>>();
