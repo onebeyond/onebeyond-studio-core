@@ -20,7 +20,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="DelegateDecompiler" Version="0.35.3" />
     <PackageVersion Include="DelegateDecompiler.EntityFrameworkCore5" Version="0.35.3" />
-    <PackageVersion Include="Ensure.That" Version="10.1.0" />    
+    <PackageVersion Include="Ensure.That" Version="10.1.0" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="Handlebars.Net" Version="2.1.6" />
     <PackageVersion Include="Humanizer.Core" Version="2.14.1" />
@@ -47,12 +47,13 @@
     <PackageVersion Include="MSTest.TestAdapter" Version="4.0.2" />
     <PackageVersion Include="MSTest.TestFramework" Version="4.0.2" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />    
+    <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
     <PackageVersion Include="Scrutor" Version="7.0.0" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageVersion Include="Thinktecture.EntityFrameworkCore.Relational" Version="10.0.0" />
     <PackageVersion Include="TimeZoneConverter" Version="7.2.0" />
+    <PackageVersion Include="Verify.Xunit" Version="31.10.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageVersion Include="Z.EntityFramework.Plus.EFCore" Version="10.105.0" />

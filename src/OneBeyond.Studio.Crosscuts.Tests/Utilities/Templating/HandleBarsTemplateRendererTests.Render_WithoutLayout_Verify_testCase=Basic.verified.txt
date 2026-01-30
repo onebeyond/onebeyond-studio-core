@@ -1,0 +1,1 @@
+﻿Basic template with one replacement variable!

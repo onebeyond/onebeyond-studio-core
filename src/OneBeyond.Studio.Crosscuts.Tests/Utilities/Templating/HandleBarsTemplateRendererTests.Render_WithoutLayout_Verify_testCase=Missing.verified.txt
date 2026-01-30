@@ -1,0 +1,8 @@
+﻿<html>
+<body>
+<p>Hello Alexis,</p>
+<p>You have been sent this email as an invitation to access Alexis' Test. In order to access the system you will first need to set a password. Please click <a href="https://testserver/resetpassword=xxasjkalsjdalkjasdlkj">here</a> to set your password.</p>
+<p>If you're having trouble clicking the link, copy and paste the URL below into your web browser: https://testserver/resetpassword=xxasjkalsjdalkjasdlkj.</p>
+<p>To log in to your account use the following user name: Alexis.</p>
+<p>Best Regards,<br />
+</p></body></html>

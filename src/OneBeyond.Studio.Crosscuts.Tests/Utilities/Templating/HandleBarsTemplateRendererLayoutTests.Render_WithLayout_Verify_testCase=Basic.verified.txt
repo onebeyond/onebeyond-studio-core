@@ -1,0 +1,9 @@
+﻿<html>
+<body>
+Basic template with one replacement!
+<footer>
+<p>Best Regards,<br />
+Test System</p>
+</footer>
+</body>
+</html>
