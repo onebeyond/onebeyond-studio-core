@@ -21,7 +21,6 @@
     <PackageReference Include="Autofac" />
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="Ensure.That" />
-    <PackageReference Include="Handlebars.Net" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
