@@ -48,7 +48,6 @@
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />    
     <PackageVersion Include="Scrutor" Version="7.0.0" />
-    <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageVersion Include="Thinktecture.EntityFrameworkCore.Relational" Version="10.0.0" />
     <PackageVersion Include="TimeZoneConverter" Version="7.2.0" />

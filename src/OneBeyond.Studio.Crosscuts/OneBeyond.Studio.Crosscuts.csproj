@@ -25,7 +25,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="Serilog" />
     <PackageReference Include="TimeZoneConverter" />
   </ItemGroup>
 </Project>
