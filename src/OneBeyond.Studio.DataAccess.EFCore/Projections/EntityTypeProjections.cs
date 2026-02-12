@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using EnsureThat;
@@ -16,16 +13,16 @@ internal class EntityTypeProjections<TEntity> : IEntityTypeProjections<TEntity>
         .MethodFrom(() => DoProject<object>(default!, default!, default!))
         .GetGenericMethodDefinition();
 
-    private readonly IReadOnlyDictionary<Type, DoProjectFunc> _doProjectFuncMap;    
+    private readonly IReadOnlyDictionary<Type, DoProjectFunc> _doProjectFuncMap;
 
     public EntityTypeProjections(
         IEnumerable<IEntityTypeProjection<TEntity>> entityTypeProjections)
     {
-        EnsureArg.IsNotNull(entityTypeProjections, nameof(entityTypeProjections));        
+        EnsureArg.IsNotNull(entityTypeProjections, nameof(entityTypeProjections));
 
         _doProjectFuncMap = entityTypeProjections
             .SelectMany(CreateDoProjectFuncMap)
-            .ToDictionary((item) => item.ResultType, (item) => item.DoProject);        
+            .ToDictionary(item => item.ResultType, item => item.DoProject);
     }
 
     public IQueryable<TResult> ProjectTo<TResult>(IQueryable<TEntity> entityQuery, DbContext dbContext)
@@ -35,27 +32,27 @@ internal class EntityTypeProjections<TEntity> : IEntityTypeProjections<TEntity>
 
         var projectionContext = new ProjectionContext(dbContext);
         return _doProjectFuncMap.TryGetValue(typeof(TResult), out var doProject)
-            ? (IQueryable<TResult>)doProject(
-                entityQuery,
-                projectionContext)
+            ? (IQueryable<TResult>)doProject(entityQuery, projectionContext)
             : throw new InvalidOperationException($"No projection specified from '{typeof(TEntity).FullName}' to '{typeof(TResult).FullName}'.");
-    }    
+    }
 
     private static IReadOnlyCollection<(Type ResultType, DoProjectFunc DoProject)> CreateDoProjectFuncMap(
         IEntityTypeProjection<TEntity> entityTypeProjection)
     {
-        var doProjectFuncMap = entityTypeProjection.GetType().GetInterfaces()
-            .Where((interfaceType) =>
-                interfaceType.IsGenericType
-                && interfaceType.GetGenericTypeDefinition() == typeof(IEntityTypeProjection<,>))
-            .Select((interfaceType) => interfaceType.GetGenericArguments()[1])
-            .Select((resultType) => (resultType, CompileDoProjectFunc(entityTypeProjection, resultType)))
+        var entityType = entityTypeProjection.GetType();
+        var doProjectFuncMap = entityType.GetInterfaces()
+            .Where(interfaceType => interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEntityTypeProjection<,>))
+            .Select(interfaceType =>
+            {
+                var resultType = interfaceType.GetGenericArguments()[1];
+                return (resultType, CompileDoProjectFunc(entityTypeProjection, resultType));
+            })
             .ToList();
+
         return doProjectFuncMap.Count == 0
             ? throw new ArgumentOutOfRangeException(
                 nameof(entityTypeProjection),
-                $"Entity type projection of the {entityTypeProjection.GetType().FullName} type is incomplete. " +
-                "Consider implementing at least one projection.")
+                $"Entity type projection of the {entityType.FullName} type is incomplete. Consider implementing at least one projection.")
             : doProjectFuncMap;
     }
 
@@ -67,23 +64,26 @@ internal class EntityTypeProjections<TEntity> : IEntityTypeProjections<TEntity>
         var projectionInstance = Expression.Constant(entityTypeProjection, interfaceType);
         var entityQueryParam = Expression.Parameter(typeof(IQueryable<>).MakeGenericType(typeof(TEntity)), "entityQuery");
         var projectionContextParam = Expression.Parameter(typeof(ProjectionContext), "context");
+
         var doProjectCall = Expression.Call(
             DoProjectMethodInfo.MakeGenericMethod(resultType),
             projectionInstance,
             entityQueryParam,
             projectionContextParam);
+
         var doProjectLambda = Expression.Lambda<DoProjectFunc>(
             doProjectCall,
             entityQueryParam,
             projectionContextParam);
+
         return doProjectLambda.Compile();
     }
 
     private static IQueryable<TResult> DoProject<TResult>(
         IEntityTypeProjection<TEntity, TResult> entityTypeProjection,
-        IQueryable<TEntity> enityQuery,
+        IQueryable<TEntity> entityQuery,
         ProjectionContext context)
-        => entityTypeProjection.Project(enityQuery, context);
+        => entityTypeProjection.Project(entityQuery, context);
 
     private delegate object DoProjectFunc(IQueryable<TEntity> entityQuery, ProjectionContext context);
 }
