@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
 
@@ -12,13 +9,13 @@ public sealed class EntityTypeProjectionsTests
 {
     private readonly Mock<IEntityTypeProjection<SomeEntity, SomeDto1>> _dto1ProjectionMock;
     private readonly Mock<IEntityTypeProjection<SomeEntity, SomeDto2>> _dto2ProjectionMock;
-    private readonly Mock<IEntityTypeProjection<SomeEntity>> _incompleteProjectionMock;    
+    private readonly Mock<IEntityTypeProjection> _incompleteProjectionMock;
 
     public EntityTypeProjectionsTests()
     {
         _dto1ProjectionMock = new Mock<IEntityTypeProjection<SomeEntity, SomeDto1>>();
         _dto2ProjectionMock = _dto1ProjectionMock.As<IEntityTypeProjection<SomeEntity, SomeDto2>>();
-        _incompleteProjectionMock = new Mock<IEntityTypeProjection<SomeEntity>>();
+        _incompleteProjectionMock = new Mock<IEntityTypeProjection>();
 
     }
 
@@ -26,7 +23,7 @@ public sealed class EntityTypeProjectionsTests
     public void Throwing_When_EntityTypeProjection_Is_Not_Fully_Implemented()
     {
         // Arrange
-        var entityProjectionsMock = CreateEntityProjectionsMock(            
+        var entityProjectionsMock = CreateEntityProjectionsMock(
             _incompleteProjectionMock.Object);
 
         // Act
@@ -42,12 +39,12 @@ public sealed class EntityTypeProjectionsTests
         }
     }
 
-    private static Mock<EntityTypeProjections<SomeEntity>> CreateEntityProjectionsMock(        
-        params IEntityTypeProjection<SomeEntity>[] projections)
+    private static Mock<EntityTypeProjections<SomeEntity>> CreateEntityProjectionsMock(
+        params IEntityTypeProjection[] projections)
     {
         var entityProjectionsMock = new Mock<EntityTypeProjections<SomeEntity>>(
             () => new EntityTypeProjections<SomeEntity>(
-                projections.ToHashSet()));        
+                projections.ToHashSet()));
 
         return entityProjectionsMock;
     }

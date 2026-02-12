@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using EnsureThat;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +64,7 @@ public static class ServiceCollectionExtensions
 
         services.Scan((scan) =>
             scan.FromAssemblies(entityTypeProjectionsAssemblies)
-                .AddClasses((classes) => classes.AssignableTo(typeof(IEntityTypeProjection<>)))
+                .AddClasses((classes) => classes.AssignableTo(typeof(IEntityTypeProjection)))
                     .AsImplementedInterfaces()
                     .WithSingletonLifetime());
 

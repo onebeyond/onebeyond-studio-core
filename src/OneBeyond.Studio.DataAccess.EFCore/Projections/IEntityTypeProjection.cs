@@ -1,14 +1,9 @@
-using System.Linq;
-
 namespace OneBeyond.Studio.DataAccess.EFCore.Projections;
 
-public interface IEntityTypeProjection<TEntity>
-    where TEntity : class
-{
-}
+public interface IEntityTypeProjection { }
 
-public interface IEntityTypeProjection<TEntity, TResult> : IEntityTypeProjection<TEntity>
+public interface IEntityTypeProjection<TEntity, TResult> : IEntityTypeProjection
     where TEntity : class
 {
-    IQueryable<TResult> Project(IQueryable<TEntity> entityQuery, ProjectionContext context);
+    public IQueryable<TResult> Project(IQueryable<TEntity> entityQuery, ProjectionContext context);
 }
