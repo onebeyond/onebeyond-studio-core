@@ -76,7 +76,7 @@ internal sealed class AuditEventRepository : IAuditEventRepository
     }
 
     private static List<PropertyMapping> CreateTypeMappings(
-            Type? type,
+            Type type,
             IEnumerable<IProperty> dbProperties)
     {
         var properties = type

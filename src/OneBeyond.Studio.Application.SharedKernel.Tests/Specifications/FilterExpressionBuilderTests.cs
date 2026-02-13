@@ -5,6 +5,7 @@ using System.Text;
 using Ardalis.SmartEnum;
 using OneBeyond.Studio.Application.SharedKernel.Specifications;
 using Xunit;
+using Assert = Xunit.Assert;
 
 #nullable disable
 

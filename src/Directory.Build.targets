@@ -2,9 +2,18 @@
 
   <Target Name="SetPackageVersion" AfterTargets="MinVer" Condition="'$(MinVerSkip)' != 'true'">
     <PropertyGroup>
-      <PackageVersion Condition="'$(MinVerPreRelease)' != ''">$(DotNetVersion).$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-$(MinVerPreRelease)</PackageVersion>
-      <PackageVersion Condition="'$(MinVerPreRelease)' == ''">$(DotNetVersion).$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PackageVersion>
+      <PackageVersion Condition="'$(MinVerPreRelease)' != ''">
+        $(DotNetVersion).$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-$(MinVerPreRelease)
+      </PackageVersion>
+
+      <PackageVersion Condition="'$(MinVerPreRelease)' == ''">
+        $(DotNetVersion).$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)
+      </PackageVersion>
+
       <Version>$(PackageVersion)</Version>
+
+      <AssemblyVersion>$(DotNetVersion).$(MinVerMajor).0.0</AssemblyVersion>
+      <FileVersion>$(PackageVersion)</FileVersion>
     </PropertyGroup>
   </Target>
 

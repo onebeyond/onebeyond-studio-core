@@ -1,4 +1,5 @@
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Entities;
 

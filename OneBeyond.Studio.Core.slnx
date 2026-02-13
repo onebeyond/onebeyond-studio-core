@@ -1,0 +1,28 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Packages.props" />
+    <File Path="src/Directory.Build.props" />
+    <File Path="src/Directory.Build.targets" />
+  </Folder>
+  <Folder Name="/OneBeyond.Studio.EntityAuditing/">
+    <Project Path="src/OneBeyond.Studio.EntityAuditing/OneBeyond.Studio.EntityAuditing.AzureTableStorage/OneBeyond.Studio.EntityAuditing.AzureTableStorage.csproj" />
+    <Project Path="src/OneBeyond.Studio.EntityAuditing/OneBeyond.Studio.EntityAuditing.Domain/OneBeyond.Studio.EntityAuditing.Domain.csproj" />
+    <Project Path="src/OneBeyond.Studio.EntityAuditing/OneBeyond.Studio.EntityAuditing.Infrastructure/OneBeyond.Studio.EntityAuditing.Infrastructure.csproj" />
+    <Project Path="src/OneBeyond.Studio.EntityAuditing/OneBeyond.Studio.EntityAuditing.SqlServer/OneBeyond.Studio.EntityAuditing.SqlServer.csproj" />
+  </Folder>
+  <Project Path="src/OneBeyond.Studio.Application.SharedKernel/OneBeyond.Studio.Application.SharedKernel.csproj" />
+  <Project Path="src/OneBeyond.Studio.Application.SharedKernel.Tests/OneBeyond.Studio.Application.SharedKernel.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.Core.Mediator/OneBeyond.Studio.Core.Mediator.csproj" />
+  <Project Path="src/OneBeyond.Studio.Crosscuts/OneBeyond.Studio.Crosscuts.csproj" />
+  <Project Path="src/OneBeyond.Studio.Crosscuts.Tests/OneBeyond.Studio.Crosscuts.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.DataAccess.EFCore/OneBeyond.Studio.DataAccess.EFCore.csproj" />
+  <Project Path="src/OneBeyond.Studio.DataAccess.EFCore.Tests/OneBeyond.Studio.DataAccess.EFCore.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.Domain.SharedKernel/OneBeyond.Studio.Domain.SharedKernel.csproj" />
+  <Project Path="src/OneBeyond.Studio.Hosting/OneBeyond.Studio.Hosting.csproj" />
+  <Project Path="src/OneBeyond.Studio.Hosting.AspNet/OneBeyond.Studio.Hosting.AspNet.csproj" />
+  <Project Path="src/OneBeyond.Studio.Hosting.AspNet.Tests/OneBeyond.Studio.Hosting.AspNet.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.Hosting.Tests/OneBeyond.Studio.Hosting.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.Infrastructure.Azure/OneBeyond.Studio.Infrastructure.Azure.csproj" />
+  <Project Path="src/OneBeyond.Studio.Infrastructure.Azure.Tests/OneBeyond.Studio.Infrastructure.Azure.Tests.csproj" />
+</Solution>

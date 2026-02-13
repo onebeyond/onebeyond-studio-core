@@ -1,7 +1,7 @@
-using System;
 using System.Linq.Expressions;
 using OneBeyond.Studio.Crosscuts.Expressions;
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace OneBeyond.Studio.Crosscuts.Tests;
 

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using OneBeyond.Studio.Crosscuts.Json;
 using OneBeyond.Studio.Crosscuts.TimeZones;
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace OneBeyond.Studio.Crosscuts.Tests.Json;
 
