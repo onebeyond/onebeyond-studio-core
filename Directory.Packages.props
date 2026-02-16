@@ -17,7 +17,7 @@
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.27.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.25.0" />
     <PackageVersion Include="Castle.Core" Version="5.2.1" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="coverlet.collector" Version="8.0.0" />
     <PackageVersion Include="DelegateDecompiler" Version="0.35.3" />
     <PackageVersion Include="DelegateDecompiler.EntityFrameworkCore5" Version="0.35.3" />
     <PackageVersion Include="Ensure.That" Version="10.1.0" />
