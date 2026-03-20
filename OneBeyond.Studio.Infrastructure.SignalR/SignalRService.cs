@@ -30,7 +30,7 @@ internal class SignalRService : ISignalRService
 
         using var hubContext = await GetHubContextAsync(cancellationToken);
 
-        await hubContext.Clients.User(message.UserId).SendAsync(message.NotificationChannelName, messageObject, cancellationToken);
+        await hubContext.Clients.User(message.UserId.ToString()).SendAsync(message.NotificationChannelName, messageObject, cancellationToken);
     }
 
     public async Task PublishErrorMessageAsync(string message, Guid userId, CancellationToken cancellationToken)
