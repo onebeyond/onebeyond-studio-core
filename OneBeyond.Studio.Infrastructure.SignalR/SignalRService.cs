@@ -1,4 +1,5 @@
 using EnsureThat;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Configuration;
@@ -32,11 +33,18 @@ internal class SignalRService : ISignalRService
         await hubContext.Clients.User(message.UserId).SendAsync(message.NotificationChannelName, messageObject, cancellationToken);
     }
 
-    public async Task PublishErrorMessageAsync(string message, string userId, CancellationToken cancellationToken)
+    public async Task PublishErrorMessageAsync(string message, Guid userId, CancellationToken cancellationToken)
     {
         using var hubContext = await GetHubContextAsync(cancellationToken);
 
-        await hubContext.Clients.User(userId).SendAsync(_globalErrorChannel, message, cancellationToken);
+        await hubContext.Clients.User(userId.ToString()).SendAsync(_globalErrorChannel, message, cancellationToken);
+    }
+
+    public async Task<NegotiationResponse> NegotiateAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var hubContext = await GetHubContextAsync(cancellationToken);
+
+        return await hubContext.NegotiateAsync(new() { UserId = userId.ToString() }, cancellationToken);
     }
 
     public async Task<ServiceHubContext> GetHubContextAsync(CancellationToken cancellationToken)
