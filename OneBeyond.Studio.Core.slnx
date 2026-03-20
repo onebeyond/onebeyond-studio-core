@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="Directory.Packages.props" />
@@ -25,4 +25,5 @@
   <Project Path="src/OneBeyond.Studio.Hosting.Tests/OneBeyond.Studio.Hosting.Tests.csproj" />
   <Project Path="src/OneBeyond.Studio.Infrastructure.Azure/OneBeyond.Studio.Infrastructure.Azure.csproj" />
   <Project Path="src/OneBeyond.Studio.Infrastructure.Azure.Tests/OneBeyond.Studio.Infrastructure.Azure.Tests.csproj" />
+  <Project Path="src/OneBeyond.Studio.Infrastructure.SignalR/OneBeyond.Studio.Infrastructure.SignalR.csproj" />
 </Solution>
