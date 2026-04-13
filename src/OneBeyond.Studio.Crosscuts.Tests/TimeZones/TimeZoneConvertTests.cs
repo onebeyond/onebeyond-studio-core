@@ -1,31 +1,32 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using OneBeyond.Studio.Crosscuts.TimeZones;
 
 namespace OneBeyond.Studio.Crosscuts.Tests.TimeZones;
 
-[TestClass]
+
 public sealed class TimeZoneConvertTests
 {
-    [TestMethod]
+    [Fact]
     public void TestTheSameIdIsReturnedForIanaTimeZoneInfo()
     {
         var ianaId = TimeZoneConvert.ToIanaId("America/New_York");
 
-        Assert.AreEqual("America/New_York", ianaId);
+        Assert.Equal("America/New_York", ianaId);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIanaIdIsReturnedForWindowsTimeZoneInfo()
     {
         var ianaId = TimeZoneConvert.ToIanaId("Tokyo Standard Time");
 
-        Assert.AreEqual("Asia/Tokyo", ianaId);
+        Assert.Equal("Asia/Tokyo", ianaId);
     }
 
-    [TestMethod]    
+    [Fact]    
     public void TestItThrowsForUnknownTimeZoneInfo()
     {
         Assert.Throws<InvalidTimeZoneException>(() => TimeZoneConvert.ToIanaId("Custom Time"));       
     }
 }
+

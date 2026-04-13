@@ -1,13 +1,13 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
-[TestClass]
+
 public sealed class AuthorizationPolicyAttributeTests
 {
-    [TestMethod]
+    [Fact]
     public void TestAuthorizationPolicyAttributeThrowsExceptionWhenNoRequirementsProvided()
     {
         try
@@ -18,8 +18,9 @@ public sealed class AuthorizationPolicyAttributeTests
         }
         catch (ArgumentException exception)
         {
-            Assert.AreEqual("Empty collection is not allowed. (Parameter 'requirementTypes')", exception.Message);
-            Assert.AreEqual("requirementTypes", exception.ParamName);
+            Assert.Equal("Empty collection is not allowed. (Parameter 'requirementTypes')", exception.Message);
+            Assert.Equal("requirementTypes", exception.ParamName);
         }
     }
 }
+

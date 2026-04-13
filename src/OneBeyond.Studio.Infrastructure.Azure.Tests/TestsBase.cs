@@ -3,18 +3,16 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace OneBeyond.Studio.Infrastructure.Azure.Tests;
 
-public abstract class TestsBase
+public abstract class TestsBase : IDisposable
 {
     private IServiceScope? _serviceScope;
 
     protected IServiceProvider? ServiceProvider { get; private set; }
 
-    [TestInitialize]
-    public void InitializeTest()
+    protected void Init()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false)
@@ -39,8 +37,21 @@ public abstract class TestsBase
         ServiceProvider = _serviceScope.ServiceProvider;
     }
 
-    [TestCleanup]
-    public void CleanupTest()
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            CleanupTest();
+        }
+    }
+
+    private void CleanupTest()
     {
         ServiceProvider = null;
         _serviceScope?.Dispose();

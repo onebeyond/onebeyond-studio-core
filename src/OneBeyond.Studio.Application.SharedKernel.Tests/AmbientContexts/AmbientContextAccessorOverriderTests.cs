@@ -1,16 +1,16 @@
 using System;
 using Autofac;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Moq;
 using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
 using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.AmbientContexts;
 
-[TestClass]
+
 public sealed class AmbientContextAccessorOverriderTests
 {
-    [TestMethod]
+    [Fact]
     public void Returns_original_context_when_no_override_provided()
     {
         // Arrange
@@ -23,11 +23,11 @@ public sealed class AmbientContextAccessorOverriderTests
         var ambientContext = ambientContextAccessor.AmbientContext;
 
         // Assert
-        Assert.IsInstanceOfType(ambientContextAccessor, typeof(AmbientContextAccessorOverrider<TestableAmbientContext>));
-        Assert.AreEqual("42", ambientContext.StringValue);
+        Assert.IsType<AmbientContextAccessorOverrider<TestableAmbientContext>>(ambientContextAccessor);
+        Assert.Equal("42", ambientContext.StringValue);
     }
 
-    [TestMethod]
+    [Fact]
     public void Returns_context_based_on_override_scope()
     {
         // Arrange
@@ -63,12 +63,12 @@ public sealed class AmbientContextAccessorOverriderTests
         }
 
         // Assert
-        Assert.AreEqual("outer", outerAmbientContext1.StringValue);
-        Assert.AreEqual("outer", outerAmbientContext2.StringValue);
-        Assert.AreEqual("inner", innerAmbientContext1.StringValue);
+        Assert.Equal("outer", outerAmbientContext1.StringValue);
+        Assert.Equal("outer", outerAmbientContext2.StringValue);
+        Assert.Equal("inner", innerAmbientContext1.StringValue);
     }
 
-    [TestMethod]
+    [Fact]
     public void Throws_when_override_scope_disposing_is_broken()
     {
         // Arrange
@@ -104,8 +104,10 @@ public sealed class AmbientContextAccessorOverriderTests
         }
 
         // Assert
-        Assert.IsNotNull(invalidOperationException, nameof(invalidOperationException));
-        Assert.AreEqual("Ambient context accessor overriding order is broken.", invalidOperationException?.Message);
-        Assert.AreEqual("42", globalAmbientContext.StringValue);
+        Assert.NotNull(invalidOperationException);
+        Assert.Equal("Ambient context accessor overriding order is broken.", invalidOperationException?.Message);
+        Assert.Equal("42", globalAmbientContext.StringValue);
     }
 }
+
+

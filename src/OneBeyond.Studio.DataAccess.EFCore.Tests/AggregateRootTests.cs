@@ -1,14 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneBeyond.Studio.Application.SharedKernel.Exceptions;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Entities.PurchaseOrders;
+using Xunit;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests;
 
-[TestClass]
 public sealed class AggregateRootTests : InMemoryTestsBase
 {
     public AggregateRootTests()
@@ -16,7 +15,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
     {
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestAggregateRootCreateEntity()
     {
         var vendorId = default(Guid);
@@ -43,11 +42,11 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 vendorId,
                 default);
 
-            Assert.AreEqual("VendorVasya", vendor.Name);
+            Assert.Equal("VendorVasya", vendor.Name);
         }
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestAggregateRootCreateMultipleEntitiesWithValidation()
     {
         var vendorVasyaId = default(Guid);
@@ -80,17 +79,17 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 vendorVasyaId,
                 default);
 
-            Assert.AreEqual("VendorVasya", vendorV.Name);
+            Assert.Equal("VendorVasya", vendorV.Name);
 
             var vendorP = await vendorRWRepository.GetByIdAsync(
                 vendorPetyaId,
                 default);
 
-            Assert.AreEqual("VendorPetya", vendorP.Name);
+            Assert.Equal("VendorPetya", vendorP.Name);
         }
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestAggregateRootUpdateMultipleEntitiesWithValidation()
     {
         var vendorVasyaId = default(Guid);
@@ -129,13 +128,13 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 vendorVasyaId,
                 default);
 
-            Assert.AreEqual("SuperVendorVasya", vendorV.Name);
+            Assert.Equal("SuperVendorVasya", vendorV.Name);
 
             var vendorP = await vendorRWRepository.GetByIdAsync(
                 vendorPetyaId,
                 default);
 
-            Assert.AreEqual("SuperVendorPetya", vendorP.Name);
+            Assert.Equal("SuperVendorPetya", vendorP.Name);
         }
     }
 }

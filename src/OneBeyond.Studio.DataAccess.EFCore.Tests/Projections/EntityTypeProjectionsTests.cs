@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
+using Xunit;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Projections;
 
-[TestClass]
 public sealed partial class EntityTypeProjectionsTests
 {
     private readonly DbContext _dbContextMock = Mock.Of<DbContext>();
@@ -25,7 +25,7 @@ public sealed partial class EntityTypeProjectionsTests
     }
 
 
-    [TestMethod]
+    [Fact]
     public void Ctor_GenericInterfaceNotImplemented_ArgumentOutOfRangeException()
     {
         // Arrange
@@ -35,11 +35,11 @@ public sealed partial class EntityTypeProjectionsTests
         var action = () => new EntityTypeProjections<Dog>([incompleteProjectionMock]);
 
         // Assert
-        var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(action);
-        Assert.AreEqual("entityTypeProjection", exception.ParamName);
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(action);
+        Assert.Equal("entityTypeProjection", exception.ParamName);
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_Simple_Succeed()
     {
         // Arrange
@@ -54,10 +54,10 @@ public sealed partial class EntityTypeProjectionsTests
 
         // Assert
         DogDto[] expected = [new DogDto { Id = $"DogDto-{entity.Id}" }];
-        CollectionAssert.AreEquivalent(expected, result.ToArray());
+        Assert.Equivalent(expected, result.ToArray());
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_MultipleResultTypes_SupportAll()
     {
         // Arrange
@@ -81,11 +81,11 @@ public sealed partial class EntityTypeProjectionsTests
         // Assert
         DogDto[] expectedDogDtoResults = [new DogDto { Id = $"DogDto-{entity.Id}" }];
         DogSummaryDto[] expectedDogSummaryDtoResults = [new DogSummaryDto { Name = $"summary-{entity.Id}" }];
-        CollectionAssert.AreEquivalent(expectedDogDtoResults, dogDtoResult.ToArray());
-        CollectionAssert.AreEquivalent(expectedDogSummaryDtoResults, dogSummaryDtoResult.ToArray());
+        Assert.Equivalent(expectedDogDtoResults, dogDtoResult.ToArray());
+        Assert.Equivalent(expectedDogSummaryDtoResults, dogSummaryDtoResult.ToArray());
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_ImplementingMultipleProjections_BeSupported()
     {
         // Arrange
@@ -102,11 +102,11 @@ public sealed partial class EntityTypeProjectionsTests
         // Assert
         DogDto[] expectedDogDtoResults = [new DogDto { Id = $"DogDto-{entity.Id}" }];
         DogSummaryDto[] expectedDogSummaryDtoResults = [new DogSummaryDto { Name = $"DogSummary-{entity.Id}" }];
-        CollectionAssert.AreEquivalent(expectedDogDtoResults, dogDtoResult.ToArray());
-        CollectionAssert.AreEquivalent(expectedDogSummaryDtoResults, dogSummaryDtoResult.ToArray());
+        Assert.Equivalent(expectedDogDtoResults, dogDtoResult.ToArray());
+        Assert.Equivalent(expectedDogSummaryDtoResults, dogSummaryDtoResult.ToArray());
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_MissingExactProjection_FallBackToBaseTypeProjection()
     {
         // Arrange
@@ -120,10 +120,10 @@ public sealed partial class EntityTypeProjectionsTests
 
         // Assert
         DogDto[] expected = [new DogDto { Id = $"DogDto-{entity.Id}" }];
-        CollectionAssert.AreEquivalent(expected, result.ToArray());
+        Assert.Equivalent(expected, result.ToArray());
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_Always_UseMostSpecificProjection()
     {
         // Arrange
@@ -144,10 +144,10 @@ public sealed partial class EntityTypeProjectionsTests
         var result = projections.ProjectTo<DogDto>(query, _dbContextMock);
 
         // Assert
-        CollectionAssert.AreEquivalent(expected, result.ToArray());
+        Assert.Equivalent(expected, result.ToArray());
     }
 
-    [TestMethod]
+    [Fact]
     public void ProjectTo_MissingProjection_InvalidOperationException()
     {
         // Arrange
@@ -158,7 +158,7 @@ public sealed partial class EntityTypeProjectionsTests
         var action = () => projections.ProjectTo<DogSummaryDto>(query, _dbContextMock);
 
         // Assert
-        var exception = Assert.ThrowsExactly<InvalidOperationException>(action);
+        var exception = Assert.Throws<InvalidOperationException>(action);
 
         Assert.Contains("No projection specified", exception.Message);
         Assert.Contains(nameof(Dog), exception.Message);

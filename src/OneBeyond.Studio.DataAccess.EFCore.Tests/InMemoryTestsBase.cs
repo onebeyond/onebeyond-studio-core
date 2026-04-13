@@ -14,8 +14,10 @@ public abstract class InMemoryTestsBase : TestsBase
     private readonly bool _withDomainEvents;
 
     protected InMemoryTestsBase(bool withDomainEvents)
+        : base()
     {
         _withDomainEvents = withDomainEvents;
+        Init();
     }
 
     protected override void ConfigureTestServices(

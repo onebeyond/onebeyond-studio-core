@@ -4,19 +4,17 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneBeyond.Studio.Crosscuts.Logging;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 
-public abstract class TestsBase
+public abstract class TestsBase : IDisposable
 {
     private IServiceScope? _serviceScope;
 
     protected IServiceProvider ServiceProvider { get; private set; } = default!;
 
-    [TestInitialize]
-    public void InitializeTest()
+    protected TestsBase()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true)
@@ -47,8 +45,21 @@ public abstract class TestsBase
         LogManager.TryConfigure(loggerFactory);
     }
 
-    [TestCleanup]
-    public void CleanupTest()
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            CleanupTest();
+        }
+    }
+
+    private void CleanupTest()
     {
         ServiceProvider = default!;
         _serviceScope?.Dispose();

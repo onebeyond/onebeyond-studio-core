@@ -2,13 +2,13 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Crosscuts.Logging;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
-[TestClass]
+
 public sealed class IntegrationEventTypeRegistryTests
 {
     static IntegrationEventTypeRegistryTests()
@@ -21,37 +21,37 @@ public sealed class IntegrationEventTypeRegistryTests
         LogManager.TryConfigure(loggerFactory);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIntegrationEventTypeRegistryScansAllProperlyMarkedTypesInAssembly()
     {
         var integrationEventTypeRegistry = new IntegrationEventTypeRegistry(new[] { Assembly.GetExecutingAssembly() });
 
         var integrationEventTypes = integrationEventTypeRegistry.IntegrationEventTypes;
 
-        Assert.HasCount(5, integrationEventTypes);
-        Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
+        Assert.Equal(5, integrationEventTypes.Count());
+        Assert.True(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.1m
             && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_1)));
-        Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
+        Assert.True(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.2m
             && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_2)));
-        Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
+        Assert.True(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.4m
             && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_4)));
-        Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
+        Assert.True(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 2.1m
             && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_2_1)));
-        Assert.IsTrue(integrationEventTypes.Any((integrationEventType) =>
+        Assert.True(integrationEventTypes.Any((integrationEventType) =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThatHappenedTypeName
             && integrationEventType.Version == 1.0m
             && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThatHappened_1_0)));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIntegrationEventTypeRegistryFindsTypeByExactMatchRegardlessTypeNameCase()
     {
         var integrationEventTypeRegistry = new IntegrationEventTypeRegistry(new[] { Assembly.GetExecutingAssembly() });
@@ -60,20 +60,20 @@ public sealed class IntegrationEventTypeRegistryTests
             TestableIntegrationEvents.ThisHappenedTypeName,
             1, 4);
 
-        Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
-        Assert.AreEqual(1.4m, integrationEventType.Version);
+        Assert.NotNull(integrationEventType);
+        Assert.Equal(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.Equal(1.4m, integrationEventType.Version);
 
         integrationEventType = integrationEventTypeRegistry.FindIntegrationEventType(
             TestableIntegrationEvents.ThisHappenedTypeName.ToLower(),
             1, 4);
 
-        Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
-        Assert.AreEqual(1.4m, integrationEventType.Version);
+        Assert.NotNull(integrationEventType);
+        Assert.Equal(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.Equal(1.4m, integrationEventType.Version);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIntegrationEventTypeRegistryFindsBackwordCompatibleType()
     {
         var integrationEventTypeRegistry = new IntegrationEventTypeRegistry(new[] { Assembly.GetExecutingAssembly() });
@@ -82,12 +82,12 @@ public sealed class IntegrationEventTypeRegistryTests
             TestableIntegrationEvents.ThisHappenedTypeName,
             1, 3);
 
-        Assert.IsNotNull(integrationEventType);
-        Assert.AreEqual(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
-        Assert.AreEqual(1.2m, integrationEventType.Version);
+        Assert.NotNull(integrationEventType);
+        Assert.Equal(TestableIntegrationEvents.ThisHappenedTypeName, integrationEventType!.TypeName);
+        Assert.Equal(1.2m, integrationEventType.Version);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIntegrationEventTypeRegistryDoesNotFindTypeForALowerVersionWhenAllRegisteredTypesAreNewer()
     {
         var integrationEventTypeRegistry = new IntegrationEventTypeRegistry(new[] { Assembly.GetExecutingAssembly() });
@@ -96,10 +96,10 @@ public sealed class IntegrationEventTypeRegistryTests
             TestableIntegrationEvents.ThisHappenedTypeName,
             1, 0);
 
-        Assert.IsNull(integrationEventType);
+        Assert.Null(integrationEventType);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIntegrationEventTypeRegistryDoesNotFindTypeForALowerVersionWhenThereAreBackwordIncompatibleTypes()
     {
         var integrationEventTypeRegistry = new IntegrationEventTypeRegistry(new[] { Assembly.GetExecutingAssembly() });
@@ -108,6 +108,8 @@ public sealed class IntegrationEventTypeRegistryTests
             TestableIntegrationEvents.ThisHappenedTypeName,
             2, 0);
 
-        Assert.IsNull(integrationEventType);
+        Assert.Null(integrationEventType);
     }
 }
+
+

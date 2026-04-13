@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 using OneBeyond.Studio.Application.SharedKernel.Tests.CommandHandlers;
 using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
@@ -13,10 +13,10 @@ using OneBeyond.Studio.Core.Mediator.DependencyInjection;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
-[TestClass]
+
 public sealed class RequestHandlersTests : TestsBase
 {
-    [TestMethod]
+    [Fact]
     public async Task TestCommandWithoutResult()
     {
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -29,14 +29,14 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(command);
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(CommandWithoutResultHandler).FullName,
                 testableContainer.Dequeue());
         }
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestCommandWithResult()
     {
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -49,14 +49,14 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(command);
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(CommandWithResultHandler).FullName,
                 testableContainer.Dequeue());
         }
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestDerivedCommands()
     {
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -67,22 +67,22 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(new DerivedCommand1());
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(DerivedCommand1Handler).FullName,
                 testableContainer.Dequeue());
 
             await mediator.Send(new DerivedCommand2());
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(DerivedCommand2Handler).FullName,
                 testableContainer.Dequeue());
 
         }
     }
 
-    [TestMethod]
+    [Fact]
     public async Task TestFactoryCommands()
     {
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -94,16 +94,16 @@ public sealed class RequestHandlersTests : TestsBase
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand1
             await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand1)));
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(DerivedCommand1Handler).FullName,
                 testableContainer.Dequeue());
 
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand2
             await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand2)));
 
-            Assert.HasCount(1, testableContainer);
-            Assert.AreEqual(
+            Assert.Equal(1, testableContainer.Count());
+            Assert.Equal(
                 typeof(DerivedCommand2Handler).FullName,
                 testableContainer.Dequeue());
 
@@ -128,3 +128,5 @@ public sealed class RequestHandlersTests : TestsBase
         containerBuilder.AddMediatorRequestHandlers(Assembly.GetExecutingAssembly());
     }
 }
+
+
