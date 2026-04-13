@@ -1,9 +1,9 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 using OneBeyond.Studio.Crosscuts.Exceptions;
 using OneBeyond.Studio.Crosscuts.Options;
+using Xunit;
 
 namespace OneBeyond.Studio.Crosscuts.Tests;
 

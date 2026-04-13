@@ -1,9 +1,8 @@
-using System.Threading.Tasks;
 using AwesomeAssertions;
-using Xunit;
 using OneBeyond.Studio.Hosting.AspNet.ModelBinders.MixedSource;
 using OneBeyond.Studio.Hosting.AspNet.Tests.ModelBinders.BindingContext;
 using OneBeyond.Studio.Hosting.AspNet.Tests.ModelBinders.BindingContext.BindingModels;
+using Xunit;
 
 namespace OneBeyond.Studio.Hosting.AspNet.Tests.ModelBinders.MixedSource;
 

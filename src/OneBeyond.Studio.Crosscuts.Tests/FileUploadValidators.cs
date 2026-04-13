@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using AwesomeAssertions;
 using OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators;
 using OneBeyond.Studio.Crosscuts.Utilities.FileUploadValidators.ImageValidators;

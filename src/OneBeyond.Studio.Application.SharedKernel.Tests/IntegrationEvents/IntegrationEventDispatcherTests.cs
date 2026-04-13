@@ -1,15 +1,12 @@
-using System;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 using OneBeyond.Studio.Application.SharedKernel.Tests.Testables;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 

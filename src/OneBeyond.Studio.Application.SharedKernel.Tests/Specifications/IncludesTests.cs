@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.Specifications;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Specifications;
 

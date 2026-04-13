@@ -1,4 +1,3 @@
-using System;
 using EnsureThat;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;

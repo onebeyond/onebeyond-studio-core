@@ -1,6 +1,5 @@
-using System;
-using Xunit;
 using OneBeyond.Studio.Domain.SharedKernel.Authorization;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 

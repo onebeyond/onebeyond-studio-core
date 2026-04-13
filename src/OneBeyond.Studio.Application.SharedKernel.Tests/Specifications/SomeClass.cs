@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 #nullable disable
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Specifications;
@@ -23,3 +21,5 @@ internal sealed class YetAnotherClass
 {
     public IEnumerable<int> YetAnotherProperty1 { get; set; }
 }
+
+#nullable restore

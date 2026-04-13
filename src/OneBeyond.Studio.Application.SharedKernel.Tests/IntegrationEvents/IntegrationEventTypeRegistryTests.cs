@@ -1,10 +1,9 @@
-using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Crosscuts.Logging;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 

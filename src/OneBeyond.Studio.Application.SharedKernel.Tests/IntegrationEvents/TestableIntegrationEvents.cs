@@ -1,4 +1,3 @@
-using System;
 using OneBeyond.Studio.Application.SharedKernel.IntegrationEvents;
 using OneBeyond.Studio.Domain.SharedKernel.IntegrationEvents;
 

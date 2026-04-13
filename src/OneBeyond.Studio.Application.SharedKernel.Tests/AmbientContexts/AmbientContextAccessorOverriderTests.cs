@@ -1,9 +1,8 @@
-using System;
 using Autofac;
-using Xunit;
 using Moq;
 using OneBeyond.Studio.Application.SharedKernel.AmbientContexts;
 using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.AmbientContexts;
 
