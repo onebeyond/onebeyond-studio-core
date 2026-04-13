@@ -25,7 +25,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command = new TestableCommands.Command1();
 
-            await mediator.Send(command);
+            await mediator.Send(command, TestContext.Current.CancellationToken);
 
             Assert.Equal(2, testableContainer.Count());
             // Auth handler is executed first
@@ -56,7 +56,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             //public Task<TResult> Send<TResult>(IRequest<TResult> request, CancellationToken cancellationToken = default);
             //we need to test authorization requirements for both
 
-            await mediator.Send(command); //Note, here we pass command as TestableCommands.Command11, not as IRequest
+            await mediator.Send(command, TestContext.Current.CancellationToken); //Note, here we pass command as TestableCommands.Command11, not as IRequest
 
             Assert.Equal(2, testableContainer.Count());
             // Auth handler is executed first
@@ -87,7 +87,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             //public Task Send(IRequest request, CancellationToken cancellationToken = default)
             //we need to test authorization requirements for both
 
-            await mediator.Send(command); //Note, here we pass command as IRequest, not as TestableCommands.Command11
+            await mediator.Send(command, TestContext.Current.CancellationToken); //Note, here we pass command as IRequest, not as TestableCommands.Command11
 
             Assert.Equal(2, testableContainer.Count());
             // Auth handler is executed first
@@ -112,7 +112,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command2 = new TestableCommands.Command2();
 
-            await mediator.Send(command2);
+            await mediator.Send(command2, TestContext.Current.CancellationToken);
 
             Assert.Equal(2, testableContainer.Count());
             // Appropriate (based on the command interface) auth handler is executed first
@@ -133,7 +133,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command3 = new TestableCommands.Command3();
 
-            await mediator.Send(command3);
+            await mediator.Send(command3, TestContext.Current.CancellationToken);
 
             Assert.Equal(2, testableContainer.Count());
             // Appropriate (based on the command interface) auth handler is executed first
@@ -158,7 +158,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command4 = new TestableCommands.Command4();
 
-            await mediator.Send(command4);
+            await mediator.Send(command4, TestContext.Current.CancellationToken);
 
             Assert.Equal(3, testableContainer.Count());
             // First requirement handler is executed and fails
@@ -187,7 +187,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command5 = new TestableCommands.Command5();
 
-            await mediator.Send(command5);
+            await mediator.Send(command5, TestContext.Current.CancellationToken);
 
             Assert.Equal(2, testableContainer.Count());
             // First requirement handler is executed and succeeds
@@ -215,7 +215,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.Send(command9);
+                await mediator.Send(command9, TestContext.Current.CancellationToken);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -245,7 +245,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             var command6 = new TestableCommands.Command6();
 
-            await mediator.Send(command6);
+            await mediator.Send(command6, TestContext.Current.CancellationToken);
 
             Assert.Equal(3, testableContainer.Count());
             // First requirement handler is executed and succeeds
@@ -276,7 +276,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.Send(command7);
+                await mediator.Send(command7, TestContext.Current.CancellationToken);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -305,7 +305,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.Send(command8);
+                await mediator.Send(command8, TestContext.Current.CancellationToken);
                 Assert.Fail();
             }
             catch (AuthorizationPolicyFailedException)
@@ -336,7 +336,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
 
             try
             {
-                await mediator.Send(command10);
+                await mediator.Send(command10, TestContext.Current.CancellationToken);
             }
             catch (AuthorizationPolicyMissingException exception)
             {

@@ -68,14 +68,14 @@ public sealed class DomainEventsTests : InMemoryTestsBase
             preSaveScopedItemContainer.Clear();
             postSaveScopedItemContainer.Clear();
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
 
             var dbContext = serviceProvider.GetRequiredService<DbContexts.DbContext>();
             var postSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPostSaveDomainEventDispatcher>();
             var raisedDomainEventReceiver = serviceProvider.GetRequiredService<IRaisedDomainEventReceiver>();
-            var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync();
+            var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync(TestContext.Current.CancellationToken);
 
             Assert.Equal(2, raisedDomainEventCount);
             Assert.Single(preSaveScopedItemContainer.Items);
@@ -118,12 +118,12 @@ public sealed class DomainEventsTests : InMemoryTestsBase
             preSaveScopedItemContainer.Clear();
             postSaveScopedItemContainer.Clear();
 
-            await purchaseOrderRWRepository.UpdateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.UpdateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             var dbContext = serviceProvider.GetRequiredService<DbContexts.DbContext>();
             var postSaveDomainEventDispatcher = serviceProvider.GetRequiredService<IPostSaveDomainEventDispatcher>();
             var raisedDomainEventReceiver = serviceProvider.GetRequiredService<IRaisedDomainEventReceiver>();
-            var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync();
+            var raisedDomainEventCount = await dbContext.Set<RaisedDomainEvent>().CountAsync(TestContext.Current.CancellationToken);
 
             Assert.Equal(1, raisedDomainEventCount);
             Assert.Single(preSaveScopedItemContainer.Items);

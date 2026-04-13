@@ -27,7 +27,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
             purchaseOrder.AddLine("First");
             purchaseOrder.AddLine("Second");
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -36,7 +36,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
         {
             var purchaseOrderRORepository = serviceScope.ServiceProvider.GetRequiredService<IRORepository<PurchaseOrder, Guid>>();
 
-            var purchaseOrder = await purchaseOrderRORepository.GetByIdAsync(purchaseOrderId, default);
+            var purchaseOrder = await purchaseOrderRORepository.GetByIdAsync(purchaseOrderId, TestContext.Current.CancellationToken);
 
             Assert.Empty(purchaseOrder.Lines);
 
@@ -68,13 +68,13 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
             baAirline.AccountAircrafts(100);
             baAirlineId = baAirline.Id;
 
-            await airlineRWRepository.CreateAsync(baAirline, default);
+            await airlineRWRepository.CreateAsync(baAirline, TestContext.Current.CancellationToken);
 
             var lhAirline = new Airline.Company("LH");
             lhAirline.AccountAircrafts(120);
             lhAirlineId = lhAirline.Id;
 
-            await airlineRWRepository.CreateAsync(lhAirline, default);
+            await airlineRWRepository.CreateAsync(lhAirline, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -84,13 +84,13 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
             var lgwAirport = new Airport.Company("LGW");
             lgwAirportId = lgwAirport.Id;
 
-            await airportRWRepository.CreateAsync(lgwAirport, default);
+            await airportRWRepository.CreateAsync(lgwAirport, TestContext.Current.CancellationToken);
 
             var lhrAirport = new Airport.Company("LHR");
             lhrAirport.AccountRunaway();
             lhrAirportId = lhrAirport.Id;
 
-            await airportRWRepository.CreateAsync(lhrAirport, default);
+            await airportRWRepository.CreateAsync(lhrAirport, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -98,11 +98,11 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
             var companyRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Company, Guid>>();
             var surveyRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Survey, Guid>>();
 
-            var baAirline = await companyRWRepository.GetByIdAsync(baAirlineId, default);
+            var baAirline = await companyRWRepository.GetByIdAsync(baAirlineId, TestContext.Current.CancellationToken);
 
             var baSurvey = new Survey("How BA did?", baAirline);
 
-            await surveyRWRepository.CreateAsync(baSurvey, default);
+            await surveyRWRepository.CreateAsync(baSurvey, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())

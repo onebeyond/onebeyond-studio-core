@@ -41,7 +41,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrderLine.AddComment("___").Archive();
             purchaseOrderLine.AddComment("___").Archive();
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -57,8 +57,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(3, purchaseOrder.Lines.Count());
             Assert.Equal(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
@@ -69,7 +68,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderRWRepository = serviceScope.ServiceProvider
                 .GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
+            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, TestContext.Current.CancellationToken);
 
             Assert.Empty(purchaseOrder.Lines);
         }
@@ -85,8 +84,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -106,8 +104,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -140,8 +137,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -191,7 +187,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrder.AddTag("Tag.2.A");
             purchaseOrder.AddTag("Tag.2.B");
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -208,8 +204,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(3, purchaseOrder.Lines.Count());
             Assert.Equal(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
@@ -221,7 +216,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderRWRepository = serviceScope.ServiceProvider
                 .GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
+            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, TestContext.Current.CancellationToken);
 
             Assert.Empty(purchaseOrder.Lines);
             Assert.Empty(purchaseOrder.Tags);
@@ -242,8 +237,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -266,8 +260,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -305,8 +298,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -336,7 +328,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var vendor = new Vendor("Vendor.1");
 
-            await vendorRWRepository.CreateAsync(vendor, default);
+            await vendorRWRepository.CreateAsync(vendor, TestContext.Current.CancellationToken);
 
             vendorId = vendor.Id;
         }
@@ -349,7 +341,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var account = new Account("Account.1");
 
-            await accountRWRepository.CreateAsync(account, default);
+            await accountRWRepository.CreateAsync(account, TestContext.Current.CancellationToken);
 
             accountId = account.Id;
         }
@@ -362,9 +354,9 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var accountRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Account, Guid>>();
             var purchaseOrderRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var vendor = await vendorRWRepository.GetByIdAsync(vendorId, default);
+            var vendor = await vendorRWRepository.GetByIdAsync(vendorId, TestContext.Current.CancellationToken);
 
-            var account = await accountRWRepository.GetByIdAsync(accountId, default);
+            var account = await accountRWRepository.GetByIdAsync(accountId, TestContext.Current.CancellationToken);
 
             var purchaseOrder = new PurchaseOrder();
 
@@ -391,7 +383,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrderLine.AddComment("___").Archive();
             purchaseOrderLine.AddComment("___").Archive();
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -407,8 +399,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
@@ -439,8 +430,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
@@ -473,8 +463,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.NotNull(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
@@ -510,7 +499,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrderLine.AddComment("___").Archive();
             purchaseOrderLine.AddComment("___").Archive();
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -526,8 +515,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(3, purchaseOrder.Lines.Count());
             Assert.Equal(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
@@ -538,7 +526,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderRWRepository = serviceScope.ServiceProvider
                 .GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
+            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, TestContext.Current.CancellationToken);
 
             Assert.Empty(purchaseOrder.Lines);
         }
@@ -553,8 +541,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -573,8 +560,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -593,8 +579,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -644,7 +629,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrder.AddTag("Tag.2.A");
             purchaseOrder.AddTag("Tag.2.B");
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -661,8 +646,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(3, purchaseOrder.Lines.Count());
             Assert.Equal(12, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
@@ -674,7 +658,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var purchaseOrderRWRepository = serviceScope.ServiceProvider
                 .GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, default);
+            var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(purchaseOrderId, TestContext.Current.CancellationToken);
 
             Assert.Empty(purchaseOrder.Lines);
             Assert.Empty(purchaseOrder.Tags);
@@ -694,8 +678,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -716,8 +699,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -740,8 +722,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
@@ -771,7 +752,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var vendor = new Vendor("Vendor.1");
 
-            await vendorRWRepository.CreateAsync(vendor, default);
+            await vendorRWRepository.CreateAsync(vendor, TestContext.Current.CancellationToken);
 
             vendorId = vendor.Id;
         }
@@ -784,7 +765,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var account = new Account("Account.1");
 
-            await accountRWRepository.CreateAsync(account, default);
+            await accountRWRepository.CreateAsync(account, TestContext.Current.CancellationToken);
 
             accountId = account.Id;
         }
@@ -797,9 +778,9 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             var accountRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Account, Guid>>();
             var purchaseOrderRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<PurchaseOrder, Guid>>();
 
-            var vendor = await vendorRWRepository.GetByIdAsync(vendorId, default);
+            var vendor = await vendorRWRepository.GetByIdAsync(vendorId, TestContext.Current.CancellationToken);
 
-            var account = await accountRWRepository.GetByIdAsync(accountId, default);
+            var account = await accountRWRepository.GetByIdAsync(accountId, TestContext.Current.CancellationToken);
 
             var purchaseOrder = new PurchaseOrder();
 
@@ -826,7 +807,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
             purchaseOrderLine.AddComment("___").Archive();
             purchaseOrderLine.AddComment("___").Archive();
 
-            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, default);
+            await purchaseOrderRWRepository.CreateAsync(purchaseOrder, TestContext.Current.CancellationToken);
 
             purchaseOrderId = purchaseOrder.Id;
         }
@@ -841,8 +822,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
@@ -862,8 +842,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
@@ -884,8 +863,7 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
-                includes,
-                default);
+                includes,                TestContext.Current.CancellationToken);
 
             Assert.NotNull(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());

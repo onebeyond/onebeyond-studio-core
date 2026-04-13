@@ -52,7 +52,7 @@ public sealed class IntegrationEventDispatcherTests : TestsBase
 
             var integrationEvent = new TestableIntegrationEvents.ThisHappened_1_1(42, DateTimeOffset.UtcNow);
 
-            await integrationEventDispatcher.DispatchAsync(integrationEvent);
+            await integrationEventDispatcher.DispatchAsync(integrationEvent, TestContext.Current.CancellationToken);
 
             Assert.Equal(2, typeContainer.Items.Count());
             Assert.Contains(typeof(TestableIntegrationEventHandler1), typeContainer.Items);

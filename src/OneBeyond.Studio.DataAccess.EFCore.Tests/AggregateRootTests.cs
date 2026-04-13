@@ -22,11 +22,11 @@ public sealed class AggregateRootTests : InMemoryTestsBase
         {
             var vendorsRWRepository = serviceScope.ServiceProvider.GetRequiredService<IAggregateRootRWRepository<Vendors, Vendor, Guid>>();
 
-            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, default);
+            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, TestContext.Current.CancellationToken);
 
             var vendor = aggregateRoot.AddVendor("VendorVasya");
 
-            await vendorsRWRepository.UpdateAsync(aggregateRoot, default);
+            await vendorsRWRepository.UpdateAsync(aggregateRoot, TestContext.Current.CancellationToken);
 
             vendorId = vendor.Id;
         }
@@ -54,7 +54,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
         {
             var vendorsRWRepository = serviceScope.ServiceProvider.GetRequiredService<IAggregateRootRWRepository<Vendors, Vendor, Guid>>();
 
-            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, default);
+            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, TestContext.Current.CancellationToken);
 
             var vendorVasya = aggregateRoot.AddVendor("VendorVasya");
 
@@ -62,7 +62,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
 
             var vendorPetya = aggregateRoot.AddVendor("VendorPetya");
 
-            await vendorsRWRepository.UpdateAsync(aggregateRoot, default);
+            await vendorsRWRepository.UpdateAsync(aggregateRoot, TestContext.Current.CancellationToken);
 
             vendorVasyaId = vendorVasya.Id;
             vendorPetyaId = vendorPetya.Id;
@@ -97,24 +97,24 @@ public sealed class AggregateRootTests : InMemoryTestsBase
         {
             var vendorsRWRepository = serviceScope.ServiceProvider.GetRequiredService<IAggregateRootRWRepository<Vendors, Vendor, Guid>>();
 
-            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, default);
+            var aggregateRoot = await vendorsRWRepository.GetAsync(x => true, TestContext.Current.CancellationToken);
 
             var vendorVasya = aggregateRoot.AddVendor("VendorVasya");
             var vendorPetya = aggregateRoot.AddVendor("VendorPetya");
 
-            await vendorsRWRepository.UpdateAsync(aggregateRoot, default);
+            await vendorsRWRepository.UpdateAsync(aggregateRoot, TestContext.Current.CancellationToken);
 
             vendorVasyaId = vendorVasya.Id;
             vendorPetyaId = vendorPetya.Id;
 
-            var updateAggregateRoot = await vendorsRWRepository.GetAsync(x => true, default);
+            var updateAggregateRoot = await vendorsRWRepository.GetAsync(x => true, TestContext.Current.CancellationToken);
 
             Assert.Throws<ValidationException>(() => updateAggregateRoot.UpdateVendor(vendorPetyaId, "VendorVasya"));
 
             updateAggregateRoot.UpdateVendor(vendorVasyaId, "SuperVendorVasya");
             updateAggregateRoot.UpdateVendor(vendorPetyaId, "SuperVendorPetya");
 
-            await vendorsRWRepository.UpdateAsync(aggregateRoot, default);
+            await vendorsRWRepository.UpdateAsync(aggregateRoot, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())

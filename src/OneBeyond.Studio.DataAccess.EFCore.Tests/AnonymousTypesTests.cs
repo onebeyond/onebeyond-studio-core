@@ -22,7 +22,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
         {
             var productRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Product, Guid>>();
 
-            await productRWRepository.CreateAsync(product1, default);
+            await productRWRepository.CreateAsync(product1, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -77,11 +77,11 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
         {
             var productRWRepository = serviceScope.ServiceProvider.GetRequiredService<IRWRepository<Product, Guid>>();
 
-            await productRWRepository.CreateAsync(product1, default);
-            await productRWRepository.CreateAsync(product2, default);
-            await productRWRepository.CreateAsync(product3, default);
-            await productRWRepository.CreateAsync(product4, default);
-            await productRWRepository.CreateAsync(product5, default);
+            await productRWRepository.CreateAsync(product1, TestContext.Current.CancellationToken);
+            await productRWRepository.CreateAsync(product2, TestContext.Current.CancellationToken);
+            await productRWRepository.CreateAsync(product3, TestContext.Current.CancellationToken);
+            await productRWRepository.CreateAsync(product4, TestContext.Current.CancellationToken);
+            await productRWRepository.CreateAsync(product5, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())

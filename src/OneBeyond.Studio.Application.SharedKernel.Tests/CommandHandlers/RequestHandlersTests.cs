@@ -27,7 +27,7 @@ public sealed class RequestHandlersTests : TestsBase
 
             var command = new CommandWithoutResult(); //Just IRequest, no result type
 
-            await mediator.Send(command);
+            await mediator.Send(command, TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(
@@ -47,7 +47,7 @@ public sealed class RequestHandlersTests : TestsBase
 
             var command = new CommandWithResult(); //IRequest with return type: IRequest<string>
 
-            await mediator.Send(command);
+            await mediator.Send(command, TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(
@@ -65,14 +65,14 @@ public sealed class RequestHandlersTests : TestsBase
             var testableContainer = serviceProvider.GetRequiredService<Queue<string>>();
             var mediator = serviceProvider.GetRequiredService<IMediator>();
 
-            await mediator.Send(new DerivedCommand1());
+            await mediator.Send(new DerivedCommand1(), TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(DerivedCommand1Handler).FullName,
                 testableContainer.Dequeue());
 
-            await mediator.Send(new DerivedCommand2());
+            await mediator.Send(new DerivedCommand2(), TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(
