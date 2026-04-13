@@ -38,7 +38,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
 
             var purchaseOrder = await purchaseOrderRORepository.GetByIdAsync(purchaseOrderId, default);
 
-            Assert.Equal(0, purchaseOrder.Lines.Count());
+            Assert.Empty(purchaseOrder.Lines);
 
             purchaseOrder = await purchaseOrderRORepository.GetByIdAsync(
                 purchaseOrderId,

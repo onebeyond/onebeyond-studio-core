@@ -29,7 +29,7 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(command);
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(CommandWithoutResultHandler).FullName,
                 testableContainer.Dequeue());
@@ -49,7 +49,7 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(command);
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(CommandWithResultHandler).FullName,
                 testableContainer.Dequeue());
@@ -67,14 +67,14 @@ public sealed class RequestHandlersTests : TestsBase
 
             await mediator.Send(new DerivedCommand1());
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(DerivedCommand1Handler).FullName,
                 testableContainer.Dequeue());
 
             await mediator.Send(new DerivedCommand2());
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(DerivedCommand2Handler).FullName,
                 testableContainer.Dequeue());
@@ -94,7 +94,7 @@ public sealed class RequestHandlersTests : TestsBase
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand1
             await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand1)));
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(DerivedCommand1Handler).FullName,
                 testableContainer.Dequeue());
@@ -102,7 +102,7 @@ public sealed class RequestHandlersTests : TestsBase
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand2
             await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand2)));
 
-            Assert.Equal(1, testableContainer.Count());
+            Assert.Single(testableContainer);
             Assert.Equal(
                 typeof(DerivedCommand2Handler).FullName,
                 testableContainer.Dequeue());

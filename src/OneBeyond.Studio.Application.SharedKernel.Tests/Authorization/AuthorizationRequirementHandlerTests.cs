@@ -281,7 +281,7 @@ public sealed class AuthorizationRequirementHandlerTests : TestsBase
             }
             catch (AuthorizationPolicyFailedException)
             {
-                Assert.Equal(1, testableContainer.Count());
+                Assert.Single(testableContainer);
                 // First requirement handler is executed and fails
                 Assert.Equal(
                     $"{typeof(TestableAuthorizationRequirementHandlers.Requirement3Handler<TestableCommands.Command7>).FullName}: {new TestableAuthorizationRequirements.Requirement3(true)} - Failure",

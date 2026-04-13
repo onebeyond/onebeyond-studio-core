@@ -31,7 +31,7 @@ public sealed class IncludesTests
 
         var some4 = includeList.Single((include) => include.Item1.Equals(includeSomeProperty4));
 
-        Assert.Equal(1, some4.Item2.Count());
+        Assert.Single(some4.Item2);
         Assert.Equal(filterAnotherProperty1, some4.Item2[0]);
 
         var some3 = includeList.Single((include) => include.Item1.Equals(includeSomeProperty3));
@@ -40,7 +40,7 @@ public sealed class IncludesTests
 
         var another2 = includeList.Single((include) => include.Item1.Equals(includeAnotherProperty2));
 
-        Assert.Equal(1, another2.Item2.Count());
+        Assert.Single(another2.Item2);
         Assert.Equal(filterYetAnotherProperty1, another2.Item2[0]);
     }
 

@@ -25,11 +25,11 @@ public sealed class MessageQueueTests : TestsBase
 
         var messageQueue1 = ServiceProvider.GetServices<IMessageQueue<Message, Queue1>>();
 
-        Assert.Equal(1, messageQueue1.Count());
+        Assert.Single(messageQueue1);
 
         var messageQueue2 = ServiceProvider.GetServices<IMessageQueue<Message, Queue2>>();
 
-        Assert.Equal(1, messageQueue2.Count());
+        Assert.Single(messageQueue2);
 
         return Task.CompletedTask;
     }
