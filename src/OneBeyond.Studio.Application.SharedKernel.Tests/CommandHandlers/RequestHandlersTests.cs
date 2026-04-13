@@ -92,7 +92,7 @@ public sealed class RequestHandlersTests : TestsBase
             var mediator = serviceProvider.GetRequiredService<IMediator>();
 
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand1
-            await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand1)));
+            await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand1)), TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(
@@ -100,7 +100,7 @@ public sealed class RequestHandlersTests : TestsBase
                 testableContainer.Dequeue());
 
             //Note, DerivedCommandFactory returns the command as IRequest, not as DerivedCommand2
-            await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand2)));
+            await mediator.Send(DerivedCommandFactory.GetCommand(nameof(DerivedCommand2)), TestContext.Current.CancellationToken);
 
             Assert.Single(testableContainer);
             Assert.Equal(

@@ -42,8 +42,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
 
             purchaseOrder = await purchaseOrderRORepository.GetByIdAsync(
                 purchaseOrderId,
-                Includes.Create((PurchaseOrder purchaseOrder) => purchaseOrder.Lines),
-                default);
+                Includes.Create((PurchaseOrder purchaseOrder) => purchaseOrder.Lines),                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
             Assert.Equal(1, purchaseOrder.Lines.Count((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));

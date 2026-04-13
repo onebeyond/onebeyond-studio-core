@@ -37,8 +37,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 .GetRequiredService<IRWRepository<Vendor, Guid>>();
 
             var vendor = await vendorRWRepository.GetByIdAsync(
-                vendorId,
-                default);
+                vendorId,                TestContext.Current.CancellationToken);
 
             Assert.Equal("VendorVasya", vendor.Name);
         }
@@ -74,14 +73,12 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 .GetRequiredService<IRORepository<Vendor, Guid>>();
 
             var vendorV = await vendorRWRepository.GetByIdAsync(
-                vendorVasyaId,
-                default);
+                vendorVasyaId,                TestContext.Current.CancellationToken);
 
             Assert.Equal("VendorVasya", vendorV.Name);
 
             var vendorP = await vendorRWRepository.GetByIdAsync(
-                vendorPetyaId,
-                default);
+                vendorPetyaId,                TestContext.Current.CancellationToken);
 
             Assert.Equal("VendorPetya", vendorP.Name);
         }
@@ -123,14 +120,12 @@ public sealed class AggregateRootTests : InMemoryTestsBase
                 .GetRequiredService<IRORepository<Vendor, Guid>>();
 
             var vendorV = await vendorRWRepository.GetByIdAsync(
-                vendorVasyaId,
-                default);
+                vendorVasyaId,                TestContext.Current.CancellationToken);
 
             Assert.Equal("SuperVendorVasya", vendorV.Name);
 
             var vendorP = await vendorRWRepository.GetByIdAsync(
-                vendorPetyaId,
-                default);
+                vendorPetyaId,                TestContext.Current.CancellationToken);
 
             Assert.Equal("SuperVendorPetya", vendorP.Name);
         }

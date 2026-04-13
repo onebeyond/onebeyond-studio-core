@@ -110,8 +110,7 @@ public sealed class DomainEventsTests : InMemoryTestsBase
             var purchaseOrder = await purchaseOrderRWRepository.GetByIdAsync(
                 purchaseOrderId,
                 Includes.Create(
-                    (PurchaseOrder purchaseOrder) => purchaseOrder.Lines),
-                default);
+                    (PurchaseOrder purchaseOrder) => purchaseOrder.Lines),                TestContext.Current.CancellationToken);
 
             purchaseOrder.AddLine("Third");
 

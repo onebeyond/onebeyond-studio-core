@@ -36,8 +36,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                 {
                     ProductId = product.Id,
                     ProductName = product.Name
-                },
-                default);
+                },                TestContext.Current.CancellationToken);
 
             Assert.NotNull(product1Dto);
             Assert.Equal(product1.Id, product1Dto.ProductId);
@@ -52,8 +51,7 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                     ProductCountry = product.CountryOfOrigin,
                     ProductPrice = product.Price,
                     ProductBrand = product.Brand
-                },
-                default);
+                },                TestContext.Current.CancellationToken);
 
             Assert.NotNull(product2Dto);
             Assert.Equal(product1.Id, product2Dto.ProductId);
@@ -95,7 +93,8 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                     ProductId = product.Id,
                     ProductName = product.Name
                 },
-                filter: (product) => product.Brand == "cartier");
+                filter: (product) => product.Brand == "cartier",
+                cancellationToken: TestContext.Current.CancellationToken);
 
             Assert.NotNull(productDtos);
             Assert.Equal(2, productDtos.Count());
@@ -121,7 +120,8 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                     ProductType = product.Type,
                     ProductPrice = product.Price
                 },
-                filter: (product) => product.CountryOfOrigin == "us" && product.Price > 1000M);
+                filter: (product) => product.CountryOfOrigin == "us" && product.Price > 1000M,
+                cancellationToken: TestContext.Current.CancellationToken);
 
             Assert.NotNull(productDtos);
             Assert.Equal(2, productDtos.Count());
@@ -151,7 +151,8 @@ public sealed class AnonymousTypesTests : InMemoryTestsBase
                     ProductPrice = product.Price
                 },
                 filter: (product) => product.Price > 1000M,
-                sortings: new List<Sorting<Product>> { Sorting.CreateDescending<Product>(x => x.Price) })
+                sortings: new List<Sorting<Product>> { Sorting.CreateDescending<Product>(x => x.Price) },
+                cancellationToken: TestContext.Current.CancellationToken)
                 ).ToArray();
 
 
