@@ -59,8 +59,8 @@ public sealed class IntegrationEventDispatcherTests : TestsBase
             Assert.Contains(typeof(TestableIntegrationEventHandler2), typeContainer.Items);
 
             Assert.Equal(2, scopedItemContainer.Items.Count());
-            Assert.True(scopedItemContainer.Items.Any((scopedItem) => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler1)));
-            Assert.True(scopedItemContainer.Items.Any((scopedItem) => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler2)));
+            Assert.Contains(scopedItemContainer.Items, scopedItem => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler1));
+            Assert.Contains(scopedItemContainer.Items, scopedItem => scopedItem.HandlerType == typeof(TestableIntegrationEventHandler2));
         }
     }
 }

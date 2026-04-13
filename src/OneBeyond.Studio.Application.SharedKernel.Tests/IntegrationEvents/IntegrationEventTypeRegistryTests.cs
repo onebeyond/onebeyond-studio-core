@@ -28,26 +28,26 @@ public sealed class IntegrationEventTypeRegistryTests
         var integrationEventTypes = integrationEventTypeRegistry.IntegrationEventTypes;
 
         Assert.Equal(5, integrationEventTypes.Count());
-        Assert.True(integrationEventTypes.Any((integrationEventType) =>
+        Assert.Contains(integrationEventTypes, integrationEventType =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.1m
-            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_1)));
-        Assert.True(integrationEventTypes.Any((integrationEventType) =>
+            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_1));
+        Assert.Contains(integrationEventTypes, integrationEventType =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.2m
-            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_2)));
-        Assert.True(integrationEventTypes.Any((integrationEventType) =>
+            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_2));
+        Assert.Contains(integrationEventTypes, integrationEventType =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 1.4m
-            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_4)));
-        Assert.True(integrationEventTypes.Any((integrationEventType) =>
+            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_1_4));
+        Assert.Contains(integrationEventTypes, integrationEventType =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThisHappenedTypeName
             && integrationEventType.Version == 2.1m
-            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_2_1)));
-        Assert.True(integrationEventTypes.Any((integrationEventType) =>
+            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThisHappened_2_1));
+        Assert.Contains(integrationEventTypes, integrationEventType =>
             integrationEventType.TypeName == TestableIntegrationEvents.ThatHappenedTypeName
             && integrationEventType.Version == 1.0m
-            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThatHappened_1_0)));
+            && integrationEventType.ClrType == typeof(TestableIntegrationEvents.ThatHappened_1_0));
     }
 
     [Fact]

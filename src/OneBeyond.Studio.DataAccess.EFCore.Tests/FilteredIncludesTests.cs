@@ -270,12 +270,12 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
                 default);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "Third");
             Assert.Equal(8, purchaseOrder.Lines.SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments).Count());
             Assert.Equal(2, purchaseOrder.Tags.Count());
-            Assert.True(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.A"));
-            Assert.True(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.A"));
+            Assert.Contains(purchaseOrder.Tags, purchaseOrderTag => purchaseOrderTag.Description == "Tag.1.A");
+            Assert.Contains(purchaseOrder.Tags, purchaseOrderTag => purchaseOrderTag.Description == "Tag.2.A");
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
@@ -309,19 +309,19 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
                 default);
 
             Assert.Equal(2, purchaseOrder.Lines.Count());
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "Third");
             var purchaseOrderLineComments = purchaseOrder.Lines
                 .SelectMany((purchaseOrderLine) => purchaseOrderLine.Comments)
                 .ToArray();
             Assert.Equal(4, purchaseOrderLineComments.Count());
-            Assert.True(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.1"));
-            Assert.True(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "1.2"));
-            Assert.True(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.1"));
-            Assert.True(purchaseOrderLineComments.Any((purchaseOrderLineComment) => purchaseOrderLineComment.Text == "3.2"));
+            Assert.Contains(purchaseOrderLineComments, purchaseOrderLineComment => purchaseOrderLineComment.Text == "1.1");
+            Assert.Contains(purchaseOrderLineComments, purchaseOrderLineComment => purchaseOrderLineComment.Text == "1.2");
+            Assert.Contains(purchaseOrderLineComments, purchaseOrderLineComment => purchaseOrderLineComment.Text == "3.1");
+            Assert.Contains(purchaseOrderLineComments, purchaseOrderLineComment => purchaseOrderLineComment.Text == "3.2");
             Assert.Equal(2, purchaseOrder.Tags.Count());
-            Assert.True(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.1.B"));
-            Assert.True(purchaseOrder.Tags.Any((purchaseOrderTag) => purchaseOrderTag.Description == "Tag.2.B"));
+            Assert.Contains(purchaseOrder.Tags, purchaseOrderTag => purchaseOrderTag.Description == "Tag.1.B");
+            Assert.Contains(purchaseOrder.Tags, purchaseOrderTag => purchaseOrderTag.Description == "Tag.2.B");
         }
     }
 
@@ -412,8 +412,8 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "Third");
             Assert.True(purchaseOrder.Lines.All((purchaseOrderLine) => purchaseOrderLine.Account is null));
         }
 
@@ -444,8 +444,8 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             Assert.Null(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "Third");
             Assert.True(purchaseOrder.Lines.All((purchaseOrderLine) => purchaseOrderLine.Account is not null));
         }
 
@@ -478,8 +478,8 @@ public sealed class FilteredIncludesTests : InMemoryTestsBase
 
             Assert.NotNull(purchaseOrder.Vendor);
             Assert.Equal(2, purchaseOrder.Lines.Count());
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "First"));
-            Assert.True(purchaseOrder.Lines.Any((purchaseOrderLine) => purchaseOrderLine.ItemName == "Third"));
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "First");
+            Assert.Contains(purchaseOrder.Lines, purchaseOrderLine => purchaseOrderLine.ItemName == "Third");
             Assert.True(purchaseOrder.Lines.All((purchaseOrderLine) => purchaseOrderLine.Account is not null));
         }
     }
