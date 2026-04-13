@@ -110,7 +110,8 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
 
             var surveys = (await surveyRORepository.ListAsync(
                     default,
-                    Includes.Create((Survey survey) => survey.Company)))
+                    Includes.Create((Survey survey) => survey.Company), 
+                    cancellationToken: TestContext.Current.CancellationToken))
                 .ToList();
 
             Assert.Single(surveys);
@@ -126,7 +127,7 @@ public sealed class DesignIdeasTests : InMemoryTestsBase
         {
             var companyRORepository = serviceScope.ServiceProvider.GetRequiredService<IRORepository<Company, Guid>>();
 
-            var companies = (await companyRORepository.ListAsync())
+            var companies = (await companyRORepository.ListAsync(cancellationToken: TestContext.Current.CancellationToken))
                 .ToDictionary((company) => company.Id);
 
             Assert.Equal(4, companies.Count);
