@@ -19,7 +19,6 @@ public abstract class TestsBase : IAsyncLifetime
     public ValueTask InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", false)
             .Build();
 
         var serviceCollection = new ServiceCollection();
