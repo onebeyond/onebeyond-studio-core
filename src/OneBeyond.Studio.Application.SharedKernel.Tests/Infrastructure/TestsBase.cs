@@ -1,4 +1,3 @@
-using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,7 @@ public abstract class TestsBase : IDisposable
 
     protected IServiceProvider ServiceProvider { get; private set; } = default!;
 
-    protected TestsBase()
+    protected void Init()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true)

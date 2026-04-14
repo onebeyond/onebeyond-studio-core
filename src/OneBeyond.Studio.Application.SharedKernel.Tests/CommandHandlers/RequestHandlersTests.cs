@@ -1,21 +1,22 @@
-using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 using OneBeyond.Studio.Application.SharedKernel.DependencyInjection;
 using OneBeyond.Studio.Application.SharedKernel.Tests.CommandHandlers;
 using OneBeyond.Studio.Application.SharedKernel.Tests.Infrastructure;
 using OneBeyond.Studio.Core.Mediator;
 using OneBeyond.Studio.Core.Mediator.DependencyInjection;
+using Xunit;
 
 namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 
 public sealed class RequestHandlersTests : TestsBase
 {
+    public RequestHandlersTests()
+        => Init();
+
     [Fact]
     public async Task TestCommandWithoutResult()
     {
