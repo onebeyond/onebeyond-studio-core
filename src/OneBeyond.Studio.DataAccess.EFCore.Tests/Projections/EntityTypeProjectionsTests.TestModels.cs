@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using OneBeyond.Studio.Domain.SharedKernel.Entities;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests.Projections;
@@ -24,5 +25,17 @@ public sealed partial class EntityTypeProjectionsTests
     internal sealed record DogSummaryDto
     {
         public required string Name { get; init; }
+    }
+
+    internal sealed class DogDbContext : DbContext
+    {
+        public DogDbContext(DbContextOptions options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Animal>().HasKey(e => e.Id);
+            modelBuilder.Entity<Dog>();
+        }
     }
 }

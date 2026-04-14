@@ -31,7 +31,7 @@ internal abstract class EntityTypeProjections
         IQueryable<TSource> entityQuery,
         ProjectionContext context)
         where TSource : class
-        => entityTypeProjection.Project(entityQuery, context);
+        => entityTypeProjection.Project(entityQuery.AsNoTracking(), context);
 
     protected static ProjectFunc GetOrCompileProjectFunc(
         IEntityTypeProjection entityTypeProjection,

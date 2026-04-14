@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using OneBeyond.Studio.DataAccess.EFCore.Projections;
@@ -163,5 +164,75 @@ public sealed partial class EntityTypeProjectionsTests
         Assert.Contains("No projection specified", exception.Message);
         Assert.Contains(nameof(Dog), exception.Message);
         Assert.Contains(nameof(DogSummaryDto), exception.Message);
+    }
+
+    [Fact]
+    public void ProjectTo_NullEntityQuery_ArgumentNullException()
+    {
+        // Arrange
+        var projections = new EntityTypeProjections<Dog>([new DogProjection()]);
+
+        // Act
+        var action = () => projections.ProjectTo<DogDto>(null!, _dbContextMock);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(action);
+    }
+
+    [Fact]
+    public void ProjectTo_NullDbContext_ArgumentNullException()
+    {
+        // Arrange
+        var projections = new EntityTypeProjections<Dog>([new DogProjection()]);
+        var query = new[] { new Dog() }.AsQueryable();
+
+        // Act
+        var action = () => projections.ProjectTo<DogDto>(query, null!);
+
+        // Assert
+        Assert.Throws<ArgumentNullException>(action);
+    }
+
+    [Fact]
+    public void ProjectTo_EFCoreQuery_QueryPassedToProjectionIsAsNoTracking()
+    {
+        // Arrange
+        var dbContextOptions = new DbContextOptionsBuilder()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
+
+        using var efDbContext = new DogDbContext(dbContextOptions);
+
+        IQueryable<Dog>? capturedQuery = null;
+        var projectionMock = new Mock<IEntityTypeProjection<Dog, DogDto>>();
+        projectionMock
+            .Setup(p => p.Project(It.IsAny<IQueryable<Dog>>(), It.IsAny<ProjectionContext>()))
+            .Callback<IQueryable<Dog>, ProjectionContext>((query, _) => capturedQuery = query)
+            .Returns(Array.Empty<DogDto>().AsQueryable());
+
+        var projections = new EntityTypeProjections<Dog>([projectionMock.Object]);
+
+        // Act
+        projections.ProjectTo<DogDto>(efDbContext.Set<Dog>(), _dbContextMock);
+
+        // Assert
+        Assert.NotNull(capturedQuery);
+        var expression = Assert.IsAssignableFrom<MethodCallExpression>(capturedQuery.Expression);
+        Assert.Equal(nameof(EntityFrameworkQueryableExtensions.AsNoTracking), expression.Method.Name);
+    }
+
+    [Fact]
+    public void ProjectTo_ProjectionForDerivedEntityType_NotAppliedToBaseEntityType()
+    {
+        // Arrange
+        var huskyProjectionMock = new Mock<IEntityTypeProjection<Husky, DogDto>>();
+        var projections = new EntityTypeProjections<Dog>([huskyProjectionMock.Object]);
+        var query = new[] { new Dog() }.AsQueryable();
+
+        // Act
+        var action = () => projections.ProjectTo<DogDto>(query, _dbContextMock);
+
+        // Assert
+        Assert.Throws<InvalidOperationException>(action);
     }
 }
