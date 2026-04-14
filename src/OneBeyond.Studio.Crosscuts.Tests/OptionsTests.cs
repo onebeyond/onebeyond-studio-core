@@ -26,7 +26,7 @@ public sealed class OptionsTests : TestsBase
     {
         var configuration = ServiceProvider.GetRequiredService<IConfiguration>();
         
-        Assert.Throws<OptionsException>(() => configuration.GetOptions<OptionsTestsOptions>("OptionsTests:Empty\""));
+        Assert.Throws<OptionsException>(() => configuration.GetOptions<OptionsTestsOptions>("OptionsTests:Empty"));
     }
 
     [Fact]
