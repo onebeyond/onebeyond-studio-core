@@ -111,7 +111,7 @@ public sealed class AggregateRootTests : InMemoryTestsBase
             updateAggregateRoot.UpdateVendor(vendorVasyaId, "SuperVendorVasya");
             updateAggregateRoot.UpdateVendor(vendorPetyaId, "SuperVendorPetya");
 
-            await vendorsRWRepository.UpdateAsync(aggregateRoot, TestContext.Current.CancellationToken);
+            await vendorsRWRepository.UpdateAsync(updateAggregateRoot, TestContext.Current.CancellationToken);
         }
 
         using (var serviceScope = ServiceProvider.CreateScope())
