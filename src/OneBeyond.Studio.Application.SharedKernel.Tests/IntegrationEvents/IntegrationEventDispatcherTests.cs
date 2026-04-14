@@ -13,9 +13,6 @@ namespace OneBeyond.Studio.Application.SharedKernel.Tests.IntegrationEvents;
 
 public sealed class IntegrationEventDispatcherTests : TestsBase
 {
-    public IntegrationEventDispatcherTests()
-        => Init();
-
     protected override void ConfigureTestServices(IConfiguration configuration, IServiceCollection serviceCollection)
     {
     }

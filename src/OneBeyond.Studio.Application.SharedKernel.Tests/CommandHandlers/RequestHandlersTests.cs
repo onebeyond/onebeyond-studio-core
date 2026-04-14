@@ -14,9 +14,6 @@ namespace OneBeyond.Studio.Application.SharedKernel.Tests.Authorization;
 
 public sealed class RequestHandlersTests : TestsBase
 {
-    public RequestHandlersTests()
-        => Init();
-
     [Fact]
     public async Task TestCommandWithoutResult()
     {
