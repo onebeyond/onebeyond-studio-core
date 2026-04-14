@@ -2,16 +2,17 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
 
 namespace OneBeyond.Studio.Crosscuts.Tests;
 
-public abstract class TestsBase : IDisposable
+public abstract class TestsBase : IAsyncLifetime
 {
     private IServiceScope? _serviceScope;
 
     protected IServiceProvider ServiceProvider { get; private set; } = default!;
 
-    protected void Init()
+    public ValueTask InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", false)
@@ -34,27 +35,17 @@ public abstract class TestsBase : IDisposable
         _serviceScope = serviceProvider.CreateScope();
 
         ServiceProvider = _serviceScope.ServiceProvider;
+
+        return ValueTask.CompletedTask;
     }
 
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            CleanupTest();
-        }
-    }
-
-    private void CleanupTest()
+    public virtual ValueTask DisposeAsync()
     {
         ServiceProvider = default!;
         _serviceScope?.Dispose();
         _serviceScope = null;
+
+        return ValueTask.CompletedTask;
     }
 
     protected abstract void ConfigureTestServices(

@@ -16,7 +16,6 @@ public abstract class InMemoryTestsBase : TestsBase
         : base()
     {
         _withDomainEvents = withDomainEvents;
-        Init();
     }
 
     protected override void ConfigureTestServices(

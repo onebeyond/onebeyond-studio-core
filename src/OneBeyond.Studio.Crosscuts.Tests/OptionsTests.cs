@@ -10,8 +10,6 @@ namespace OneBeyond.Studio.Crosscuts.Tests;
 
 public sealed class OptionsTests : TestsBase
 {
-    public OptionsTests()
-        => Init();
 
     [Fact]    
     public void TestOptionsExceptionThrownWhenSectionNotFound()

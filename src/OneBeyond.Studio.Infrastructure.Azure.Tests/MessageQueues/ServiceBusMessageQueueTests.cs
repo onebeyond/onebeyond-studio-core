@@ -17,7 +17,6 @@ public sealed class ServiceBusMessageQueueTests : TestsBase
         : base()
     {
         _connectionString = ""; // Please provide your own connection string
-        Init();
     }
 
     [Fact]

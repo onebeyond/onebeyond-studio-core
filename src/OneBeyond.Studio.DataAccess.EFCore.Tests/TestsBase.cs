@@ -6,16 +6,17 @@ using Microsoft.Extensions.Logging;
 using OneBeyond.Studio.Application.SharedKernel.Repositories;
 using OneBeyond.Studio.Crosscuts.Logging;
 using OneBeyond.Studio.DataAccess.EFCore.Tests.Data.Repositories;
+using Xunit;
 
 namespace OneBeyond.Studio.DataAccess.EFCore.Tests;
 
-public abstract class TestsBase : IDisposable
+public abstract class TestsBase : IAsyncLifetime
 {
     private IServiceScope? _serviceScope;
 
     protected IServiceProvider ServiceProvider { get; private set; } = default!;
 
-    protected void Init()
+    public ValueTask InitializeAsync()
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", false)
@@ -50,27 +51,17 @@ public abstract class TestsBase : IDisposable
         var loggerFactory = ServiceProvider.GetRequiredService<ILoggerFactory>();
 
         LogManager.TryConfigure(loggerFactory);
+
+        return ValueTask.CompletedTask;
     }
 
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            CleanupTest();
-        }
-    }
-
-    private void CleanupTest()
+    public virtual ValueTask DisposeAsync()
     {
         ServiceProvider = default!;
         _serviceScope?.Dispose();
         _serviceScope = null;
+
+        return ValueTask.CompletedTask;
     }
 
     protected abstract void ConfigureTestServices(

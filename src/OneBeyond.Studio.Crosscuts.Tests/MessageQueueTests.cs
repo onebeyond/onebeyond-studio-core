@@ -13,9 +13,6 @@ public sealed class MessageQueueTests : TestsBase
     private Queue<Message>? _messageQueue1;
     private Queue<Message>? _messageQueue2;
 
-    public MessageQueueTests()
-        => Init();
-
     [Fact]
     public Task TestMessageQueueRegistrations()
     {
