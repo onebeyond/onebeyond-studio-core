@@ -18,11 +18,12 @@ namespace OneBeyond.Studio.DataAccess.EFCore.Repositories;
 
 /// <summary>
 /// Implements base read-write repository for the <typeparamref name="TAggregateRoot"/> type using EF Core.
-/// All the entities returned by this repository are trackable.
+/// All the entities returned by this repository are trackable, and each write persists immediately via
+/// <see cref="SaveChangesAsync(CancellationToken)"/>.
 /// </summary>
-/// <typeparam name="TDbContext"></typeparam>
-/// <typeparam name="TAggregateRoot"></typeparam>
-/// <typeparam name="TAggregateRootId"></typeparam>
+/// <typeparam name="TDbContext">DB context type.</typeparam>
+/// <typeparam name="TAggregateRoot">Aggregate root type.</typeparam>
+/// <typeparam name="TAggregateRootId">Aggregate root identifier type.</typeparam>
 public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
     : BaseRORepository<TDbContext, TAggregateRoot, TAggregateRootId>
     , IRWRepository<TAggregateRoot, TAggregateRootId>
@@ -63,6 +64,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
     protected AsyncLazy<Action<TAggregateRoot>> EnsureUpdateDataAccessPolicy { get; }
     protected AsyncLazy<Action<TAggregateRoot>> EnsureDeleteDataAccessPolicy { get; }
 
+    /// <inheritdoc cref="IRWRepository{TAggregateRoot, TAggregateRootId}.GetByIdAsync"/>
     public new async Task<TAggregateRoot> GetByIdAsync(
         TAggregateRootId aggregateRootId,
         Includes<TAggregateRoot>? includes,
@@ -82,6 +84,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         return entity!;
     }
 
+    /// <inheritdoc/>
     public async Task<TAggregateRoot> GetByFilterAsync(
         Expression<Func<TAggregateRoot, bool>> filter,
         Includes<TAggregateRoot>? includes,
@@ -96,6 +99,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         return entity!;
     }
 
+    /// <inheritdoc/>
     public async Task CreateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(aggregateRoot, nameof(aggregateRoot));
@@ -105,6 +109,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task UpdateAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(aggregateRoot, nameof(aggregateRoot));
@@ -114,6 +119,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task DeleteAsync(TAggregateRoot aggregateRoot, CancellationToken cancellationToken)
     {
         EnsureArg.IsNotNull(aggregateRoot, nameof(aggregateRoot));
@@ -123,6 +129,7 @@ public class BaseRWRepository<TDbContext, TAggregateRoot, TAggregateRootId>
         await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public Task DeleteAsync(TAggregateRootId id, CancellationToken cancellationToken)
     {
         var aggregate = DbSet.Value.Find(id);

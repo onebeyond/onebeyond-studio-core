@@ -51,6 +51,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
     protected AsyncLazy<DataAccessPolicy<TEntity>?> ReadDataAccessPolicy { get; }
     protected IEntityTypeProjections<TEntity> EntityTypeProjections { get; }
 
+    /// <inheritdoc/>
     public async Task<IReadOnlyCollection<TEntity>> ListAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         Includes<TEntity>? includes = null,
@@ -63,6 +64,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await query.ToListAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<IReadOnlyCollection<TResultDto>> ListAsync<TResultDto>(
         Expression<Func<TEntity, bool>>? preFilter,
         Expression<Func<TResultDto, bool>>? filter = null,
@@ -76,6 +78,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await resultQuery.ToListAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<IReadOnlyCollection<TResultDto>> ListAsync<TResultDto>(
         Expression<Func<TEntity, TResultDto>> projection,
         Expression<Func<TEntity, bool>>? filter = null,
@@ -90,6 +93,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await resultQuery.ToListAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<int> CountAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         CancellationToken cancellationToken = default)
@@ -99,6 +103,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await query.CountAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<int> CountAsync<TResultDto>(
         Expression<Func<TEntity, bool>>? preFilter,
         Expression<Func<TResultDto, bool>>? filter = null,
@@ -110,6 +115,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await resultQuery.CountAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> AnyAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         CancellationToken cancellationToken = default)
@@ -119,6 +125,7 @@ public class BaseRORepository<TDbContext, TEntity> : IRORepository<TEntity>
         return await query.AnyAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> AnyAsync<TResultDto>(
         Expression<Func<TEntity, bool>>? preFilter,
         Expression<Func<TResultDto, bool>>? filter = null,
@@ -245,6 +252,7 @@ public class BaseRORepository<TDbContext, TEntity, TEntityId>
     {
     }
 
+    /// <inheritdoc/>
     public async Task<TEntity> GetByIdAsync(
         TEntityId entityId,
         Includes<TEntity>? includes,
@@ -262,6 +270,7 @@ public class BaseRORepository<TDbContext, TEntity, TEntityId>
         return entity!;
     }
 
+    /// <inheritdoc/>
     public async Task<TResultDto> GetByIdAsync<TResultDto>(
         TEntityId entityId,
         CancellationToken cancellationToken)
@@ -282,6 +291,7 @@ public class BaseRORepository<TDbContext, TEntity, TEntityId>
         return entityDto!;
     }
 
+    /// <inheritdoc/>
     public async Task<TResultDto> GetByIdAsync<TResultDto>(
         TEntityId entityId,
         Expression<Func<TEntity, TResultDto>> projection,
